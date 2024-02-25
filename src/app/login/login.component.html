@@ -1,17 +1,25 @@
 <!-- login.component.html -->
 
-<form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
-    <h1>Login</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
+                <h1>Login</h1>
 
-    <div class="form-control">
-        <label for="email">Email</label>
-        <input formControlName="email" id="email" autocomplete="new-password" type="email">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input formControlName="email" id="email" autocomplete="new-password" type="email"
+                        class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input formControlName="password" id="password" autocomplete="new-password" type="password"
+                        class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login &#8594;</button>
+            </form>
+        </div>
     </div>
-
-    <div class="form-control">
-        <label for="password">Password</label>
-        <input formControlName="password" id="password" autocomplete="new-password" type="password">
-    </div>
-
-    <button type="submit">Login &#8594;</button>
-</form>
+</div>
