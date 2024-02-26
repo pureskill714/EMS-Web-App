@@ -14,7 +14,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <img src="assets/wizvision_logo.png" alt="Company Logo" class="logo">
-                <p class="text-center"><b>Wizvision Employee & Project Management System</b></p>
+                <p class="text-center title"><b>Wizvision Employee & Project Management System</b></p>
                 <a href="register" class="btn btn-primary btn-block register-button">I don't have an account</a>
                 <a href="login" class="btn btn-primary btn-block login-button">Login</a>
             </div>
@@ -25,6 +25,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the logo element
+            var logo = document.querySelector('.logo');
+            // Set a timeout to show the logo after a delay
+            setTimeout(function () {
+                logo.style.opacity = '1'; // Set opacity to 1 to trigger the fade-in animation
+            }, 1000); // Adjust the delay as needed
+        });
+    </script>
 </body>
 
 </html>
