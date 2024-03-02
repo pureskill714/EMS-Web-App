@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -12,7 +13,9 @@ export class LoginComponent {
     password: new FormControl('', Validators.required),
   });
 
-  constructor() {
+
+
+  constructor(private router: Router,) {
     this.loginForm.valueChanges.subscribe((value) => {
       console.log(value);
     })
@@ -24,6 +27,7 @@ export class LoginComponent {
       return alert('Invalid Email Or Password');
 
     alert('Calling backend to login')
+    this.router.navigateByUrl('dashboard'); // Redirect to dashboard page
 
   }
 

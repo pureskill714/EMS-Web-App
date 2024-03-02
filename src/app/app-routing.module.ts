@@ -3,13 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BookroomComponent } from './bookroom/bookroom.component';
+import { NewbookingComponent } from './newbooking/newbooking.component';
 
 const routes: Routes = [
-  {
-    component: LoginComponent,
-    path: 'login'
-  }
-  ,
   {
     component: HomeComponent,
     path: ''
@@ -19,7 +17,26 @@ const routes: Routes = [
     component: RegisterComponent,
     path: 'register'
   }
-
+  ,
+  {
+    component: LoginComponent,
+    path: 'login'
+  }
+  ,
+  {
+    component: DashboardComponent,
+    path: 'dashboard'
+  }
+  ,
+  {
+    component: BookroomComponent,
+    path: 'booking'
+  }
+  ,
+  {
+    component: NewbookingComponent,
+    path: 'newbooking'
+  }
 ];
 
 @NgModule({

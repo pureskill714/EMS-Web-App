@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="square-box">
+    <!-- First Section: Header -->
+    <div class="header">
+        <div class="left">
+            <h2>Make A New Booking</h2>
+        </div>
+    </div>
+
+    <!-- Second Section: Dropdowns -->
+    <div class="dropdowns">
+        <div class="dropdown">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date">
+        </div>
+
+        <div class="dropdown">
+            <label for="roomselection">Room</label>
+            <select id="roomselection">
+                <option value="Meeting Room 1">Meeting Room 1</option>
+                <option value="Meeting Room 2">Meeting Room 2</option>
+                <!-- Add more start time options as needed -->
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <label for="startTime">Start Time:</label>
+            <select id="startTime">
+                <option value="00:00">00:00</option>
+                <option value="00:30">00:30</option>
+                <option value="01:00">01:00</option>
+                <!-- Add more start time options as needed -->
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <label for="endTime">End Time:</label>
+            <select id="endTime">
+                <option value="00:00">00:00</option>
+                <option value="00:30">00:30</option>
+                <option value="01:00">01:00</option>
+                <!-- Add more end time options as needed -->
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <button type="submit">Submit</button>
+        </div>
+    </div>
+</div>

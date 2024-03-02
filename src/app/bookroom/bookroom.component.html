@@ -1,0 +1,90 @@
+<app-header></app-header>
+
+<div class="square-box">
+    <!-- First Section: Header -->
+    <div class="header">
+        <div class="left">
+            <h2>My Bookings</h2>
+        </div>
+        <div class="right">
+            <button class="btn" [routerLink]="'/newbooking'">Make a New Booking</button>
+        </div>
+    </div>
+
+    <!-- Second Section: Buttons -->
+    <div class="buttons">
+        <button class="btn">Upcoming</button>
+        <button class="btn">Past</button>
+        <button class="btn">Calendar View</button>
+    </div>
+
+    <!-- Third Section: List of Bookings -->
+    <div class="booking-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Resource Name</th>
+                    <th>Date</th>
+                    <th>Time Start</th>
+                    <th>Time End</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                    <th>Booking ID</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dummy Data -->
+                <tr>
+                    <td>Meeting Room 1</td>
+                    <td>2024-03-01</td>
+                    <td>10:00 AM</td>
+                    <td>12:00 PM</td>
+                    <td>Team Meeting</td>
+                    <td>Confirmed</td>
+                    <td>123456</td>
+                    <td>
+                        <button class="btn">Cancel</button>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>Conference Room A</td>
+                    <td>2024-03-02</td>
+                    <td>2:00 PM</td>
+                    <td>5:00 PM</td>
+                    <td>Presentation</td>
+                    <td>Confirmed</td>
+                    <td>789012</td>
+                    <td>
+                        <button class="btn">Cancel</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Training Room B</td>
+                    <td>2024-03-03</td>
+                    <td>9:00 AM</td>
+                    <td>12:00 PM</td>
+                    <td>Training Session</td>
+                    <td>Pending</td>
+                    <td>345678</td>
+                    <td>
+                        <button class="btn">Cancel</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Boardroom X</td>
+                    <td>2024-03-04</td>
+                    <td>3:00 PM</td>
+                    <td>4:00 PM</td>
+                    <td>Board Meeting</td>
+                    <td>Past</td>
+                    <td>901234</td>
+                    <td>
+                        <button class="btn">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
