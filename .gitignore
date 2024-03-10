@@ -45,7 +45,6 @@ Thumbs.db
 dist/
 *.js
 *.js.map
-*.css
 *.css.map
 *.bundle.js
 

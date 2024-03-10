@@ -1,0 +1,92 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.logo {
+    max-width: 350px;
+    /* Increase the max-width */
+    margin-bottom: 20px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.button {
+    display: block;
+    width: fit-content;
+    padding: 10px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    text-align: center;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.register-button {
+    background-color: #ffa500;
+    /* Orange color */
+    color: white;
+}
+
+.login-button {
+    background-color: #4caf50;
+    border-color: #4caf50;
+    color: white;
+    /* Set text color to white */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.logo {
+    opacity: 0;
+    animation: fadeIn 1.5s ease-in-out forwards;
+    /* Keep the final state of the animation */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.title {
+    opacity: 0;
+    animation: popIn 1s ease-in-out forwards;
+    font-size: 18px;
+    /* Adjust the font size as needed */
+}

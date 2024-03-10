@@ -1,0 +1,81 @@
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+/* App-header styles */
+app-header {
+    margin-bottom: 20px;
+    /* Add margin between app-header and square-box */
+}
+
+/* Square box component */
+.square-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    /* Add margin between header and dropdowns */
+}
+
+.header .left h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Dropdowns styles */
+.dropdowns {
+    display: flex;
+    align-items: center;
+    /* Vertically align items */
+}
+
+.dropdown {
+    margin-right: 20px;
+    /* Add margin between dropdowns */
+}
+
+.dropdown label {
+    font-weight: bold;
+    margin-right: 10px;
+    /* Add margin space between labels and dropdowns */
+}
+
+.dropdown select {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 180px;
+}
+
+.dropdown button {
+    padding: 8px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+    width: 150px;
+    border: none;
+    background-color: #28a745;
+    /* Green background color */
+    color: #fff;
+    cursor: pointer;
+    margin-left: 10px;
+    /* Add margin between last dropdown and button */
+}
+
+.dropdown button:hover {
+    background-color: #218838;
+    /* Darker green on hover */
+}
