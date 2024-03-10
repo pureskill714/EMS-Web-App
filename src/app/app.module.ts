@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
 import { BookroomComponent } from './bookroom/bookroom.component';
-import { NewbookingComponent } from './newbooking/newbooking.component';
+import { NewbookingComponent } from './bookroom/newbooking/newbooking.component';
 
 
 

@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BookroomComponent } from './bookroom/bookroom.component';
-import { NewbookingComponent } from './newbooking/newbooking.component';
+import { NewbookingComponent } from './bookroom/newbooking/newbooking.component';
 
 const routes: Routes = [
   {
