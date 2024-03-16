@@ -3,22 +3,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form [formGroup]="loginForm" (submit)="login()" autocomplete="new-password">
+            <form>
                 <h1>Login</h1>
 
                 <div class="form-group">
-                    <label for="email">Email</label>
-                    <input formControlName="email" id="email" autocomplete="new-password" type="email"
-                        class="form-control">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control" id="stname"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input formControlName="password" id="password" autocomplete="new-password" type="password"
-                        class="form-control">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control" id="stname"/>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Login &#8594;</button>
+                <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
             </form>
         </div>
     </div>

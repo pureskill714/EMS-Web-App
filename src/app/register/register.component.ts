@@ -39,7 +39,6 @@ export class RegisterComponent {
 
   save()
   {
-    alert("test works");
     this.register();
   }
 

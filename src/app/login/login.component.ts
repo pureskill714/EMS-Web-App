@@ -1,34 +1,47 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', Validators.required),
-  });
 
+  email: string = '';
+  password: string = '';
 
+  isLogin: boolean = true;
+  erroMessage: string = "";
 
-  constructor(private router: Router,) {
-    this.loginForm.valueChanges.subscribe((value) => {
-      console.log(value);
-    })
-  }
+  constructor(private router: Router,private http: HttpClient) {}
 
   login() {
-    //Call API with username and password
-    if (this.loginForm.invalid)
-      return alert('Invalid Email Or Password');
+    console.log(this.email);
+    console.log(this.password);
 
-    alert('Calling backend to login')
-    this.router.navigateByUrl('dashboard'); // Redirect to dashboard page
+    let bodyData = {
+      email: this.email,
+      password: this.password,
+    };
 
-  }
+        this.http.post("http://localhost:9992/login", bodyData).subscribe(  (resultData: any) => {
+        console.log(resultData);
+
+        if (resultData.status) 
+        {
+      
+          this.router.navigateByUrl('dashboard');
+    
+
+        } 
+        else
+         {
+          alert("Incorrect Email or Password");
+          console.log("Errror login");
+        }
+      });
+    }
 
 }
