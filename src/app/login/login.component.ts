@@ -22,26 +22,26 @@ export class LoginComponent {
     console.log(this.password);
 
     let bodyData = {
-      email: this.email,
-      password: this.password,
+        email: this.email,
+        password: this.password,
     };
 
-        this.http.post("http://localhost:9992/login", bodyData).subscribe(  (resultData: any) => {
-        console.log(resultData);
+    this.http.post("http://localhost:9992/login", bodyData).subscribe(
+        (resultData: any) => {
+            console.log(resultData);
 
-        if (resultData.status) 
-        {
-      
-          this.router.navigateByUrl('dashboard');
-    
-
-        } 
-        else
-         {
-          alert("Incorrect Email or Password");
-          console.log("Errror login");
+            if (resultData.status) {
+                this.router.navigateByUrl('dashboard');
+            } else {
+                alert("Incorrect Email or Password");
+                console.log("Error login");
+            }
+        },
+        (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            alert("Error logging in. Please check if backend server is running.");
         }
-      });
-    }
+    );
+}
 
 }
