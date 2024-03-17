@@ -22,6 +22,18 @@ export class RegisterComponent {
   }
 
   register() {
+    if (this.password.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return; // Exit the function if password length is invalid
+    }
+
+    // Password complexity check using regular expression
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(this.password)) {
+        alert("Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long.");
+        return; // Exit the function if password complexity is invalid
+    }
+
     let bodyData = {
         "firstname": this.firstname,
         "lastname": this.lastname,
@@ -35,10 +47,14 @@ export class RegisterComponent {
             alert("Account Registered Successfully");
         },
         (error) => {
-            console.error("Error occurred while sending POST request:", error);
-            alert("Error register account. Please check if backend server is running.");
-            // You can handle the error further as needed (e.g., logging, additional error handling)
-        }
+          console.error("Error occurred while sending POST request:", error);
+          if (error.status === 409) { // Assuming 409 is the status code for email already exists
+              alert("Email already used. Please choose a different email address.");
+          } else {
+              alert("Error registering account. Please check if the backend server is running.");
+          }
+          // You can handle the error further as needed (e.g., logging, additional error handling)
+      }
     );
 }
 
