@@ -43,7 +43,6 @@ Thumbs.db
 
 # Compiled output
 dist/
-*.js
 *.js.map
 *.css.map
 *.bundle.js
