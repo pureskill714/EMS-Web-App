@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -13,9 +14,8 @@ export class RegisterComponent {
   email: string ="";
   password: string ="";
 
-  constructor(private http: HttpClient) 
-  {
-  }
+  constructor(private http: HttpClient, private router: Router) {}
+  
 
   ngOnInit(): void
   {
@@ -34,6 +34,13 @@ export class RegisterComponent {
         return; // Exit the function if password complexity is invalid
     }
 
+     // Check if email contains the required domain. Comment out if needed to register other emails
+     const validDomain = '@wizvision.com';
+     if (!this.email.includes(validDomain)) {
+         alert(`Email must be from ${validDomain}`);
+         return; // Exit the function if email domain is invalid
+     }
+
     let bodyData = {
         "firstname": this.firstname,
         "lastname": this.lastname,
@@ -44,7 +51,8 @@ export class RegisterComponent {
     this.http.post("http://localhost:9992/create", bodyData).subscribe(
         (resultData: any) => {
             console.log(resultData);
-            alert("Account Registered Successfully");
+            alert("Account Registered Successfully! Redirecting To Login Page");
+            this.router.navigate(['/login']);
         },
         (error) => {
           console.error("Error occurred while sending POST request:", error);

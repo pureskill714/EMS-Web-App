@@ -18,6 +18,7 @@ module.exports.createnonManagerialEmployeeDBService = (nonManagerialEmployeeDeta
                     nonManagerialEmployeeModelData.email = nonManagerialEmployeeDetails.email;
                     nonManagerialEmployeeModelData.password = nonManagerialEmployeeDetails.password;
                     var encrypted = encryptor.encrypt(nonManagerialEmployeeDetails.password);
+                    nonManagerialEmployeeModelData.role = "non-managerial";
                     nonManagerialEmployeeModelData.password = encrypted;
  
                     nonManagerialEmployeeModelData.save()

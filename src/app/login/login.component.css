@@ -46,5 +46,12 @@ button {
     border-color: #4caf50;
     color: white;
     /* Set text color to white */
-
 }
+
+.custom-link {
+    text-decoration: none; /* Remove underline by default */
+  }
+  
+  .custom-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }
