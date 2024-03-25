@@ -22,10 +22,28 @@ export class RegisterComponent {
   }
 
   register() {
-    if (this.password.length < 8) {
-      alert("Password must be at least 8 characters long.");
-      return; // Exit the function if password length is invalid
+      // Check if first name is missing
+      if (!this.firstname) {
+        alert("Please enter your first name.");
+        return; // Exit the function if first name is missing
     }
+
+      // Check if last name is missing
+      if (!this.lastname) {
+          alert("Please enter your last name.");
+          return; // Exit the function if last name is missing
+      }
+
+      // Check if email is missing or invalid format
+      if (!this.email || !this.email.includes('@')) {
+          alert("Please enter a valid email address.");
+          return; // Exit the function if email is missing or invalid
+      }
+
+      if (this.password.length < 8) {
+        alert("Password must be at least 8 characters long.");
+        return; // Exit the function if password length is invalid
+      }
 
     // Password complexity check using regular expression
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;

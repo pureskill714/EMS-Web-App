@@ -13,6 +13,7 @@ import { HeaderComponent } from './header/header.component';
 import { BookroomComponent } from './bookroom/bookroom.component';
 import { NewbookingComponent } from './bookroom/newbooking/newbooking.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 
 
 
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     BookroomComponent,
     NewbookingComponent,
+    ProjectManagerDashboardComponent,
   ],
   imports: [
     BrowserModule,

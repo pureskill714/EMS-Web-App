@@ -26,7 +26,7 @@ var loginUserControllerFn = async (req, res) => {
     try {
         result = await nonManagerialEmployeeService.loginuserDBService(req.body);
         if (result.status) {
-            res.send({ "status": true, "message": result.msg });
+            res.send({ "status": true, "message": result.msg, "role": result.role });
         } else {
             res.send({ "status": false, "message": result.msg });
         }

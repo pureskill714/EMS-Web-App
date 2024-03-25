@@ -45,7 +45,7 @@ module.exports.loginuserDBService = (nonManagerialEmployeeDetails) => {
                } else {
                    var decrypted = encryptor.decrypt(result.password);
                    if (decrypted === nonManagerialEmployeeDetails.password) {
-                       resolve({ status: true, msg: "non-managerial employee Validated Successfully" });
+                       resolve({ status: true, msg: "non-managerial employee Validated Successfully", role: result.role });
                    } else {
                        reject({ status: false, msg: "non-managerial employee Validation Failed" });
                    }

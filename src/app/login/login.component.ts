@@ -22,26 +22,40 @@ export class LoginComponent {
     console.log(this.password);
 
     let bodyData = {
-        email: this.email,
-        password: this.password,
+      email: this.email,
+      password: this.password,
     };
 
     this.http.post("http://localhost:9992/login", bodyData).subscribe(
-        (resultData: any) => {
-            console.log(resultData);
+      (resultData: any) => {
+        console.log(resultData);
 
-            if (resultData.status) {
-                this.router.navigateByUrl('dashboard');
+        if (resultData.status) {
+          // Check if 'role' data is present in the response
+          if (resultData.role) {
+            const userRole = resultData.role;
+            // Perform role-based actions or redirection based on the user's role
+            if (userRole === 'non-managerial') {
+              this.router.navigateByUrl('dashboard');
+            } else if (userRole === 'project-manager') {
+              this.router.navigateByUrl('pm-dashboard');
             } else {
-                alert("Incorrect Email or Password");
-                console.log("Error login");
+              this.router.navigateByUrl('dashboard');
             }
-        },
-        (error) => {
-            console.error("Error occurred while sending POST request:", error);
-            alert("Error logging in. Please check if backend server is running.");
+          } else {
+            console.error("Role data not found in login response.");
+            alert("Error occurred during login. Please try again.");
+          }
+        } else {
+          alert("Incorrect Email or Password");
+          console.log("Error login");
         }
+      },
+      (error) => {
+        console.error("Error occurred while sending POST request:", error);
+        alert("Error logging in. Please check if backend server is running.");
+      }
     );
-}
+  }
 
 }
