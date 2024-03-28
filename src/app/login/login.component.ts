@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service'; 
+
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent {
   isLogin: boolean = true;
   erroMessage: string = "";
 
-  constructor(private router: Router,private http: HttpClient) {}
+  constructor(private router: Router,private http: HttpClient,private authService: AuthService) {}
 
   login() {
     console.log(this.email);
@@ -31,6 +33,9 @@ export class LoginComponent {
         console.log(resultData);
 
         if (resultData.status) {
+          // Update authentication status using AuthService
+          this.authService.login(this.email, this.password);
+
           // Check if 'role' data is present in the response
           if (resultData.role) {
             const userRole = resultData.role;
