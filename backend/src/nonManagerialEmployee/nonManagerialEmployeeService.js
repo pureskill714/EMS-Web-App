@@ -36,23 +36,23 @@ module.exports.createnonManagerialEmployeeDBService = (nonManagerialEmployeeDeta
     });
  };
 
-module.exports.loginuserDBService = (nonManagerialEmployeeDetails) => {
-   return new Promise((resolve, reject) => {
-       nonManagerialEmployeeModel.findOne({ email: nonManagerialEmployeeDetails.email })
-           .then(result => {
-               if (!result) {
-                   reject({ status: false, msg: "Invalid Data" });
-               } else {
-                   var decrypted = encryptor.decrypt(result.password);
-                   if (decrypted === nonManagerialEmployeeDetails.password) {
-                       resolve({ status: true, msg: "non-managerial employee Validated Successfully", role: result.role });
-                   } else {
-                       reject({ status: false, msg: "non-managerial employee Validation Failed" });
-                   }
-               }
-           })
-           .catch(error => {
-               reject({ status: false, msg: "non-managerial employee Error Details" });
-           });
-   });
-};
+ module.exports.loginuserDBService = (nonManagerialEmployeeDetails) => {
+    return new Promise((resolve, reject) => {
+        nonManagerialEmployeeModel.findOne({ email: nonManagerialEmployeeDetails.email })
+            .then(result => {
+                if (!result) {
+                    reject({ status: false, msg: "Invalid Data" });
+                } else {
+                    var decrypted = encryptor.decrypt(result.password);
+                    if (decrypted === nonManagerialEmployeeDetails.password) {
+                        resolve({ status: true, msg: "non-managerial employee Validated Successfully", role: result.role, firstname: result.firstname, lastname: result.lastname });
+                    } else {
+                        reject({ status: false, msg: "non-managerial employee Validation Failed" });
+                    }
+                }
+            })
+            .catch(error => {
+                reject({ status: false, msg: "non-managerial employee Error Details" });
+            });
+    });
+ };

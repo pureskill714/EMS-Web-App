@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../auth/auth.service'; 
+import { AuthService } from '../auth/auth.service';
+import { UserDataService } from '../user-data.service';
 
 
 @Component({
@@ -10,6 +11,7 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  fullName: string = ''; // Initialize fullName property
 
   email: string = '';
   password: string = '';
@@ -17,7 +19,11 @@ export class LoginComponent {
   isLogin: boolean = true;
   erroMessage: string = "";
 
-  constructor(private router: Router,private http: HttpClient,private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private http: HttpClient,
+    private authService: AuthService,
+    private userDataService: UserDataService,) {}
 
   login() {
     console.log(this.email);
@@ -39,6 +45,8 @@ export class LoginComponent {
           // Check if 'role' data is present in the response
           if (resultData.role) {
             const userRole = resultData.role;
+            this.userDataService.setFirstName(resultData.firstname);
+            this.userDataService.setLastName(resultData.lastname);
             // Perform role-based actions or redirection based on the user's role
             if (userRole === 'non-managerial') {
               this.router.navigateByUrl('dashboard');

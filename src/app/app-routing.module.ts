@@ -38,7 +38,8 @@ const routes: Routes = [
   ,
   {
     component: BookroomComponent,
-    path: 'booking'
+    path: 'booking',
+    canActivate: [AuthGuard]
   }
   ,
   {
