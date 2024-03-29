@@ -6,21 +6,28 @@
             <form>
                 <h1>Login</h1>
 
-
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control" id="stname"/>
+                    <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}" class="form-control" id="email"/>
                 </div>
 
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
-                    <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control" id="stname"/>
+                    <div class="input-group">
+                        <input type="password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}" class="form-control" id="password" #passwordInput/>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility(passwordInput)">
+                                <i class="fas" [ngClass]="{'fa-eye': !showPassword, 'fa-eye-slash': showPassword}"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
                 <br><br>
                 <div style="display: flex; justify-content: center;">
                     <a routerLink="/register" class="custom-link">Don't have an account? Click here to register</a>
-                  </div>
+                </div>
             </form>
         </div>
     </div>

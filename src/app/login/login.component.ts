@@ -19,11 +19,18 @@ export class LoginComponent {
   isLogin: boolean = true;
   erroMessage: string = "";
 
+  showPassword: boolean = false;
+
   constructor(
     private router: Router,
     private http: HttpClient,
     private authService: AuthService,
     private userDataService: UserDataService,) {}
+
+    togglePasswordVisibility(input: HTMLInputElement): void {
+      this.showPassword = !this.showPassword;
+      input.type = this.showPassword ? 'text' : 'password';
+    }
 
   login() {
     console.log(this.email);

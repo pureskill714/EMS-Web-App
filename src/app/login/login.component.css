@@ -37,7 +37,7 @@ h1 {
     }
 }
 
-button {
+button.btn-primary {
     padding: 8px 24px;
     border-radius: 4px;
     width: 100%;
