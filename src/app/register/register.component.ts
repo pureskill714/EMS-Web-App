@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-register',
@@ -8,6 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
+  @ViewChild('passwordInput') passwordInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('confirmPasswordInput') confirmPasswordInput!: ElementRef<HTMLInputElement>;
 
   firstname: string ="";
   lastname: string ="";
@@ -15,11 +18,26 @@ export class RegisterComponent {
   password: string ="";
   confirmPassword: string = "";
 
+  showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
+
   constructor(private http: HttpClient, private router: Router) {}
   
 
   ngOnInit(): void
   {
+  }
+
+  togglePasswordVisibility(input: HTMLInputElement): void {
+    this.showPassword = !this.showPassword;
+    const inputType = this.passwordInput.nativeElement.type;
+    this.passwordInput.nativeElement.type = inputType === 'password' ? 'text' : 'password';
+  }
+
+  toggleConfirmPasswordVisibility(input: HTMLInputElement): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+    const inputType = this.confirmPasswordInput.nativeElement.type;
+    this.confirmPasswordInput.nativeElement.type = inputType === 'password' ? 'text' : 'password';
   }
 
   register() {
