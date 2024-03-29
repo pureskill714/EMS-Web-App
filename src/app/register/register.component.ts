@@ -13,6 +13,7 @@ export class RegisterComponent {
   lastname: string ="";
   email: string ="";
   password: string ="";
+  confirmPassword: string = "";
 
   constructor(private http: HttpClient, private router: Router) {}
   
@@ -43,6 +44,12 @@ export class RegisterComponent {
       if (this.password.length < 8) {
         alert("Password must be at least 8 characters long.");
         return; // Exit the function if password length is invalid
+      }
+
+      // Check if password and confirm password match
+      if (this.password !== this.confirmPassword) {
+        alert("Password and confirm password do not match. Please try again.");
+        return; // Exit the function if passwords don't match
       }
 
     // Password complexity check using regular expression
