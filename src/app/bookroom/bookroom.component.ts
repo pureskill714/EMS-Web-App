@@ -9,6 +9,7 @@ export class BookroomComponent {
   showCalendarView: boolean = false;
   showBookingList: boolean = true;
   showPastBookings: boolean = false;
+  selectedDate: Date | null = null;
 
   toggleCalendarView(): void {
     this.showCalendarView = true;
