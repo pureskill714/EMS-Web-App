@@ -1,6 +1,5 @@
 <app-header></app-header>
 
-
 <div class="square-box">
     <!-- First Section: Header -->
     <div class="header">
@@ -14,14 +13,15 @@
 
     <!-- Second Section: Buttons -->
     <div class="buttons">
-        <button class="btn">Upcoming</button>
-        <button class="btn">Past</button>
-        <button class="btn">Calendar View</button>
+        <button class="btn" (click)="loadBookingList()">Upcoming</button>
+        <button class="btn" (click)="loadPastBookings()">Past</button>
+        <button class="btn" (click)="toggleCalendarView()">Calendar View</button>
     </div>
 
     <!-- Third Section: List of Bookings -->
-    <div class="booking-list">
+    <div *ngIf="!showCalendarView && showBookingList && !showPastBookings" class="booking-list">
         <table>
+            <!-- Table content -->
             <thead>
                 <tr>
                     <th>Resource Name</th>
@@ -35,8 +35,8 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Dummy Data -->
-                <tr>
+                 <!-- Dummy Data -->
+                 <tr>
                     <td>Meeting Room 1</td>
                     <td>2024-03-01</td>
                     <td>10:00 AM</td>
@@ -47,45 +47,114 @@
                     <td>
                         <button class="btn">Cancel</button>
                     </td>
-
-                </tr>
-                <tr>
-                    <td>Conference Room A</td>
-                    <td>2024-03-02</td>
-                    <td>2:00 PM</td>
-                    <td>5:00 PM</td>
-                    <td>Presentation</td>
-                    <td>Confirmed</td>
-                    <td>789012</td>
-                    <td>
-                        <button class="btn">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Training Room B</td>
-                    <td>2024-03-03</td>
-                    <td>9:00 AM</td>
-                    <td>12:00 PM</td>
-                    <td>Training Session</td>
-                    <td>Pending</td>
-                    <td>345678</td>
-                    <td>
-                        <button class="btn">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Boardroom X</td>
-                    <td>2024-03-04</td>
-                    <td>3:00 PM</td>
-                    <td>4:00 PM</td>
-                    <td>Board Meeting</td>
-                    <td>Past</td>
-                    <td>901234</td>
-                    <td>
-                        <button class="btn">Cancel</button>
-                    </td>
-                </tr>
             </tbody>
         </table>
+    </div>
+
+    <!-- Fourth Section: Date Picker or Calendar View or Past View -->
+    <div *ngIf="showPastBookings && !showBookingList && !showCalendarView" class="past-view">
+        <!-- Include your past bookings component here -->
+        <h1>Past Bookings View</h1>
+    </div>
+
+    <div *ngIf="showCalendarView && !showBookingList && !showPastBookings" class="date-picker">
+        <!-- Include your calendar view component here -->
+        <div class="dropdowns">
+            <div class="dropdown">
+                <label for="date">Select Date</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <br>
+
+            <div id="calendar">
+                <table border="1">
+                    <!-- Table Header Row -->
+                    <thead>
+                        <tr>
+                            <!-- Empty cell for spacing -->
+                            <th></th>
+                            <!-- Header cells for columns A to T -->
+                            <th>9:00</th>
+                            <th>9:30</th>
+                            <th>10:00</th>
+                            <th>10:30</th>
+                            <th>11:00</th>
+                            <th>11:30</th>
+                            <th>12:00</th>
+                            <th>12:30</th>
+                            <th>13:00</th>
+                            <th>13:30</th>
+                            <th>14:00</th>
+                            <th>14:30</th>
+                            <th>15:00</th>
+                            <th>15:30</th>
+                            <th>16:00</th>
+                            <th>16:30</th>
+                            <th>17:00</th>
+                            <th>17:30</th>
+                            <th>18:00</th>
+                            <!-- Add headers for all 20 columns (A to T) -->
+                            <!-- For brevity, only a few columns are shown -->
+                        </tr>
+                    </thead>
+                    <!-- Table Body Rows -->
+                    <tbody>
+                        <!-- First Row -->
+                        <tr>
+                            <!-- Row header for Row 1 -->
+                            <th>Meeting Room 1</th>
+                            <!-- Cells for Row 1, Columns A to T -->
+                            <td></td> <!-- For 9am-->
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> <!-- fpr 18:00 -->
+                            <!-- Add cells for all 20 columns in Row 1 -->
+                        </tr>
+                        <!-- Second Row -->
+                        <tr>
+                            <!-- Row header for Row 2 -->
+                            <th>Meeting Room 2</th>
+                            <!-- Cells for Row 2, Columns A to T -->
+                            <td></td> <!-- For 9am-->
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> 
+                            <td></td> <!-- fpr 18:00 -->
+                            <!-- Add cells for all 20 columns in Row 2 -->
+                        </tr>
+                        <!-- Repeat the above rows for additional rows if needed -->
+                    </tbody>
+                </table>
+            </div>
+            
     </div>
 </div>

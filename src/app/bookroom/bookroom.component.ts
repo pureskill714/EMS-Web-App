@@ -6,5 +6,26 @@ import { Component } from '@angular/core';
   styleUrl: './bookroom.component.css'
 })
 export class BookroomComponent {
+  showCalendarView: boolean = false;
+  showBookingList: boolean = true;
+  showPastBookings: boolean = false;
+
+  toggleCalendarView(): void {
+    this.showCalendarView = true;
+    this.showBookingList = false;
+    this.showPastBookings = false;
+  }
+
+  loadBookingList(): void {
+    this.showBookingList = true;
+    this.showCalendarView = false;
+    this.showPastBookings = false;
+  }
+
+  loadPastBookings(): void {
+    this.showPastBookings = true;
+    this.showBookingList = false;
+    this.showCalendarView = false;
+  }
 
 }

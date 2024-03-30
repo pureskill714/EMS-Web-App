@@ -28,18 +28,18 @@ const routes: Routes = [
   {
     component: DashboardComponent,
     path: 'dashboard',
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   },
   {
     component: ProjectManagerDashboardComponent,
     path: 'pm-dashboard',
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   }
   ,
   {
     component: BookroomComponent,
     path: 'booking',
-    canActivate: [AuthGuard]
+    //canActivate: [AuthGuard]
   }
   ,
   {
