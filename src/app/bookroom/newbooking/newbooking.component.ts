@@ -33,6 +33,21 @@ export class NewbookingComponent {
 
   checkInputs(): void {
     this.inputsFilled = this.selectedDate !== null && this.selectedRoom !== null;
+
+    if (this.selectedDate === null) {
+      this.inputsFilled = false; // Date input is cleared
+      this.showTimeSlots = false; // Hide time slots when date is cleared
+    }
+
+    if (this.selectedDate === "") {
+      this.inputsFilled = false; // Date input is cleared
+      this.showTimeSlots = false; // Hide time slots when date is cleared
+    }
+
+    // Hide time slots when inputs are not filled
+    if (!this.inputsFilled) {
+      this.showTimeSlots = false;
+    }
   }
 
 }
