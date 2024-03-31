@@ -35,8 +35,8 @@
                 </tr>
             </thead>
             <tbody>
-                 <!-- Dummy Data -->
-                 <tr>
+                <!-- Dummy Data -->
+                <tr>
                     <td>Meeting Room 1</td>
                     <td>2024-03-01</td>
                     <td>10:00 AM</td>
@@ -64,7 +64,7 @@
                 <label for="date">Select Date</label>
                 <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (change)="toggleCalendarView()">
             </div>
-            <br>
+            <br><br>
             <!-- Add ngIf directive to conditionally show the table -->
             <div id="calendar" *ngIf="selectedDate">
                 <table border="1">
@@ -104,7 +104,8 @@
                             <!-- Row header for Row 1 -->
                             <th>Meeting Room 1</th>
                             <!-- Cells for Row 1, Columns A to T -->
-                            <td></td> <!-- For 9am-->
+                            <td class="green-box"></td> <!-- For 9:00am-->
+                            <td class="green-box"></td> <!-- For 9:30am-->
                             <td></td>
                             <td></td>
                             <td></td>
@@ -119,9 +120,8 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <td class="grey-box"></td>
+                            <td class="grey-box"></td>
                             <td></td> <!-- For 6pm-->
                             <!-- Add cells for all 20 columns in Row 1 -->
                         </tr>
@@ -154,10 +154,17 @@
                         <!-- Repeat the above rows for additional rows if needed -->
                     </tbody>
                 </table>
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="green-box-legend"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="grey-box-legend"></div>
+                        <span>Booked</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-            
-    </div>
-
+</div>

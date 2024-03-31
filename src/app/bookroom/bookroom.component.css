@@ -108,3 +108,68 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+
+/* Style the dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Style the label */
+  .dropdown label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  /* Style the date input */
+  .dropdown input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  /* Style the calendar dropdown when active */
+.dropdown input[type="date"]:focus {
+    border-color: #007bff; /* Change color to your desired focus color */
+  }
+
+  /* Style for the green box */
+.green-box {
+    background-color: green;
+}
+
+/* Style for the grey box */
+.grey-box {
+    background-color: #ccc; /* Use any shade of grey you prefer */
+}
+
+/* Style for the legend container */
+.legend {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+/* Style for each legend item */
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+}
+
+/* Style for the green box */
+.green-box-legend {
+    width: 20px;
+    height: 20px;
+    background-color: green;
+    margin-right: 5px;
+}
+
+/* Style for the grey box */
+.grey-box-legend {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    margin-right: 5px;
+}
