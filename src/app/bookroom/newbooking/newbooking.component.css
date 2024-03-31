@@ -117,5 +117,14 @@ app-header {
     cursor: not-allowed; /* Change cursor to not-allowed when disabled */
   }
 
+  .grey-button {
+    background-color: #ccc; /* Grey background color */
+    color: black; /* White text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Show pointer cursor on hover */
+}
+
   
   

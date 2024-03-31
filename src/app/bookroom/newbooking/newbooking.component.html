@@ -51,4 +51,7 @@
     <button class="time-slot" [class.selected]="isSelected('17:00 - 18:00')"
         (click)="toggleTimeSlot('17:00 - 18:00')">17:00 - 18:00</button>
     <!-- Add more buttons for other intervals as needed -->
+
+    <!-- Add the "Next" button after the last time slot button -->
+    <button class="grey-button" (click)="onNextButtonClick()">Next</button>
 </div>

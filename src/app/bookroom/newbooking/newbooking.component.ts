@@ -20,6 +20,7 @@ export class NewbookingComponent {
   }
 
   isSelected(timeSlot: string): boolean {
+    console.log(this.selectedTimeSlots);
     return this.selectedTimeSlots.includes(timeSlot);
   }
 
@@ -41,19 +42,35 @@ export class NewbookingComponent {
   checkInputs(): void {
     this.inputsFilled = this.selectedDate !== null && this.selectedRoom !== null;
 
+    console.log(this.selectedDate);
+    console.log(this.selectedRoom);
+
     if (this.selectedDate === null) {
       this.inputsFilled = false; // Date input is cleared
       this.showTimeSlots = false; // Hide time slots when date is cleared
+      this.selectedTimeSlots = [];
+      console.log(this.selectedTimeSlots)
     }
 
     if (this.selectedDate === "") {
       this.inputsFilled = false; // Date input is cleared
       this.showTimeSlots = false; // Hide time slots when date is cleared
+      this.selectedTimeSlots = [];
+      console.log(this.selectedTimeSlots)
     }
 
     // Hide time slots when inputs are not filled
     if (!this.inputsFilled) {
       this.showTimeSlots = false;
+    }
+  }
+
+  onNextButtonClick(): void {
+    if (this.selectedTimeSlots.length === 0) {
+      window.alert('Please select a timeslot.'); // Display alert if no timeslot is selected
+    } else {
+      // Perform the next action (e.g., navigate to the next page)
+      console.log('Next button clicked with selected timeslots:', this.selectedTimeSlots);
     }
   }
 
