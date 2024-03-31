@@ -12,72 +12,26 @@
     <div class="dropdowns">
         <div class="dropdown">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date">
+            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="checkInputs()">
         </div>
 
         <div class="dropdown">
             <label for="roomselection">Room</label>
-            <select id="roomselection">
+            <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="checkInputs()">
                 <option value="Meeting Room 1">Meeting Room 1</option>
                 <option value="Meeting Room 2">Meeting Room 2</option>
                 <!-- Add more start time options as needed -->
             </select>
         </div>
-
         <div class="dropdown">
-            <label for="startTime">Start Time:</label>
-            <select id="startTime">
-                <option value="09:00">09:00</option>
-                <option value="09:30">09:30</option>
-                <option value="10:00">10:00</option>
-                <option value="10:30">10:30</option>
-                <option value="11:00">11:00</option>
-                <option value="11:30">11:30</option>
-                <option value="12:00">12:00</option>
-                <option value="12:30">12:30</option>
-                <option value="13:00">13:00</option>
-                <option value="13:30">13:30</option>
-                <option value="14:00">14:00</option>
-                <option value="14:30">14:30</option>
-                <option value="15:00">15:00</option>
-                <option value="15:30">15:30</option>
-                <option value="16:00">16:00</option>
-                <option value="16:30">16:30</option>
-                <option value="17:00">17:00</option>
-                <option value="17:30">17:30</option>
-                <option value="18:00">18:00</option>
-                <!-- Add more start time options as needed -->
-            </select>
-        </div>
-
-        <div class="dropdown">
-            <label for="endTime">End Time:</label>
-            <select id="endTime">
-                <option value="09:00">09:00</option>
-                <option value="09:30">09:30</option>
-                <option value="10:00">10:00</option>
-                <option value="10:30">10:30</option>
-                <option value="11:00">11:00</option>
-                <option value="11:30">11:30</option>
-                <option value="12:00">12:00</option>
-                <option value="12:30">12:30</option>
-                <option value="13:00">13:00</option>
-                <option value="13:30">13:30</option>
-                <option value="14:00">14:00</option>
-                <option value="14:30">14:30</option>
-                <option value="15:00">15:00</option>
-                <option value="15:30">15:30</option>
-                <option value="16:00">16:00</option>
-                <option value="16:30">16:30</option>
-                <option value="17:00">17:00</option>
-                <option value="17:30">17:30</option>
-                <option value="18:00">18:00</option>
-                <!-- Add more end time options as needed -->
-            </select>
-        </div>
-
-        <div class="dropdown">
-            <button type="submit">Search</button>
+            <button type="submit" (click)="search()" [disabled]="!inputsFilled" class="search-button">Search</button>
         </div>
     </div>
+</div>
+<br><br>
+<!-- Third Section: Time Slots (Hidden by default) -->
+<div class="time-slots" *ngIf="showTimeSlots">
+    <button class="time-slot" [class.selected]="isSelected('09:00 - 10:00')" (click)="toggleTimeSlot('09:00 - 10:00')">09:00 - 10:00</button>
+    <button class="time-slot" [class.selected]="isSelected('10:00 - 11:00')" (click)="toggleTimeSlot('10:00 - 11:00')">10:00 - 11:00</button>
+    <!-- Add more buttons for other intervals as needed -->
 </div>
