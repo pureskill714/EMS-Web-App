@@ -12,7 +12,8 @@
     <div class="dropdowns">
         <div class="dropdown">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="checkInputs()">
+            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="checkInputs()"
+                [min]="minDate">
         </div>
 
         <div class="dropdown">
@@ -31,14 +32,23 @@
 <br>
 <!-- Third Section: Time Slots (Hidden by default) -->
 <div class="time-slots" *ngIf="showTimeSlots">
-    <button class="time-slot" [class.selected]="isSelected('09:00 - 10:00')" (click)="toggleTimeSlot('09:00 - 10:00')">09:00 - 10:00</button>
-    <button class="time-slot" [class.selected]="isSelected('10:00 - 11:00')" (click)="toggleTimeSlot('10:00 - 11:00')">10:00 - 11:00</button>
-    <button class="time-slot" [class.selected]="isSelected('11:00 - 12:00')" (click)="toggleTimeSlot('11:00 - 12:00')">11:00 - 12:00</button>
-    <button class="time-slot" [class.selected]="isSelected('12:00 - 13:00')" (click)="toggleTimeSlot('12:00 - 13:00')">12:00 - 13:00</button>
-    <button class="time-slot" [class.selected]="isSelected('13:00 - 14:00')" (click)="toggleTimeSlot('13:00 - 14:00')">13:00 - 14:00</button>
-    <button class="time-slot" [class.selected]="isSelected('14:00 - 15:00')" (click)="toggleTimeSlot('14:00 - 15:00')">14:00 - 15:00</button>
-    <button class="time-slot" [class.selected]="isSelected('15:00 - 16:00')" (click)="toggleTimeSlot('15:00 - 16:00')">15:00 - 16:00</button>
-    <button class="time-slot" [class.selected]="isSelected('16:00 - 17:00')" (click)="toggleTimeSlot('16:00 - 17:00')">16:00 - 17:00</button>
-    <button class="time-slot" [class.selected]="isSelected('17:00 - 18:00')" (click)="toggleTimeSlot('17:00 - 18:00')">17:00 - 18:00</button>
+    <button class="time-slot" [class.selected]="isSelected('09:00 - 10:00')"
+        (click)="toggleTimeSlot('09:00 - 10:00')">09:00 - 10:00</button>
+    <button class="time-slot" [class.selected]="isSelected('10:00 - 11:00')"
+        (click)="toggleTimeSlot('10:00 - 11:00')">10:00 - 11:00</button>
+    <button class="time-slot" [class.selected]="isSelected('11:00 - 12:00')"
+        (click)="toggleTimeSlot('11:00 - 12:00')">11:00 - 12:00</button>
+    <button class="time-slot" [class.selected]="isSelected('12:00 - 13:00')"
+        (click)="toggleTimeSlot('12:00 - 13:00')">12:00 - 13:00</button>
+    <button class="time-slot" [class.selected]="isSelected('13:00 - 14:00')"
+        (click)="toggleTimeSlot('13:00 - 14:00')">13:00 - 14:00</button>
+    <button class="time-slot" [class.selected]="isSelected('14:00 - 15:00')"
+        (click)="toggleTimeSlot('14:00 - 15:00')">14:00 - 15:00</button>
+    <button class="time-slot" [class.selected]="isSelected('15:00 - 16:00')"
+        (click)="toggleTimeSlot('15:00 - 16:00')">15:00 - 16:00</button>
+    <button class="time-slot" [class.selected]="isSelected('16:00 - 17:00')"
+        (click)="toggleTimeSlot('16:00 - 17:00')">16:00 - 17:00</button>
+    <button class="time-slot" [class.selected]="isSelected('17:00 - 18:00')"
+        (click)="toggleTimeSlot('17:00 - 18:00')">17:00 - 18:00</button>
     <!-- Add more buttons for other intervals as needed -->
 </div>
