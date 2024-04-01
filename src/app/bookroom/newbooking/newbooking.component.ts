@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BookingConfirmationDialogComponent } from '../booking-confirmation-dialog/booking-confirmation-dialog.component';
+import { UserDataService } from '../../user-data.service';
 
 @Component({
   selector: 'app-newbooking',
@@ -15,10 +16,11 @@ export class NewbookingComponent {
   inputsFilled: boolean = false;
   minDate: string; // Define minDate property
 
-  constructor(private dialog: MatDialog) {
+  constructor(private dialog: MatDialog,private userDataService: UserDataService) {
     // Initialize minDate to the current date
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
+
   }
 
   isSelected(timeSlot: string): boolean {
@@ -43,6 +45,9 @@ export class NewbookingComponent {
 
   checkInputs(): void {
     this.inputsFilled = this.selectedDate !== null && this.selectedRoom !== null;
+
+    this.userDataService.setSelectedBookingDate(this.selectedDate);
+    this.userDataService.setSelectedBookingRoom(this.selectedRoom);
 
     console.log(this.selectedDate);
     console.log(this.selectedRoom);
