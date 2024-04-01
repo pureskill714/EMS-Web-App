@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Styles for the dialog title */
+.custom-dialog-container {
+    background-color: whte; /* White background for dialog */
+    color: white; /* Dark text color */
+    border-radius: 8px; /* Rounded corners for dialog */
+  }
+  
+  .custom-backdrop {
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black backdrop */
+  }

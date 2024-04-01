@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingConfirmationDialogComponent } from '../booking-confirmation-dialog/booking-confirmation-dialog.component';
 
 @Component({
   selector: 'app-newbooking',
@@ -13,7 +15,7 @@ export class NewbookingComponent {
   inputsFilled: boolean = false;
   minDate: string; // Define minDate property
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
     // Initialize minDate to the current date
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
@@ -67,10 +69,25 @@ export class NewbookingComponent {
 
   onNextButtonClick(): void {
     if (this.selectedTimeSlots.length === 0) {
-      window.alert('Please select a timeslot.'); // Display alert if no timeslot is selected
+      window.alert('Please select a timeslot.');
     } else {
-      // Perform the next action (e.g., navigate to the next page)
-      console.log('Next button clicked with selected timeslots:', this.selectedTimeSlots);
+      const dialogRef = this.dialog.open(BookingConfirmationDialogComponent, {
+        width: '420px',
+        panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+        hasBackdrop: true, // Display backdrop behind the dialog
+        backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+        data: { selectedDate: this.selectedDate, selectedRoom: this.selectedRoom }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 'confirm') {
+          // Handle the confirmation action
+          console.log('Booking confirmed');
+        } else {
+          // Handle the cancel action or do nothing
+          console.log('Booking cancelled or closed');
+        }
+      });
     }
   }
 
