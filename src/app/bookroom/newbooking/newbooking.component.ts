@@ -31,11 +31,18 @@ export class NewbookingComponent {
   toggleTimeSlot(timeSlot: string): void {
     const index = this.selectedTimeSlots.indexOf(timeSlot);
     if (index === -1) {
-      this.selectedTimeSlots.push(timeSlot);
+      // Find the index where the new time slot should be inserted
+      let insertIndex = 0;
+      while (insertIndex < this.selectedTimeSlots.length && this.selectedTimeSlots[insertIndex] < timeSlot) {
+        insertIndex++;
+      }
+      // Insert the new time slot at the correct index
+      this.selectedTimeSlots.splice(insertIndex, 0, timeSlot);
     } else {
       this.selectedTimeSlots.splice(index, 1);
     }
   }
+  
 
   search(): void {
     // Perform search logic here (e.g., fetch time slots from backend)
@@ -76,6 +83,7 @@ export class NewbookingComponent {
     if (this.selectedTimeSlots.length === 0) {
       window.alert('Please select a timeslot.');
     } else {
+      this.userDataService.setSelectedTimeSlots(this.selectedTimeSlots);
       const dialogRef = this.dialog.open(BookingConfirmationDialogComponent, {
         width: '420px',
         panelClass: 'custom-dialog-container', // Custom CSS class for dialog container

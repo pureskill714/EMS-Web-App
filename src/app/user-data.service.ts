@@ -8,6 +8,7 @@ export class UserDataService {
   private lastName: string | null = null;
   private selectedBookingRoom: string | null = null;
   private selectedBookingDate: string | null = null;
+  private selectedTimeSlots: string[] = []; // Add selectedTimeSlots array
 
   constructor() {}
 
@@ -42,4 +43,16 @@ export class UserDataService {
   getSelectedBookingDate(): string | null {
     return this.selectedBookingDate;
   }
+
+  // Method to set selected time slots
+  setSelectedTimeSlots(timeSlots: string[]) {
+    this.selectedTimeSlots = timeSlots;
+  }
+
+  // Method to get selected time slots
+  getSelectedTimeSlots(): string[] {
+    return this.selectedTimeSlots;
+  }
+
+  
 }

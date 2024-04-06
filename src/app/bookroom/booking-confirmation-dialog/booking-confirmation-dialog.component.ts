@@ -9,11 +9,13 @@ import { UserDataService } from '../../user-data.service';
 export class BookingConfirmationDialogComponent {
   selectedDate: string | null = null;
   selectedRoom: string | null = null;
+  selectedTimeSlots: string[] | null = null;
 
   constructor(public dialogRef: MatDialogRef<BookingConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {
     this.selectedDate = this.userDataService.getSelectedBookingDate();
     this.selectedRoom = this.userDataService.getSelectedBookingRoom();
+    this.selectedTimeSlots = this.userDataService.getSelectedTimeSlots();
 
   }
 
