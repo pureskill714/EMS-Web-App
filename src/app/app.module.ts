@@ -15,7 +15,7 @@ import { NewbookingComponent } from './bookroom/newbooking/newbooking.component'
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 import { BookingConfirmationDialogComponent } from './bookroom/booking-confirmation-dialog/booking-confirmation-dialog.component';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -37,6 +37,7 @@ import { BookingConfirmationDialogComponent } from './bookroom/booking-confirmat
     ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule,
+    MatFormFieldModule,
     HttpClientModule
   ],
   providers: [provideClientHydration()],

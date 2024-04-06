@@ -4,20 +4,39 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserDataService {
+  private email: string | null = null;
   private firstName: string | null = null;
   private lastName: string | null = null;
   private selectedBookingRoom: string | null = null;
   private selectedBookingDate: string | null = null;
+  private inputBookingPurpose: string | null = null;
   private selectedTimeSlots: string[] = []; // Add selectedTimeSlots array
 
   constructor() {}
+
+  setEmail(email: string) {
+    this.email = email;
+  }
+
+  getEmail(): string | null {
+    return this.email;
+  }
 
   setFirstName(firstName: string) {
     this.firstName = firstName;
   }
 
+  getFirstName(): string | null {
+    return this.firstName;
+  }
+
+
   setLastName(lastName: string) {
     this.lastName = lastName;
+  }
+
+  getLastName(): string | null {
+    return this.lastName;
   }
 
   setSelectedBookingRoom(room: string | null = null) {
@@ -42,6 +61,14 @@ export class UserDataService {
 
   getSelectedBookingDate(): string | null {
     return this.selectedBookingDate;
+  }
+
+  setBookingPurpose(bookingPurpose: string | null = null) {
+    this.inputBookingPurpose = bookingPurpose;
+  }
+
+  getInputBookingPurpose(): string | null {
+    return this.inputBookingPurpose;
   }
 
   // Method to set selected time slots

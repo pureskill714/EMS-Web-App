@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 import { BookingConfirmationDialogComponent } from '../booking-confirmation-dialog/booking-confirmation-dialog.component';
 import { UserDataService } from '../../user-data.service';
 
@@ -16,7 +17,7 @@ export class NewbookingComponent {
   inputsFilled: boolean = false;
   minDate: string; // Define minDate property
 
-  constructor(private dialog: MatDialog,private userDataService: UserDataService) {
+  constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient) {
     // Initialize minDate to the current date
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
@@ -96,6 +97,32 @@ export class NewbookingComponent {
         if (result === 'confirm') {
           // Handle the confirmation action
           console.log('Booking confirmed');
+
+          let bodyData = {
+            "date": this.userDataService.getSelectedBookingDate(),
+            "meetingRoom": this.userDataService.getSelectedBookingRoom(),
+            "purpose": this.userDataService.getInputBookingPurpose(),
+            "timeslots": ["10:00 AM - 11:00 AM", "11:00 AM - 12:00 PM"],
+            "email": this.userDataService.getEmail(),
+            "firstName": this.userDataService.getFirstName(),
+            "lastName": this.userDataService.getLastName()
+        };
+
+          this.http.post("http://localhost:9992/booking", bodyData).subscribe(
+          (resultData: any) => {
+              console.log(resultData);
+              alert("Room Booking Successfully");
+          },
+          (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            if (error.status === 409) { // Assuming 409 is the status code for email already exists
+                alert("Booking already in used.");
+            } else {
+                alert("Error registering room booking. Please check if the backend server is running/functioning properly.");
+            }
+            // You can handle the error further as needed (e.g., logging, additional error handling)
+        }
+        );
         } else {
           // Handle the cancel action or do nothing
           console.log('Booking cancelled or closed');

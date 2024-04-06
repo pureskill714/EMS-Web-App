@@ -10,6 +10,7 @@ export class BookingConfirmationDialogComponent {
   selectedDate: string | null = null;
   selectedRoom: string | null = null;
   selectedTimeSlots: string[] | null = null;
+  bookingPurpose: string = ''; // Add this line
 
   constructor(public dialogRef: MatDialogRef<BookingConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {
@@ -24,6 +25,7 @@ export class BookingConfirmationDialogComponent {
   }
 
   onConfirm(): void {
+    this.userDataService.setBookingPurpose(this.bookingPurpose);
     this.dialogRef.close('confirm');
   }
 }
