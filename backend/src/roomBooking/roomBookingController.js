@@ -3,17 +3,20 @@ const roomBookingService = require('./roomBookingService');
 const createRoomBookingControllerFn = async (req, res) => {
     try {
         console.log(req.body);
-        const status = await roomBookingService.createRoomBooking(req.body);
-        console.log(status);
+        const result = await roomBookingService.createRoomBooking(req.body);
 
-        if (status) {
-            res.send({ "status": true, "message": "Room booking created successfully" });
+        if (result) {
+            res.send({ status: true, message: 'Room booking created successfully' });
         } else {
-            res.send({ "status": false, "message": "Error creating room booking" });
+            res.send({ status: false, message: 'Error creating room booking' });
         }
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Internal server error' });
+    } catch (error) {
+        if (error.status && error.message) {
+            res.status(error.status).json({ error: error.message });
+        } else {
+            console.log(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
     }
 };
 

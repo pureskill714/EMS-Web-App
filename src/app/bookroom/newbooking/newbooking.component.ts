@@ -102,7 +102,7 @@ export class NewbookingComponent {
             "date": this.userDataService.getSelectedBookingDate(),
             "meetingRoom": this.userDataService.getSelectedBookingRoom(),
             "purpose": this.userDataService.getInputBookingPurpose(),
-            "timeslots": ["10:00 AM - 11:00 AM", "11:00 AM - 12:00 PM"],
+            "timeslots": this.userDataService.getSelectedTimeSlots(),
             "email": this.userDataService.getEmail(),
             "firstName": this.userDataService.getFirstName(),
             "lastName": this.userDataService.getLastName()
@@ -115,12 +115,12 @@ export class NewbookingComponent {
           },
           (error) => {
             console.error("Error occurred while sending POST request:", error);
-            if (error.status === 409) { // Assuming 409 is the status code for email already exists
+            if (error.status === 409) { 
                 alert("Booking already in used.");
             } else {
-                alert("Error registering room booking. Please check if the backend server is running/functioning properly.");
+                alert("Error registering room booking. Please check if the backend server is running/functioning properly or timeslots have been booked for specified date and meeting room");
             }
-            // You can handle the error further as needed (e.g., logging, additional error handling)
+            // You can handle the error further as needed
         }
         );
         } else {
