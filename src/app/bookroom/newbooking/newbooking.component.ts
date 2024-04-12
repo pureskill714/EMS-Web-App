@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { BookingConfirmationDialogComponent } from '../booking-confirmation-dialog/booking-confirmation-dialog.component';
 import { UserDataService } from '../../user-data.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-newbooking',
@@ -17,7 +19,7 @@ export class NewbookingComponent {
   inputsFilled: boolean = false;
   minDate: string; // Define minDate property
 
-  constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient) {
+  constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router) {
     // Initialize minDate to the current date
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
@@ -46,9 +48,36 @@ export class NewbookingComponent {
   
 
   search(): void {
-    // Perform search logic here (e.g., fetch time slots from backend)
+    this.userDataService.setSelectedTimeSlots(this.selectedTimeSlots);
+    this.userDataService.setSelectedBookingRoom(this.selectedRoom);
+
+    
     // For demonstration, I'm just setting showTimeSlots to true
     this.showTimeSlots = true;
+    // Perform search logic here (e.g., fetch time slots from backend)
+    let bodyData = {
+      "date": this.userDataService.getSelectedBookingDate(),
+      "meetingRoom": this.userDataService.getSelectedBookingRoom(),
+    };
+
+    this.http.post<any>('http://localhost:9992/retrievebookingtimeslots', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            // Success: Handle received data
+            console.log('Data received:', resultData);
+          } else {
+            // Error: Handle error
+            console.log('Failed to retrieve data:', resultData.message);
+          }
+        },
+        (error) => {
+          // Error: Handle HTTP error
+          console.error('Error retrieving data:', error);
+        }
+      );
   }
 
   checkInputs(): void {
@@ -73,6 +102,17 @@ export class NewbookingComponent {
       this.selectedTimeSlots = [];
       console.log(this.selectedTimeSlots)
     }
+
+     // Check if the selected date is cleared
+  if (this.selectedDate === null || this.selectedDate === "") {
+    // Reset selected room to null
+    this.selectedRoom = null;
+    // Date input is cleared, hide time slots
+    this.showTimeSlots = false;
+    // Reset selected time slots
+    this.selectedTimeSlots = [];
+    console.log(this.selectedTimeSlots);
+  }
 
     // Hide time slots when inputs are not filled
     if (!this.inputsFilled) {
@@ -112,13 +152,14 @@ export class NewbookingComponent {
           (resultData: any) => {
               console.log(resultData);
               alert("Room Booking Successfully");
+              this.router.navigate(['/booking']);
           },
           (error) => {
             console.error("Error occurred while sending POST request:", error);
             if (error.status === 409) { 
                 alert("Booking already in used.");
             } else {
-                alert("Error registering room booking. Please check if the backend server is running/functioning properly or timeslots have been booked for specified date and meeting room");
+                alert("Error registering room booking. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
             }
             // You can handle the error further as needed
         }

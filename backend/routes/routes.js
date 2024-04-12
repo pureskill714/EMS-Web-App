@@ -10,6 +10,7 @@ router.route('/login').post(nonManagerialEmployeeController.loginUserControllerF
 router.route('/create').post(nonManagerialEmployeeController.createnonManagerialEmployeeControllerFn);
 
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
+router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 
 
 module.exports = router;
