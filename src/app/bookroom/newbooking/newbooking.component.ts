@@ -117,7 +117,15 @@ export class NewbookingComponent {
     // Hide time slots when inputs are not filled
     if (!this.inputsFilled) {
       this.showTimeSlots = false;
+      console.log("Timeslots array reset")
+      this.selectedTimeSlots = [];
     }
+  }
+
+  onDateChange(): void {
+    // Reset selected room to null when date changes
+    this.selectedRoom = null;
+    this.showTimeSlots = false;
   }
 
   onNextButtonClick(): void {

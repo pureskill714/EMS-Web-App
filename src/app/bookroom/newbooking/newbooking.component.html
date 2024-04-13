@@ -12,13 +12,14 @@
     <div class="dropdowns">
         <div class="dropdown">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="checkInputs()"
-                [min]="minDate">
+            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange(); checkInputs()">
+
+
         </div>
 
         <div class="dropdown">
             <label for="roomselection">Room</label>
-            <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="checkInputs()">
+            <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="checkInputs()" [disabled]="!selectedDate">
                 <option value="Meeting Room 1">Meeting Room 1</option>
                 <option value="Meeting Room 2">Meeting Room 2</option>
                 <!-- Add more room options as needed -->
