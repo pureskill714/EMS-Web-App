@@ -38,5 +38,10 @@
         (click)="toggleTimeSlot(timeSlot)">{{ timeSlot }}</button>
 
     <!-- Add the "Next" button after the last time slot button -->
-    <button class="grey-button" (click)="onNextButtonClick()">Next</button>
+    <button *ngIf="this.timeSlots.length > 0" class="grey-button" (click)="onNextButtonClick()">Next</button>
+    <ng-container *ngIf="this.timeSlots.length <= 0">
+        <div style="margin: auto; width: fit-content;">
+            <h5 id="noBookingSlots">No available time slots remaining</h5>
+        </div>
+    </ng-container>
 </div>
