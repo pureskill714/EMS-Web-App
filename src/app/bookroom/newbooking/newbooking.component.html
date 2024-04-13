@@ -12,7 +12,7 @@
     <div class="dropdowns">
         <div class="dropdown">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange(); checkInputs()">
+            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange(); checkInputs()" [min]="minDate">
 
 
         </div>
