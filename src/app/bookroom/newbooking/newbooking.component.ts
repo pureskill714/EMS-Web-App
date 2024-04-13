@@ -17,7 +17,22 @@ export class NewbookingComponent {
   showTimeSlots: boolean = false;
   selectedTimeSlots: string[] = [];
   inputsFilled: boolean = false;
+  //retrievedTimeSlots: string[] = [];
+  retrievedTimeSlots: string[] = [];
   minDate: string; // Define minDate property
+
+    // Define your time slots here
+  timeSlots: string[] = [
+    '09:00-10:00',
+    '10:00-11:00',
+    '11:00-12:00',
+    '12:00-13:00',
+    '13:00-14:00',
+    '14:00-15:00',
+    '15:00-16:00',
+    '16:00-17:00',
+    '17:00-18:00'
+  ];
 
   constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router) {
     // Initialize minDate to the current date
@@ -48,13 +63,23 @@ export class NewbookingComponent {
   
 
   search(): void {
-    this.userDataService.setSelectedTimeSlots(this.selectedTimeSlots);
-    this.userDataService.setSelectedBookingRoom(this.selectedRoom);
+    this.timeSlots = [
+      '09:00-10:00',
+      '10:00-11:00',
+      '11:00-12:00',
+      '12:00-13:00',
+      '13:00-14:00',
+      '14:00-15:00',
+      '15:00-16:00',
+      '16:00-17:00',
+      '17:00-18:00'
+    ];
 
-    
+
+
     // For demonstration, I'm just setting showTimeSlots to true
     this.showTimeSlots = true;
-    // Perform search logic here (e.g., fetch time slots from backend)
+
     let bodyData = {
       "date": this.userDataService.getSelectedBookingDate(),
       "meetingRoom": this.userDataService.getSelectedBookingRoom(),
@@ -67,7 +92,12 @@ export class NewbookingComponent {
 
           if (resultData.status) {
             // Success: Handle received data
-            console.log('Data received:', resultData);
+            console.log('Data received:', resultData.timeslots);
+            this.retrievedTimeSlots = resultData.timeslots;
+            this.filterTimeSlots(); // Filter time slots after retrieving data
+            console.log('Retrieved Time Slots:', this.retrievedTimeSlots);
+            console.log('Filtered Time Slots:', this.timeSlots);
+
           } else {
             // Error: Handle error
             console.log('Failed to retrieve data:', resultData.message);
@@ -120,6 +150,13 @@ export class NewbookingComponent {
       console.log("Timeslots array reset")
       this.selectedTimeSlots = [];
     }
+  }
+
+  filterTimeSlots(): void {
+    console.log('Filtering time slots...');
+    // Filter out the time slots that are already retrieved
+    this.timeSlots = this.timeSlots.filter(slot => !this.retrievedTimeSlots.includes(slot));
+    console.log(this.timeSlots);
   }
 
   onDateChange(): void {
