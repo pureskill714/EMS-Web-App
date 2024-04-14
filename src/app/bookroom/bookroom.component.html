@@ -21,34 +21,32 @@
     <!-- Third Section: List of Bookings -->
     <div *ngIf="!showCalendarView && showBookingList && !showPastBookings" class="booking-list">
         <table>
-            <!-- Table content -->
             <thead>
                 <tr>
-                    <th>Resource Name</th>
                     <th>Date</th>
-                    <th>Time Start</th>
-                    <th>Time End</th>
+                    <th>Meeting Room</th> <!-- Change 'Location' to 'Meeting Room' -->
+                    <th>Time Slots</th>
                     <th>Purpose</th>
-                    <th>Status</th>
-                    <th>Booking ID</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Dummy Data -->
-                <tr>
-                    <td>Meeting Room 1</td>
-                    <td>2024-03-01</td>
-                    <td>10:00 AM</td>
-                    <td>12:00 PM</td>
-                    <td>Team Meeting</td>
-                    <td>Confirmed</td>
-                    <td>123456</td>
+                <tr *ngFor="let booking of this.retrievedBookingInfos">
+                    <td>{{ booking.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                    <td>{{ booking.meetingRoom }}</td> <!-- Change 'location' to 'meetingRoom' -->
+                    <td>
+                        <ul>
+                            <li *ngFor="let timeslot of booking.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                        </ul>
+                    </td>
+                    <td>{{ booking.purpose }}</td>
                     <td>
                         <button class="btn">Cancel</button>
                     </td>
+                </tr>
             </tbody>
         </table>
+        
     </div>
 
     <!-- Fourth Section: Date Picker or Calendar View or Past View -->

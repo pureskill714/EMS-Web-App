@@ -77,3 +77,45 @@ module.exports.retrieveTimeslots = async (requestData) => {
         throw error;
     }
 };
+
+module.exports.retrieveBookingInfos = async (requestData) => {
+    try {
+        // MongoDB connection URL
+        const uri = 'mongodb://localhost:27017';
+        // Database Name
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'bookings';
+
+        // Get today's date
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Run the MongoDB query
+        const bookings = await database.collection(collectionName).find({
+            "email": requestData.email,
+            "date": {
+                "$gte": today
+            }
+        }).toArray();
+
+
+        // Close the connection to the MongoDB server
+        await client.close();
+
+        // Return the retrieved booking infos
+        return bookings;
+    } catch (error) {
+        throw error;
+    }
+};

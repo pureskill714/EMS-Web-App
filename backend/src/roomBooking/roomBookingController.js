@@ -28,7 +28,7 @@ const retrieveBookingTimeslotsControllerFn = async (req, res) => {
         if (timeslots.length > 0) { // Check if timeslots are retrieved successfully
             res.status(200).json({ status: true, message: 'Timeslots retrieved successfully', timeslots: timeslots });
         } else {
-            res.status(404).json({ status: false, message: 'No timeslots available' });
+            res.status(404).json({ status: false, message: 'No timeslots detected' });
         }
     } catch (error) {
         console.error(error);
@@ -36,7 +36,25 @@ const retrieveBookingTimeslotsControllerFn = async (req, res) => {
     }
 };
 
+const retrieveBookingInfosControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const bookings = await roomBookingService.retrieveBookingInfos(req.body);
+
+        if (bookings && bookings.length > 0) { // Check if bookings are retrieved successfully
+            res.status(200).json({ status: true, bookings: bookings });
+        } else {
+            res.status(404).json({ status: false, message: "No bookings found." });
+        }
+    } catch (error) {
+        console.error("Error retrieving booking information:", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
+
 module.exports = {
     createRoomBookingControllerFn,
-    retrieveBookingTimeslotsControllerFn
+    retrieveBookingTimeslotsControllerFn,
+    retrieveBookingInfosControllerFn
 };
