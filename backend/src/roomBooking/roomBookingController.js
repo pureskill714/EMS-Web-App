@@ -52,9 +52,28 @@ const retrieveBookingInfosControllerFn = async (req, res) => {
     }
 };
 
+const retrieveCalendarInfosControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const calendarInfo = await roomBookingService.retrieveCalendarInfo(req.body);
+
+        if (calendarInfo && calendarInfo.length > 0) {
+            res.status(200).json({ status: true, calendarInfo: calendarInfo });
+        } else {
+            res.status(404).json({ status: false, message: "No calendar information found." });
+        }
+    } catch (error) {
+        console.error("Error retrieving calendar information:", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
+
+
 
 module.exports = {
     createRoomBookingControllerFn,
     retrieveBookingTimeslotsControllerFn,
-    retrieveBookingInfosControllerFn
+    retrieveBookingInfosControllerFn,
+    retrieveCalendarInfosControllerFn
 };

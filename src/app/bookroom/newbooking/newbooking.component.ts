@@ -61,7 +61,6 @@ export class NewbookingComponent {
     }
   }
   
-
   search(): void {
     this.timeSlots = [
       '09:00-10:00',
@@ -74,7 +73,6 @@ export class NewbookingComponent {
       '16:00-17:00',
       '17:00-18:00'
     ];
-
 
 
     // For demonstration, I'm just setting showTimeSlots to true

@@ -119,3 +119,37 @@ module.exports.retrieveBookingInfos = async (requestData) => {
         throw error;
     }
 };
+
+module.exports.retrieveCalendarInfo = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const collectionName = 'bookings';
+        
+        //MongoDB query
+        const result = await database.collection(collectionName).aggregate([
+            {
+              $match: {
+                "date": { $eq: new Date(requestData.date) }, // Match documents with the specified date
+                //"email": requestData.email // Match documents with the specified email
+              }
+            },
+            {
+              $group: {
+                _id: "$meetingRoom",
+                timeslots: { $push: "$timeslots" } // Push each timeslots array into the timeslots field for its respective meeting room
+              }
+            }
+          ]).toArray();
+        
+
+        await client.close();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+

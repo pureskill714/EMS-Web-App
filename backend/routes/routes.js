@@ -12,5 +12,6 @@ router.route('/create').post(nonManagerialEmployeeController.createnonManagerial
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);
+router.route('/retrievecalendarinfos').post(roomBookingController.retrieveCalendarInfosControllerFn);
 
 module.exports = router;
