@@ -15,7 +15,7 @@ export class BookroomComponent {
   meetingRoomOneCalendartimeSlotsArray: string[] = [];
   meetingRoomTwoCalendartimeSlotsArray: string[] = [];
 
-  timeSlots: string[] = ['9:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
+  timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
   meetingRooms = [
     { name: 'Meeting Room 1', calendarInfos: [''] },
@@ -37,6 +37,17 @@ export class BookroomComponent {
     this.showBookingList = false;
     this.showPastBookings = false;
 
+    this.meetingRooms = [
+      { name: 'Meeting Room 1', calendarInfos: [''] },
+      { name: 'Meeting Room 2', calendarInfos: [''] }
+    ];
+
+    this.retrievedMeetingRoomOneCalendarInfos = [];
+    this.retrievedMeetingRoomTwoCalendarInfos = [];
+
+    this.meetingRoomOneCalendartimeSlotsArray = [];
+    this.meetingRoomTwoCalendartimeSlotsArray = [];
+
     let bodyData = {
       "date": this.selectedDate,
       //"email": this.userDataService.getEmail(),
@@ -50,14 +61,11 @@ export class BookroomComponent {
           if (resultData.status) {
             console.log('Calendar data received:', resultData);
 
-            this.retrievedMeetingRoomTwoCalendarInfos = resultData.calendarInfo[0].timeslots;
-            console.log("retrievedMeetingRoomTwoCalendarInfos : " + this.retrievedMeetingRoomTwoCalendarInfos);
-
-            this.retrievedMeetingRoomOneCalendarInfos = resultData.calendarInfo[1].timeslots;
+            this.retrievedMeetingRoomOneCalendarInfos = resultData.calendarInfo[0].timeslots;
             console.log("retrievedMeetingRoomOneCalendarInfos : " + this.retrievedMeetingRoomOneCalendarInfos);
 
-            let dataType = typeof this.retrievedMeetingRoomTwoCalendarInfos;
-            console.log("Type of retrievedMeetingRoomTwoCalendarInfos: ", dataType);
+            this.retrievedMeetingRoomTwoCalendarInfos = resultData.calendarInfo[1].timeslots;
+            console.log("retrievedMeetingRoomTwoCalendarInfos : " + this.retrievedMeetingRoomTwoCalendarInfos);
 
             // Loop through the properties of the object
             for (let key in this.retrievedMeetingRoomOneCalendarInfos) {
@@ -77,11 +85,12 @@ export class BookroomComponent {
               }
             }
 
-            console.log("Time slots array: ", this. meetingRoomTwoCalendartimeSlotsArray);
+            console.log("Time slots array (meeting room 1): " + this.meetingRoomOneCalendartimeSlotsArray);
+            console.log("Time slots array (meeting room 2): " + this.meetingRoomTwoCalendartimeSlotsArray);
 
             this.meetingRooms = [
               { name: 'Meeting Room 1', calendarInfos: this.meetingRoomOneCalendartimeSlotsArray },
-              { name: 'Meeting Room 2', calendarInfos: this. meetingRoomTwoCalendartimeSlotsArray }
+              { name: 'Meeting Room 2', calendarInfos: this.meetingRoomTwoCalendartimeSlotsArray }
             ];
 
 
