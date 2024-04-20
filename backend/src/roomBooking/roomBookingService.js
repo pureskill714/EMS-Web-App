@@ -1,5 +1,5 @@
 const RoomBooking = require('./roomBookingModel');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 module.exports.createRoomBooking = async (roomBookingDetails) => {
     try {
@@ -145,6 +145,25 @@ module.exports.retrieveCalendarInfo = async (requestData) => {
             }
           ]).toArray();
         
+
+        await client.close();
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+module.exports.cancelBooking = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const collectionName = 'bookings';
+        
+        // MongoDB query to delete the document with the specified _id
+        const result = await database.collection(collectionName).deleteOne({ _id: new ObjectId(requestData.id) });
 
         await client.close();
         return result;

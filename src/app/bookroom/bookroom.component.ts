@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserDataService } from './../user-data.service';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-bookroom',
@@ -22,7 +23,7 @@ export class BookroomComponent {
     { name: 'Meeting Room 2', calendarInfos: [''] }
   ];
 
-  constructor(private userDataService: UserDataService, private http: HttpClient) {
+  constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location) {
     this.getBookingInfos();
   }
 
@@ -150,6 +151,38 @@ export class BookroomComponent {
     return calendarInfos.includes(timeSlot);
   }
 
-}
+  cancelBooking(bookingId: string) {
+    // Call your backend service to cancel the booking
+
+    let bodyData = {
+      "id": bookingId,
+    };
+
+    this.http.post<any>('http://localhost:9992/cancelbooking', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log('Cancel booking success:', resultData);
+            alert('Cancel booking success');
+            window.location.reload();
+          }
+          else {
+            // Error: Handle error
+            console.log('Cancel booking failed:', resultData.message);
+            alert('Cancel booking failed:');
+          }
+        },
+        (error) => {
+          // Error: Handle HTTP error
+          console.error('(HTTP error) Cancel booking failed', error);
+          alert('(HTTP error) Cancel booking failed');
+        })        
+          }
+  }
+        
+
+
 
 

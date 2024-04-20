@@ -68,6 +68,22 @@ const retrieveCalendarInfosControllerFn = async (req, res) => {
     }
 };
 
+const cancelBookingControllerFn = async (req, res) => {
+    try {
+        console.log(req.body); // Log request body for debugging if needed
+        const cancelResult = await roomBookingService.cancelBooking(req.body); // Assuming req.body contains the necessary data
+
+        if (cancelResult.deletedCount === 1) {
+            res.status(200).json({ status: true, message: "Booking cancelled successfully." });
+        } else {
+            res.status(404).json({ status: false, message: "Booking not found or already cancelled." });
+        }
+    } catch (error) {
+        console.error("Error cancelling booking:", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
 
 
 
@@ -75,5 +91,6 @@ module.exports = {
     createRoomBookingControllerFn,
     retrieveBookingTimeslotsControllerFn,
     retrieveBookingInfosControllerFn,
-    retrieveCalendarInfosControllerFn
+    retrieveCalendarInfosControllerFn,
+    cancelBookingControllerFn
 };
