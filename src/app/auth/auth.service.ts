@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private isLoggedIn = false;
+  private readonly storageKey = 'userData';
   constructor(private router: Router) {}
 
   login(username: string, password: string): void {
@@ -16,6 +17,7 @@ export class AuthService {
 
   logout(): void {
     this.isLoggedIn = false;
+    this.clearUserData();
 
     // Redirect to homepage after logout
     this.router.navigateByUrl('/');
@@ -24,5 +26,22 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.isLoggedIn;
+  }
+
+  // Method to store user data in browser storage
+  storeUserData(email: string, firstName: string, lastName: string) {
+    const userData = { email, firstName, lastName };
+    localStorage.setItem(this.storageKey, JSON.stringify(userData));
+  }
+
+  // Method to retrieve user data from browser storage
+  getUserData() {
+    const userDataString = localStorage.getItem(this.storageKey);
+    return userDataString ? JSON.parse(userDataString) : null;
+  }
+
+  // Method to clear user data from browser storage (e.g., on logout)
+  clearUserData() {
+    localStorage.removeItem(this.storageKey);
   }
 }

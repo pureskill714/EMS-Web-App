@@ -1,0 +1,12 @@
+<app-header></app-header>
+
+
+<div class="container">
+    <h1>Your Booking on {{ date }} at {{ meetingRoom }} </h1>
+    <p>For the following time slots:</p>
+    <ul>
+        <li *ngFor="let timeSlot of timeSlots">{{ timeSlot }}</li>
+    </ul>
+    <p>Has been cancelled</p>
+    <button class="return-button" (click)="returnToBookingPage()">Click Here To Return To Bookings Page</button>
+</div>

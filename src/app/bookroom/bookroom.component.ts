@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { UserDataService } from './../user-data.service';
 import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { AuthService } from '../auth/auth.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-bookroom',
@@ -23,7 +26,8 @@ export class BookroomComponent {
     { name: 'Meeting Room 2', calendarInfos: [''] }
   ];
 
-  constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location) {
+  constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
+    private authService: AuthService,private router: Router) {
     this.getBookingInfos();
   }
 
@@ -31,6 +35,18 @@ export class BookroomComponent {
   showBookingList: boolean = true;
   showPastBookings: boolean = false;
   selectedDate: Date | null = null;
+
+  ngOnInit() {
+    const userData = this.authService.getUserData();
+    if (userData) {
+      const { email, firstName, lastName } = userData;
+      this.userDataService.setFirstName(userData.firstName);
+      this.userDataService.setLastName(userData.lastName);
+      this.userDataService.setEmail(userData.email);
+    } else {
+      alert("THIS IS FAIL")
+    }
+  }
 
   toggleCalendarView(): void {
     console.log('Selected date:', this.selectedDate);
@@ -165,8 +181,8 @@ export class BookroomComponent {
 
           if (resultData.status) {
             console.log('Cancel booking success:', resultData);
-            alert('Cancel booking success');
-            window.location.reload();
+            //alert('Cancel booking success');
+            this.router.navigate(['/cancelbooking']);
           }
           else {
             // Error: Handle error
@@ -179,7 +195,7 @@ export class BookroomComponent {
           console.error('(HTTP error) Cancel booking failed', error);
           alert('(HTTP error) Cancel booking failed');
         })        
-          }
+    }
   }
         
 

@@ -194,8 +194,8 @@ export class NewbookingComponent {
           this.http.post("http://localhost:9992/booking", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
-              alert("Room Booking Successfully");
-              this.router.navigate(['/booking']);
+              //alert("Room Booking Successfully");
+              this.router.navigate(['/confirmbooking']);
           },
           (error) => {
             console.error("Error occurred while sending POST request:", error);

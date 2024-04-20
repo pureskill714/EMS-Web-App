@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 import { BookingConfirmationDialogComponent } from './bookroom/booking-confirmation-dialog/booking-confirmation-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
+import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/bookingconfirmation.component';
 
 
 @NgModule({
@@ -30,6 +32,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     NewbookingComponent,
     ProjectManagerDashboardComponent,
     BookingConfirmationDialogComponent,
+    CancelbookingComponent,
+    BookingconfirmationComponent,
   ],
   imports: [
     BrowserModule,

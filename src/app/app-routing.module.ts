@@ -8,6 +8,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { BookroomComponent } from './bookroom/bookroom.component';
 import { NewbookingComponent } from './bookroom/newbooking/newbooking.component';
 import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
+import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
+import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/bookingconfirmation.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,16 @@ const routes: Routes = [
   {
     component: NewbookingComponent,
     path: 'newbooking'
+  }
+  ,
+  {
+    component: CancelbookingComponent,
+    path: 'cancelbooking'
+  }
+  ,
+  {
+    component: BookingconfirmationComponent,
+    path: 'confirmbooking'
   }
 ];
 
