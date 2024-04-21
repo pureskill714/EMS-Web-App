@@ -11,13 +11,14 @@ export class BookingCancellationDialogComponent {
   date: string | null = null;
   room: string | null = null;
   timeSlots: string[] | null = null;
-  purpose: string = ''; // Add this line
+  purpose: string | null = null;
 
   constructor(public dialogRef: MatDialogRef<BookingCancellationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {
-    this.date = this.userDataService.getSelectedBookingDate();
-    this.room = this.userDataService.getSelectedBookingRoom();
-    this.timeSlots = this.userDataService.getSelectedTimeSlots();
+    this.date = this.userDataService.getCancelledDate();
+    this.room = this.userDataService.getCancelledRoom();
+    this.timeSlots = this.userDataService.getCancelledTimeSlots();
+    this.purpose = this.userDataService.getCancelledPurpose();
 
   }
 

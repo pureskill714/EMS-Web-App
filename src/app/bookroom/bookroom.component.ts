@@ -169,12 +169,16 @@ export class BookroomComponent {
     return calendarInfos.includes(timeSlot);
   }
 
-  cancelBooking(bookingId: string) {
-    // Call your backend service to cancel the booking
-
+  cancelBooking(bookingId: string, cancelledDate: string, cancelledRoom: string,cancelledTimeSlots: string[], cancelledPurpose:string) {
+    this.userDataService.setCancelledDate(cancelledDate);
+    this.userDataService.setCancelledRoom(cancelledRoom);
+    this.userDataService.setCancelledTimeSlots(cancelledTimeSlots);
+    this.userDataService.setCancelledPurpose(cancelledPurpose);
+    
     let bodyData = {
       "id": bookingId,
     };
+
 
     const dialogRef = this.dialog.open(BookingCancellationDialogComponent, {
       width: '420px',
@@ -185,6 +189,7 @@ export class BookroomComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'cancel') {
+        // Call your backend service to cancel the booking
         this.http.post<any>('http://localhost:9992/cancelbooking', bodyData)
       .subscribe(
         (resultData: any) => {

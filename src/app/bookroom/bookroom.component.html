@@ -43,7 +43,7 @@
                     <td>{{ booking.purpose }}</td>
                     <td>{{ booking._id}}</td>
                     <td>
-                        <button class="btn" (click)="cancelBooking(booking._id)">Cancel</button>
+                        <button class="btn" (click)="cancelBooking(booking._id,booking.date,booking.meetingRoom,booking.timeslots,booking.purpose)">Cancel</button>
                     </td>
                 </tr>
             </tbody>

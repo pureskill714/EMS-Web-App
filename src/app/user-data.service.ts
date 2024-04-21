@@ -12,6 +12,11 @@ export class UserDataService {
   private inputBookingPurpose: string | null = null;
   private selectedTimeSlots: string[] = []; // Add selectedTimeSlots array
 
+  private cancelledDate: string | null = null;
+  private cancelledRoom: string | null = null;
+  private cancelledTimeSlots: string[] = [];
+  private cancelledPurpose : string | null = null;
+
   constructor() {}
 
   setEmail(email: string) {
@@ -81,5 +86,37 @@ export class UserDataService {
     return this.selectedTimeSlots;
   }
 
-  
+  setCancelledDate(date: string | null = null) {
+    this.cancelledDate = date;
+  }
+
+  getCancelledDate(): string | null {
+    return this.cancelledDate;
+  }
+
+  setCancelledRoom(room: string | null = null) {
+    this.cancelledRoom = room;
+  }
+
+
+  getCancelledRoom(): string | null {
+    return this.cancelledRoom;
+  }
+
+  setCancelledTimeSlots(timeSlots: string[]) {
+    this.cancelledTimeSlots = timeSlots;
+  }
+
+  getCancelledTimeSlots(): string[] {
+    return this.cancelledTimeSlots;
+  }
+
+  setCancelledPurpose(purpose: string | null = null) {
+    this.cancelledPurpose = purpose;
+  }
+
+  getCancelledPurpose(): string | null {
+    return this.cancelledPurpose ;
+  }
+
 }
