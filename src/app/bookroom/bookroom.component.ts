@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { BookingCancellationDialogComponent } from './booking-cancellation-dialog/booking-cancellation-dialog.component';
 
 
 @Component({
@@ -27,7 +29,7 @@ export class BookroomComponent {
   ];
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
-    private authService: AuthService,private router: Router) {
+    private authService: AuthService,private router: Router,private dialog: MatDialog) {
     this.getBookingInfos();
   }
 
@@ -174,7 +176,16 @@ export class BookroomComponent {
       "id": bookingId,
     };
 
-    this.http.post<any>('http://localhost:9992/cancelbooking', bodyData)
+    const dialogRef = this.dialog.open(BookingCancellationDialogComponent, {
+      width: '420px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'cancel') {
+        this.http.post<any>('http://localhost:9992/cancelbooking', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -187,14 +198,19 @@ export class BookroomComponent {
           else {
             // Error: Handle error
             console.log('Cancel booking failed:', resultData.message);
-            alert('Cancel booking failed:');
+            //alert('Cancel booking failed:');
           }
         },
         (error) => {
           // Error: Handle HTTP error
           console.error('(HTTP error) Cancel booking failed', error);
           alert('(HTTP error) Cancel booking failed');
-        })        
+        })  
+      }
+      else{
+        console.log("Booking was not cancelled")
+      }
+    })     
     }
   }
         
