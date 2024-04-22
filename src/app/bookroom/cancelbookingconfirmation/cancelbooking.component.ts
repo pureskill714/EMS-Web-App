@@ -1,29 +1,21 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDataService } from '../../user-data.service';
-import { AuthService } from '../../auth/auth.service';
+
 @Component({
   selector: 'app-cancelbooking',
   templateUrl: './cancelbooking.component.html',
   styleUrl: './cancelbooking.component.css'
 })
 export class CancelbookingComponent {
-  date: string = '30-4-2024';
-  meetingRoom: string = 'Meeting Room 1';
-  timeSlots: string[] = ['09:00 - 10:00', '13:00 - 14:00'];
+  date: string | null = null;
+  room: string | null = null;
+  timeSlots: string[] | null = null;
 
-  constructor(private router: Router,private userDataService: UserDataService,private authService: AuthService) {}
-
-  ngOnInit() {
-    const userData = this.authService.getUserData();
-    if (userData) {
-      const { email, firstName, lastName } = userData;
-      this.userDataService.setFirstName(userData.firstName);
-      this.userDataService.setLastName(userData.lastName);
-      this.userDataService.setEmail(userData.email);
-    } else {
-      alert("THIS IS FAIL")
-    }
+  constructor(private router: Router,private userDataService: UserDataService) {
+    this.date = this.userDataService.getCancelledDate();
+    this.room = this.userDataService.getCancelledRoom();
+    this.timeSlots = this.userDataService.getCancelledTimeSlots();
   }
 
   returnToBookingPage(): void {

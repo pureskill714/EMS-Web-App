@@ -9,11 +9,15 @@ import { AuthService } from '../../auth/auth.service';
   styleUrl: './bookingconfirmation.component.css'
 })
 export class BookingconfirmationComponent {
-  date: string = '30-4-2024';
-  meetingRoom: string = 'Meeting Room 1';
-  timeSlots: string[] = ['09:00 - 10:00', '13:00 - 14:00'];
+  date: string | null = null;
+  room: string | null = null;
+  timeSlots: string[] | null = null;
 
-  constructor(private router: Router,private userDataService: UserDataService,private authService: AuthService) {}
+  constructor(private router: Router,private userDataService: UserDataService,private authService: AuthService) {
+    this.date = this.userDataService.getSelectedBookingDate();
+    this.room = this.userDataService.getSelectedBookingRoom();
+    this.timeSlots = this.userDataService.getSelectedTimeSlots();
+  }
 
   ngOnInit() {
     const userData = this.authService.getUserData();
