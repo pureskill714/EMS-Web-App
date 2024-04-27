@@ -21,6 +21,9 @@ export class BookroomComponent {
   meetingRoomOneCalendartimeSlotsArray: string[] = [];
   meetingRoomTwoCalendartimeSlotsArray: string[] = [];
 
+  meetingRoomTest : string | null = null;
+  meetingRoomTest2 : string | null = null;
+
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
   meetingRooms = [
@@ -64,6 +67,8 @@ export class BookroomComponent {
     this.retrievedMeetingRoomOneCalendarInfos = [];
     this.retrievedMeetingRoomTwoCalendarInfos = [];
 
+    
+
     this.meetingRoomOneCalendartimeSlotsArray = [];
     this.meetingRoomTwoCalendartimeSlotsArray = [];
 
@@ -80,51 +85,110 @@ export class BookroomComponent {
           if (resultData.status) {
             console.log('Calendar data received:', resultData);
 
-            this.retrievedMeetingRoomOneCalendarInfos = resultData.calendarInfo[0].timeslots;
-            console.log("retrievedMeetingRoomOneCalendarInfos : " + this.retrievedMeetingRoomOneCalendarInfos);
+            // If both Meeting Room 2 and 1 have data, or if only Meeting Room 2 has data
+          try {
+            if (resultData.calendarInfo[0]._id == "Meeting Room 2") {
+              this.retrievedMeetingRoomTwoCalendarInfos = resultData.calendarInfo[0].timeslots;
+              console.log("Time slots array (meeting room 2): " + this.retrievedMeetingRoomTwoCalendarInfos);
 
-            this.retrievedMeetingRoomTwoCalendarInfos = resultData.calendarInfo[1].timeslots;
-            console.log("retrievedMeetingRoomTwoCalendarInfos : " + this.retrievedMeetingRoomTwoCalendarInfos);
-
-            // Loop through the properties of the object
-            for (let key in this.retrievedMeetingRoomOneCalendarInfos) {
-              // Check if the property is not inherited from the prototype chain
-              if (this.retrievedMeetingRoomOneCalendarInfos.hasOwnProperty(key)) {
-                  // Concatenate the values of each property to the array
-                  this.meetingRoomOneCalendartimeSlotsArray = this.meetingRoomOneCalendartimeSlotsArray.concat(this.retrievedMeetingRoomOneCalendarInfos[key]);
+              // Loop through the properties of the object
+            if (this.retrievedMeetingRoomTwoCalendarInfos && this.retrievedMeetingRoomTwoCalendarInfos.length > 0) {
+              for (let key in this.retrievedMeetingRoomTwoCalendarInfos) {
+                // Check if the property is not inherited from the prototype chain
+                if (this.retrievedMeetingRoomTwoCalendarInfos.hasOwnProperty(key)) {
+                    // Concatenate the values of each property to the array
+                    this.meetingRoomTwoCalendartimeSlotsArray = this.meetingRoomTwoCalendartimeSlotsArray.concat(this.retrievedMeetingRoomTwoCalendarInfos[key]);
+                }
               }
-            }
-
-            // Loop through the properties of the object
-            for (let key in this.retrievedMeetingRoomTwoCalendarInfos) {
-              // Check if the property is not inherited from the prototype chain
-              if (this.retrievedMeetingRoomTwoCalendarInfos.hasOwnProperty(key)) {
-                  // Concatenate the values of each property to the array
-                  this. meetingRoomTwoCalendartimeSlotsArray = this. meetingRoomTwoCalendartimeSlotsArray.concat(this.retrievedMeetingRoomTwoCalendarInfos[key]);
-              }
-            }
-
-            console.log("Time slots array (meeting room 1): " + this.meetingRoomOneCalendartimeSlotsArray);
-            console.log("Time slots array (meeting room 2): " + this.meetingRoomTwoCalendartimeSlotsArray);
-
-            this.meetingRooms = [
-              { name: 'Meeting Room 1', calendarInfos: this.meetingRoomOneCalendartimeSlotsArray },
-              { name: 'Meeting Room 2', calendarInfos: this.meetingRoomTwoCalendartimeSlotsArray }
-            ];
-
-
-          } else {
-            // Error: Handle error
-            console.log('Failed to retrieve calendar data:', resultData.message);
           }
-        },
-        (error) => {
-          // Error: Handle HTTP error
-          console.error('Error retrieving calendar data:', error);
-        }
-      );
 
-  }
+            }
+          } catch (error) {
+            console.error("Error accessing Meeting Room 2 data:", error);
+          }
+
+          try {
+            if (resultData.calendarInfo[1]._id == "Meeting Room 1") {
+              this.retrievedMeetingRoomOneCalendarInfos = resultData.calendarInfo[1].timeslots;
+              console.log("Time slots array (meeting room 1): " + this.retrievedMeetingRoomOneCalendarInfos);
+
+                // Loop through the properties of the object
+            if (this.retrievedMeetingRoomOneCalendarInfos && this.retrievedMeetingRoomOneCalendarInfos.length > 0) {
+                for (let key in this.retrievedMeetingRoomOneCalendarInfos) {
+                  // Check if the property is not inherited from the prototype chain
+                  if (this.retrievedMeetingRoomOneCalendarInfos.hasOwnProperty(key)) {
+                      // Concatenate the values of each property to the array
+                      this.meetingRoomOneCalendartimeSlotsArray = this.meetingRoomOneCalendartimeSlotsArray.concat(this.retrievedMeetingRoomOneCalendarInfos[key]);
+                  }
+                }
+            }
+
+            }
+          } catch (error) {
+            console.error("No data at [1] for meeting room 1:", error);
+          }
+
+          // If both Meeting Room 2 and 1 have data, or if only Meeting Room 2 has data but if the array is swapped
+          try {
+            if (resultData.calendarInfo[1]._id == "Meeting Room 2") {
+              this.retrievedMeetingRoomTwoCalendarInfos = resultData.calendarInfo[1].timeslots;
+              console.log("Time slots array (meeting room 2): " + this.retrievedMeetingRoomTwoCalendarInfos);
+
+               // Loop through the properties of the object
+            if (this.retrievedMeetingRoomTwoCalendarInfos && this.retrievedMeetingRoomTwoCalendarInfos.length > 0) {
+              for (let key in this.retrievedMeetingRoomTwoCalendarInfos) {
+                // Check if the property is not inherited from the prototype chain
+                if (this.retrievedMeetingRoomTwoCalendarInfos.hasOwnProperty(key)) {
+                    // Concatenate the values of each property to the array
+                    this.meetingRoomTwoCalendartimeSlotsArray = this.meetingRoomTwoCalendartimeSlotsArray.concat(this.retrievedMeetingRoomTwoCalendarInfos[key]);
+                }
+              }
+          }
+            }
+          } catch (error) {
+            console.error("Error accessing Meeting Room 2 data:", error);
+          }
+
+          try {
+            if (resultData.calendarInfo[0]._id == "Meeting Room 1") {
+              this.retrievedMeetingRoomOneCalendarInfos = resultData.calendarInfo[0].timeslots;
+              console.log("Time slots array (meeting room 1): " + this.retrievedMeetingRoomOneCalendarInfos);
+
+                // Loop through the properties of the object
+            if (this.retrievedMeetingRoomOneCalendarInfos && this.retrievedMeetingRoomOneCalendarInfos.length > 0) {
+                for (let key in this.retrievedMeetingRoomOneCalendarInfos) {
+                  // Check if the property is not inherited from the prototype chain
+                  if (this.retrievedMeetingRoomOneCalendarInfos.hasOwnProperty(key)) {
+                      // Concatenate the values of each property to the array
+                      this.meetingRoomOneCalendartimeSlotsArray = this.meetingRoomOneCalendartimeSlotsArray.concat(this.retrievedMeetingRoomOneCalendarInfos[key]);
+                  }
+                }
+            }
+
+            }
+          } catch (error) {
+            console.error("No data at [1] for meeting room 1:", error);
+          }
+
+          // If only meeting room 1 has data
+          try {
+            if (resultData.calendarInfo[0]._id == "Meeting Room 1") {
+              this.retrievedMeetingRoomOneCalendarInfos = resultData.calendarInfo[0].timeslots;
+              console.log("Time slots array (meeting room 1): " + this.retrievedMeetingRoomOneCalendarInfos);
+            }
+          } catch (error) {
+            console.error("No data at [0] for meeting room 1", error);
+          }
+            
+          this.meetingRooms = [
+            { name: 'Meeting Room 1', calendarInfos: this.meetingRoomOneCalendartimeSlotsArray },
+            { name: 'Meeting Room 2', calendarInfos: this.meetingRoomTwoCalendartimeSlotsArray }
+          ]; 
+
+          }
+        });
+      }
+          
 
   loadBookingList(): void {
     this.showBookingList = true;

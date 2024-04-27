@@ -57,12 +57,15 @@ const retrieveCalendarInfosControllerFn = async (req, res) => {
         console.log(req.body);
         const calendarInfo = await roomBookingService.retrieveCalendarInfo(req.body);
 
-        if (calendarInfo && calendarInfo.length > 0) {
+        if (calendarInfo && Object.keys(calendarInfo).length > 0) {
+            // Check if calendarInfo is not empty
             res.status(200).json({ status: true, calendarInfo: calendarInfo });
         } else {
+            // Handle case where no calendar information is found
             res.status(404).json({ status: false, message: "No calendar information found." });
         }
     } catch (error) {
+        // Handle server error
         console.error("Error retrieving calendar information:", error);
         res.status(500).json({ status: false, message: "Internal server error." });
     }
