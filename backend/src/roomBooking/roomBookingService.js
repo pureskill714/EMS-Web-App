@@ -128,26 +128,48 @@ module.exports.retrieveCalendarInfo = async (requestData) => {
         await client.connect();
         const database = client.db(dbName);
         const collectionName = 'bookings';
-        
-        //MongoDB query
+
+        // MongoDB aggregation pipeline
         const result = await database.collection(collectionName).aggregate([
             {
-              $match: {
-                "date": { $eq: new Date(requestData.date) }, // Match documents with the specified date
-                //"email": requestData.email // Match documents with the specified email
-              }
+                $match: {
+                    "date": { $eq: new Date(requestData.date) }
+                    // Optionally, you can include email matching criteria here
+                }
             },
             {
-              $group: {
-                _id: "$meetingRoom",
-                timeslots: { $push: "$timeslots" } // Push each timeslots array into the timeslots field for its respective meeting room
-              }
+                $group: {
+                    _id: "$meetingRoom",
+                    timeslots: { $push: "$timeslots" } // Push each timeslots array into the timeslots field for its respective meeting room
+                }
             }
-          ]).toArray();
-        
+        ]).toArray();
 
         await client.close();
-        return result;
+
+        // Prepare arrays for each meeting room
+        const meetingRoomArrays = {};
+
+        result.forEach((item) => {
+            const meetingRoomId = item._id;
+            const timeslotsArray = item.timeslots.flat(); // Flatten the timeslots arrays
+
+            if (!meetingRoomArrays[meetingRoomId]) {
+                meetingRoomArrays[meetingRoomId] = [];
+            }
+
+            meetingRoomArrays[meetingRoomId] = timeslotsArray;
+        });
+
+        // Ensure arrays are initialized for all meeting rooms (even if empty)
+        const meetingRooms = Object.keys(meetingRoomArrays);
+        meetingRooms.forEach((roomId) => {
+            if (!meetingRoomArrays[roomId]) {
+                meetingRoomArrays[roomId] = [];
+            }
+        });
+
+        return meetingRoomArrays;
     } catch (error) {
         throw error;
     }
