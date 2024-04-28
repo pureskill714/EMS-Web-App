@@ -110,6 +110,96 @@
                         <span>Booked</span>
                     </div>
                 </div>
+                <br>
+                <div class="button-container">
+                    <button (click)="showMeetingRoomOneDetails()" class="btn btn-primary">Meeting Room 1 Details</button>
+                    <button (click)="showMeetingRoomTwoDetails()" class="btn btn-primary">Meeting Room 2 Details</button>
+                  </div>
+                  <br>
+                <!-- load showmeetingroomoneDetails-->
+               
+                    <ng-container *ngIf="selectedMeetingRoom === 1">
+                        <table>
+                        <thead>
+                            <tr>
+                              <th>Meeting Room</th>
+                              <th>Time Slots</th>
+                              <th>Purpose</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr>
+                                <td>Meeting Room 1</td>
+                                <td>
+                                    <ul>
+                                        <li>09:00-10:00</li>
+                                        <li>10:00-11:00</li>
+                                    </ul>
+                                </td>
+                                <td>Team Meeting</td>
+                                <td>John Doe</td>
+                                <td>johndoe&#64;example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Meeting Room 1</td>
+                                <td>
+                                    <ul>
+                                        <li>14:00-15:00</li>
+                                        <li>15:00-16:00</li>
+                                    </ul>
+                                </td>
+                                <td>Presentation</td>
+                                <td>Jane Smith</td>
+                                <td>janesmith&#64;example.com</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="selectedMeetingRoom === 2">
+                        <table>
+                        <thead>
+                            <tr>
+                              <th>Meeting Room</th>
+                              <th>Time Slots</th>
+                              <th>Purpose</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr>
+                                <td>Meeting Room 2</td>
+                                <td>
+                                    <ul>
+                                        <li>09:00-10:00</li>
+                                        <li>10:00-11:00</li>
+                                    </ul>
+                                </td>
+                                <td>Team Meeting</td>
+                                <td>John Doe</td>
+                                <td>johndoe&#64;example.com</td>
+                            </tr>
+                            <tr>
+                                <td>Meeting Room 2</td>
+                                <td>
+                                    <ul>
+                                        <li>14:00-15:00</li>
+                                        <li>15:00-16:00</li>
+                                    </ul>
+                                </td>
+                                <td>Presentation</td>
+                                <td>Jane Smith</td>
+                                <td>janesmith&#64;example.com</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </ng-container>
+                    
             </div>
         </div>
     </div>

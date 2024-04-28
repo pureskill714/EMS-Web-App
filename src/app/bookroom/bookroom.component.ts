@@ -21,8 +21,7 @@ export class BookroomComponent {
   meetingRoomOneCalendartimeSlotsArray: string[] = [];
   meetingRoomTwoCalendartimeSlotsArray: string[] = [];
 
-  meetingRoomTest : string | null = null;
-  meetingRoomTest2 : string | null = null;
+  selectedMeetingRoom: number | null = null;
 
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
@@ -55,6 +54,7 @@ export class BookroomComponent {
 
   toggleCalendarView(): void {
     console.log('Selected date:', this.selectedDate);
+    this.selectedMeetingRoom = 0;
     this.showCalendarView = true;
     this.showBookingList = false;
     this.showPastBookings = false;
@@ -187,6 +187,15 @@ export class BookroomComponent {
       }
     })     
     }
+
+    showMeetingRoomOneDetails(): void {
+      this.selectedMeetingRoom = 1;
+    }
+  
+    showMeetingRoomTwoDetails(): void {
+      this.selectedMeetingRoom = 2;
+    }
+
   }
         
 
