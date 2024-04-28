@@ -112,13 +112,27 @@
                 </div>
                 <br>
                 <div class="button-container">
-                    <button (click)="showMeetingRoomOneDetails()" class="btn btn-primary">Meeting Room 1 Details</button>
-                    <button (click)="showMeetingRoomTwoDetails()" class="btn btn-primary">Meeting Room 2 Details</button>
+
+                    <button (click)="showMeetingRoomOneDetails()">
+                        <span *ngIf="!meetingRoomOneSelected">Meeting Room 1 Details</span>
+                        <span *ngIf="meetingRoomOneSelected">Meeting Room 1 Details</span>
+                        <i class="bi bi-toggle2-off ms-2" *ngIf="!meetingRoomOneSelected"></i>
+                        <i class="bi bi-toggle2-on ms-2" *ngIf="meetingRoomOneSelected"></i>
+                      </button>
+
+                      <button (click)="showMeetingRoomTwoDetails()">
+                        <span *ngIf="!meetingRoomTwoSelected">Meeting Room 2 Details</span>
+                        <span *ngIf="meetingRoomTwoSelected">Meeting Room 2 Details</span>
+                        <i class="bi bi-toggle2-off ms-2" *ngIf="!meetingRoomTwoSelected"></i>
+                        <i class="bi bi-toggle2-on ms-2" *ngIf="meetingRoomTwoSelected"></i>
+                      </button>
+
+
                   </div>
-                  <br>
                 <!-- load showmeetingroomoneDetails-->
-               
-                    <ng-container *ngIf="selectedMeetingRoom === 1">
+                    <ng-container *ngIf="meetingRoomOneSelected == true">
+                        <br>
+                        <h3>Meeting Room 1 Details</h3>
                         <table>
                         <thead>
                             <tr>
@@ -159,7 +173,9 @@
                     </table>
                     </ng-container>
                     
-                    <ng-container *ngIf="selectedMeetingRoom === 2">
+                    <ng-container *ngIf="meetingRoomTwoSelected == true">
+                        <br>
+                        <h3>Meeting Room 2 Details</h3>
                         <table>
                         <thead>
                             <tr>
