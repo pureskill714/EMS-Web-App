@@ -19,7 +19,7 @@
 
         <div class="dropdown">
             <label for="roomselection">Room</label>
-            <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="checkInputs()" [disabled]="!selectedDate">
+            <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="onRoomChange(); checkInputs()" [disabled]="!selectedDate">
                 <option value="Meeting Room 1">Meeting Room 1</option>
                 <option value="Meeting Room 2">Meeting Room 2</option>
                 <!-- Add more room options as needed -->

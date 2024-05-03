@@ -163,6 +163,11 @@ export class NewbookingComponent {
     this.showTimeSlots = false;
   }
 
+  onRoomChange(): void {
+    // Reset selected room to null when date changes
+    this.showTimeSlots = false;
+  }
+
   onNextButtonClick(): void {
     if (this.selectedTimeSlots.length === 0) {
       window.alert('Please select a timeslot.');
