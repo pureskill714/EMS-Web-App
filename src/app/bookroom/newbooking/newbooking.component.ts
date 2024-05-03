@@ -21,6 +21,8 @@ export class NewbookingComponent {
   retrievedTimeSlots: string[] = [];
   minDate: string; // Define minDate property
 
+  bookedDetailsSelected : boolean = false;
+
     // Define your time slots here
   timeSlots: string[] = [
     '09:00-10:00',
@@ -33,6 +35,25 @@ export class NewbookingComponent {
     '16:00-17:00',
     '17:00-18:00'
   ];
+
+  retrievedCalendarDetailsMeetingRoomOne: any[] = [
+    {
+      date: new Date('2024-05-01'),
+      timeslots: ['09:00 AM', '11:00 AM'],
+      purpose: 'Meeting',
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'johndoe@example.com'
+    },
+    {
+      date: new Date('2024-05-02'),
+      timeslots: ['10:00 AM', '02:00 PM'],
+      purpose: 'Presentation',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      email: 'janesmith@example.com'
+    }
+  ]
 
   constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router) {
     // Initialize minDate to the current date
@@ -218,6 +239,10 @@ export class NewbookingComponent {
         }
       });
     }
+  }
+
+  showMeetingRoomDetails(): void {
+    this.bookedDetailsSelected = !this.bookedDetailsSelected;
   }
 
 }

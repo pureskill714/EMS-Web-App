@@ -126,5 +126,42 @@ app-header {
     cursor: pointer; /* Show pointer cursor on hover */
 }
 
+.bookedDetails-button {
+  margin-left: 20px; /* Adjust the value as needed for the desired right margin */
+}
+
+/* Container styles */
+.booking-list-container {
+  width: 100%; /* Ensure the container occupies the full width of its parent */
+  text-align: center; /* Center-align the contents horizontally */
+  margin-top: 20px; /* Optional margin-top for spacing */
+}
+
+/* Table styles */
+.booking-list {
+  width: 80%; /* Set the desired width for the table */
+  margin-left: 20px;
+  border-collapse: collapse;
+}
+
+.booking-list th,
+.booking-list td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.booking-list th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.booking-list tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.booking-list tr:hover {
+  background-color: #f0f0f0;
+}
   
   
