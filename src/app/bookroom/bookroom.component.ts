@@ -111,6 +111,19 @@ export class BookroomComponent {
            
           }
         });
+
+        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom2details', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log('Calendar details received (Meeting Room 2):', resultData);
+            this.retrievedCalendarDetailsMeetingRoomTwo = resultData.calendarDetailsMeetingRoomTwo;
+            console.log(this.retrievedCalendarDetailsMeetingRoomTwo);
+           
+          }
+        });
         
 
       }

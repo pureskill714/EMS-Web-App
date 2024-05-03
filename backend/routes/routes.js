@@ -14,6 +14,7 @@ router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBoo
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);
 router.route('/retrievecalendarinfos').post(roomBookingController.retrieveCalendarInfosControllerFn);
 router.route('/retrievecalendarmeetingroom1details').post(roomBookingController.retrieveCalendarMeetingRoomOneDetails);
+router.route('/retrievecalendarmeetingroom2details').post(roomBookingController.retrieveCalendarMeetingRoomTwoDetails);
 router.route('/cancelbooking').post(roomBookingController.cancelBookingControllerFn);
 
 module.exports = router;
