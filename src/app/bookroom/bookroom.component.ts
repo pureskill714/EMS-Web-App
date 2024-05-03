@@ -92,13 +92,35 @@ export class BookroomComponent {
             const meetingRoom2Array = resultData.calendarInfo["Meeting Room 2"];
             console.log("Meeting Room 2 timeslots:", meetingRoom2Array);
 
+            this.retrievedMeetingRoomOneCalendarInfos = meetingRoom1Array
+            this.retrievedMeetingRoomTwoCalendarInfos = meetingRoom2Array
+
+            if (meetingRoom1Array === undefined || meetingRoom1Array.length === 0) {
+              console.log("meetingRoom1Array is empty")
+              this.retrievedMeetingRoomOneCalendarInfos = [];
+          } else {
+            console.log("meetingRoom1Array is NOT empty")
+            this.retrievedMeetingRoomOneCalendarInfos = meetingRoom1Array;
+           
+          }
+
+          if (meetingRoom2Array === undefined || meetingRoom2Array.length === 0) {
+            console.log("meetingRoom2Array is empty")
+            this.retrievedMeetingRoomTwoCalendarInfos = [];
+        } else {
+          console.log("meetingRoom2Array is NOT empty")
+          this.retrievedMeetingRoomTwoCalendarInfos = meetingRoom2Array;
+         
+        }
+
+
             this.meetingRooms = [
-              { name: 'Meeting Room 1', calendarInfos: meetingRoom1Array },
-              { name: 'Meeting Room 2', calendarInfos: meetingRoom2Array }
+              { name: 'Meeting Room 1', calendarInfos: this.retrievedMeetingRoomOneCalendarInfos },
+              { name: 'Meeting Room 2', calendarInfos: this.retrievedMeetingRoomTwoCalendarInfos }
             ]; 
           }
         });
-
+        
         this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom1details', bodyData)
       .subscribe(
         (resultData: any) => {
