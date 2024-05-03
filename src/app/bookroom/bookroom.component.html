@@ -136,7 +136,7 @@
                         <table>
                         <thead>
                             <tr>
-                              <th>Meeting Room</th>
+                              <th>Date</th>
                               <th>Time Slots</th>
                               <th>Purpose</th>
                               <th>Name</th>
@@ -145,29 +145,16 @@
                           </thead>
 
                           <tbody>
-                            <tr>
-                                <td>Meeting Room 1</td>
+                            <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomOne">
+                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
                                 <td>
                                     <ul>
-                                        <li>09:00-10:00</li>
-                                        <li>10:00-11:00</li>
+                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
                                     </ul>
                                 </td>
-                                <td>Team Meeting</td>
-                                <td>John Doe</td>
-                                <td>johndoe&#64;example.com</td>
-                            </tr>
-                            <tr>
-                                <td>Meeting Room 1</td>
-                                <td>
-                                    <ul>
-                                        <li>14:00-15:00</li>
-                                        <li>15:00-16:00</li>
-                                    </ul>
-                                </td>
-                                <td>Presentation</td>
-                                <td>Jane Smith</td>
-                                <td>janesmith&#64;example.com</td>
+                                <td>{{ calendar.purpose }}</td>
+                                <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
+                                <td>{{ calendar.email }}</td>
                             </tr>
                         </tbody>
                     </table>

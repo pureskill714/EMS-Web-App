@@ -13,6 +13,7 @@ router.route('/booking').post(roomBookingController.createRoomBookingControllerF
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);
 router.route('/retrievecalendarinfos').post(roomBookingController.retrieveCalendarInfosControllerFn);
+router.route('/retrievecalendarmeetingroom1details').post(roomBookingController.retrieveCalendarMeetingRoomOneDetails);
 router.route('/cancelbooking').post(roomBookingController.cancelBookingControllerFn);
 
 module.exports = router;

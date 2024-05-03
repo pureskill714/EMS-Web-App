@@ -21,6 +21,9 @@ export class BookroomComponent {
   meetingRoomOneCalendartimeSlotsArray: string[] = [];
   meetingRoomTwoCalendartimeSlotsArray: string[] = [];
 
+  retrievedCalendarDetailsMeetingRoomOne: any = [];
+  retrievedCalendarDetailsMeetingRoomTwo: any = [];
+
   meetingRoomOneSelected : boolean = false;
   meetingRoomTwoSelected : boolean = false;
 
@@ -66,6 +69,9 @@ export class BookroomComponent {
       { name: 'Meeting Room 2', calendarInfos: [''] }
     ];
 
+    this.retrievedCalendarDetailsMeetingRoomOne  = [];
+    this.retrievedCalendarDetailsMeetingRoomTwo  = [];
+
     let bodyData = {
       "date": this.selectedDate,
       //"email": this.userDataService.getEmail(),
@@ -90,11 +96,23 @@ export class BookroomComponent {
               { name: 'Meeting Room 1', calendarInfos: meetingRoom1Array },
               { name: 'Meeting Room 2', calendarInfos: meetingRoom2Array }
             ]; 
-
-
           }
-
         });
+
+        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom1details', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log('Calendar details received (Meeting Room 1):', resultData);
+            this.retrievedCalendarDetailsMeetingRoomOne = resultData.calendarDetailsMeetingRoomOne;
+            console.log(this.retrievedCalendarDetailsMeetingRoomOne);
+           
+          }
+        });
+        
+
       }
           
 
