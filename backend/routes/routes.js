@@ -12,6 +12,7 @@ router.route('/create').post(nonManagerialEmployeeController.createnonManagerial
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);
+router.route('/retrievepastbookinginfos').post(roomBookingController.retrievePastBookingInfosControllerFn);
 router.route('/retrievecalendarinfos').post(roomBookingController.retrieveCalendarInfosControllerFn);
 router.route('/retrievecalendardetails').post(roomBookingController.retrieveCalendarDetails);
 router.route('/retrievecalendarmeetingroom1details').post(roomBookingController.retrieveCalendarMeetingRoomOneDetails);

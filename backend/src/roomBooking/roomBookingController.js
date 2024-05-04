@@ -52,6 +52,22 @@ const retrieveBookingInfosControllerFn = async (req, res) => {
     }
 };
 
+const retrievePastBookingInfosControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const bookings = await roomBookingService.retrievePastBookingInfos(req.body);
+
+        if (bookings && bookings.length > 0) { // Check if bookings are retrieved successfully
+            res.status(200).json({ status: true, bookings: bookings });
+        } else {
+            res.status(404).json({ status: false, message: "No bookings found." });
+        }
+    } catch (error) {
+        console.error("Error retrieving booking information:", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
 const retrieveCalendarInfosControllerFn = async (req, res) => {
     try {
         console.log(req.body);
@@ -158,6 +174,7 @@ module.exports = {
     createRoomBookingControllerFn,
     retrieveBookingTimeslotsControllerFn,
     retrieveBookingInfosControllerFn,
+    retrievePastBookingInfosControllerFn,
     retrieveCalendarInfosControllerFn,
     retrieveCalendarDetails,
     retrieveCalendarMeetingRoomOneDetails,

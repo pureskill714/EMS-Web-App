@@ -54,7 +54,30 @@
     <!-- Fourth Section: Date Picker or Calendar View or Past View -->
     <div *ngIf="showPastBookings && !showBookingList && !showCalendarView" class="past-view">
         <!-- Include your past bookings component here -->
-        <h1>Past Bookings View</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Meeting Room</th> <!-- Change 'Location' to 'Meeting Room' -->
+                    <th>Time Slots</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of this.retrievedPastBookingInfos">
+                    <td>{{ booking.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                    <td>{{ booking.meetingRoom }}</td> 
+                    <td>
+                        <ul>
+                            <li *ngFor="let timeslot of booking.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                        </ul>
+                    </td>
+                    <td>{{ booking.purpose }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
     </div>
 
     <div *ngIf="showCalendarView && !showBookingList && !showPastBookings" class="date-picker">

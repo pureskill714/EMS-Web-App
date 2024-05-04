@@ -120,6 +120,52 @@ module.exports.retrieveBookingInfos = async (requestData) => {
     }
 };
 
+module.exports.retrievePastBookingInfos = async (requestData) => {
+    try {
+        // MongoDB connection URL
+        const uri = 'mongodb://localhost:27017';
+        // Database Name
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'bookings';
+
+        // Get the current year
+        const currentYear = new Date().getFullYear();
+
+        // Calculate the start and end dates for the current year
+        const startDate = new Date(`${currentYear}-01-01`);
+        const endDate = new Date(`${currentYear}-12-31`);
+
+        // Run the MongoDB query to retrieve past bookings within the current year
+        const bookings = await database.collection(collectionName).find({
+            "email": requestData.email,
+            "date": {
+                "$lt": new Date(), // Bookings made before today's date
+                "$gte": startDate, // Bookings made on or after the start of the current year
+                "$lte": endDate // Bookings made on or before the end of the current year
+            }
+        }).toArray();
+
+        // Close the connection to the MongoDB server
+        await client.close();
+
+        // Return the retrieved booking infos
+        return bookings;
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports.retrieveCalendarInfo = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';

@@ -15,6 +15,7 @@ import { BookingCancellationDialogComponent } from './booking-cancellation-dialo
 })
 export class BookroomComponent {
   retrievedBookingInfos: any = [];
+  retrievedPastBookingInfos : any = [];
   retrievedMeetingRoomOneCalendarInfos: any = [];
   retrievedMeetingRoomTwoCalendarInfos: any = [];
 
@@ -161,6 +162,31 @@ export class BookroomComponent {
     this.showPastBookings = true;
     this.showBookingList = false;
     this.showCalendarView = false;
+
+    let bodyData = {
+      "email": this.userDataService.getEmail(),
+    };
+
+    this.http.post<any>('http://localhost:9992/retrievepastbookinginfos', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log('Data received (past booking views):', resultData.bookings);
+            this.retrievedPastBookingInfos = resultData.bookings;
+            console.log(this.retrievedBookingInfos);
+
+          } else {
+            // Error: Handle error
+            console.log('Failed to retrieve data:', resultData.message);
+          }
+        },
+        (error) => {
+          // Error: Handle HTTP error
+          console.error('Error retrieving data:', error);
+        }
+      );
   }
 
   getBookingInfos(): void {
