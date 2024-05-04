@@ -19,6 +19,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
 import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/bookingconfirmation.component';
 import { BookingCancellationDialogComponent } from './bookroom/booking-cancellation-dialog/booking-cancellation-dialog.component';
+import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { BookingCancellationDialogComponent } from './bookroom/booking-cancellat
     CancelbookingComponent,
     BookingconfirmationComponent,
     BookingCancellationDialogComponent,
+    EmployeeinfoComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

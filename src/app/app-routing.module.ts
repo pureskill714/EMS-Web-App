@@ -10,6 +10,8 @@ import { NewbookingComponent } from './bookroom/newbooking/newbooking.component'
 import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
 import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/bookingconfirmation.component';
+import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -58,6 +60,17 @@ const routes: Routes = [
     component: BookingconfirmationComponent,
     path: 'confirmbooking'
   }
+  ,
+  {
+    component: EmployeeinfoComponent,
+    path: 'employeeinfo'
+  }
+  ,
+  {
+    component: ProfileComponent,
+    path: 'profile'
+  }
+
 ];
 
 @NgModule({
