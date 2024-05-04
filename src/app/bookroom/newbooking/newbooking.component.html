@@ -12,40 +12,78 @@
     <div class="dropdowns">
         <div class="dropdown">
             <label for="date">Date:</label>
-            <input type="date" id="date" name="date">
+            <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (ngModelChange)="onDateChange(); checkInputs()" [min]="minDate">
+
+
         </div>
 
         <div class="dropdown">
             <label for="roomselection">Room</label>
-            <select id="roomselection">
+            <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="onRoomChange(); checkInputs()" [disabled]="!selectedDate">
                 <option value="Meeting Room 1">Meeting Room 1</option>
                 <option value="Meeting Room 2">Meeting Room 2</option>
-                <!-- Add more start time options as needed -->
+                <!-- Add more room options as needed -->
             </select>
         </div>
-
         <div class="dropdown">
-            <label for="startTime">Start Time:</label>
-            <select id="startTime">
-                <option value="00:00">00:00</option>
-                <option value="00:30">00:30</option>
-                <option value="01:00">01:00</option>
-                <!-- Add more start time options as needed -->
-            </select>
-        </div>
-
-        <div class="dropdown">
-            <label for="endTime">End Time:</label>
-            <select id="endTime">
-                <option value="00:00">00:00</option>
-                <option value="00:30">00:30</option>
-                <option value="01:00">01:00</option>
-                <!-- Add more end time options as needed -->
-            </select>
-        </div>
-
-        <div class="dropdown">
-            <button type="submit">Submit</button>
+            <button type="submit" (click)="search()" [disabled]="!inputsFilled" class="search-button">Search</button>
         </div>
     </div>
 </div>
+<br>
+<!-- Third Section: Time Slots (Hidden by default) -->
+<div class="time-slots" *ngIf="showTimeSlots">
+    <button class="time-slot" [class.selected]="isSelected(timeSlot)"
+        *ngFor="let timeSlot of timeSlots"
+        (click)="toggleTimeSlot(timeSlot)">{{ timeSlot }}</button>
+
+    <!-- Add the "Next" button after the last time slot button -->
+    <button *ngIf="this.timeSlots.length > 0" class="grey-button" (click)="onNextButtonClick()">Next</button>
+    <ng-container *ngIf="this.timeSlots.length <= 0">
+        <div style="margin: auto; width: fit-content;">
+            <h5 id="noBookingSlots">No available time slots remaining</h5>
+        </div>
+    </ng-container>
+</div>
+
+<br>
+
+<button *ngIf="showTimeSlots" (click)="showMeetingRoomDetails()" class="bookedDetails-button">
+    <span *ngIf="!bookedDetailsSelected">Booked Timeslots Details</span>
+    <span *ngIf="bookedDetailsSelected">Booked Timeslots Details</span>
+    <i class="bi bi-toggle2-off ms-2" *ngIf="!bookedDetailsSelected"></i>
+    <i class="bi bi-toggle2-on ms-2" *ngIf="bookedDetailsSelected"></i>
+</button>
+
+<br>
+
+ <!-- Load showMeetingRoomOneDetails -->
+<ng-container *ngIf="bookedDetailsSelected == true">
+    <br>
+    <div class="booking-list-container">
+      <table class="booking-list">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time Slots</th>
+            <th>Purpose</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let calendar of retrievedCalendarDetails">
+            <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td>
+            <td>
+              <ul>
+                <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li>
+              </ul>
+            </td>
+            <td>{{ calendar.purpose }}</td>
+            <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
+            <td>{{ calendar.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>

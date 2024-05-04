@@ -48,10 +48,12 @@ export class LoginComponent {
         if (resultData.status) {
           // Update authentication status using AuthService
           this.authService.login(this.email, this.password);
-
+          this.userDataService.setEmail(this.email);
+          
           // Check if 'role' data is present in the response
           if (resultData.role) {
             const userRole = resultData.role;
+            this.authService.storeUserData(this.email, resultData.firstname, resultData.lastname); // Store user data in browser storage
             this.userDataService.setFirstName(resultData.firstname);
             this.userDataService.setLastName(resultData.lastname);
             // Perform role-based actions or redirection based on the user's role

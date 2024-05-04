@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Booking Confirmation</h1>
+<div mat-dialog-content>
+  <p>Location: {{ selectedRoom }}</p>
+  <p>Date: {{ selectedDate }}</p>
+  <p>Timeslots: {{ selectedTimeSlots }}</p>
+  <mat-form-field>
+    <input matInput placeholder="Purpose of Booking" [(ngModel)]="bookingPurpose">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button type="button" class="btn btn-danger" (click)="onCancel()">Cancel</button>
+  <button type="button" class="btn btn-success" (click)="onConfirm()">Confirm Booking</button>
+</div>

@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Booking Cancellation</h1>
+<div mat-dialog-content>
+  <p>Location: {{ room }}</p>
+  <p>Date: {{ date | date: 'yyyy-MM-dd' }}</p>
+  <p>Timeslots: {{ timeSlots }}</p>
+  <p>Purpose: {{ purpose }}</p>
+</div>
+<div mat-dialog-actions align="end">
+  <button type="button" class="btn btn-danger" (click)="onBackButton()">Back</button>
+  <button type="button" class="btn btn-success" (click)="onCancelButton()">Cancel Booking</button>
+</div>
+

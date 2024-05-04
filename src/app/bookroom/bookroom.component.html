@@ -1,11 +1,10 @@
 <app-header></app-header>
 
-
 <div class="square-box">
     <!-- First Section: Header -->
     <div class="header">
         <div class="left">
-            <h2>My Bookings</h2>
+            <h2>Room Bookings</h2>
         </div>
         <div class="right">
             <button class="btn" [routerLink]="'/newbooking'">Make a New Booking</button>
@@ -14,78 +13,207 @@
 
     <!-- Second Section: Buttons -->
     <div class="buttons">
-        <button class="btn">Upcoming</button>
-        <button class="btn">Past</button>
-        <button class="btn">Calendar View</button>
+        <button class="btn" (click)="loadBookingList()">Upcoming</button>
+        <button class="btn" (click)="loadPastBookings()">Past</button>
+        <button class="btn" (click)="toggleCalendarView()">Calendar View</button>
     </div>
 
     <!-- Third Section: List of Bookings -->
-    <div class="booking-list">
+    <div *ngIf="!showCalendarView && showBookingList && !showPastBookings" class="booking-list">
         <table>
             <thead>
                 <tr>
-                    <th>Resource Name</th>
                     <th>Date</th>
-                    <th>Time Start</th>
-                    <th>Time End</th>
+                    <th>Meeting Room</th> <!-- Change 'Location' to 'Meeting Room' -->
+                    <th>Time Slots</th>
                     <th>Purpose</th>
-                    <th>Status</th>
-                    <th>Booking ID</th>
+                    <th>Booking Id</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Dummy Data -->
-                <tr>
-                    <td>Meeting Room 1</td>
-                    <td>2024-03-01</td>
-                    <td>10:00 AM</td>
-                    <td>12:00 PM</td>
-                    <td>Team Meeting</td>
-                    <td>Confirmed</td>
-                    <td>123456</td>
+                <tr *ngFor="let booking of this.retrievedBookingInfos">
+                    <td>{{ booking.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                    <td>{{ booking.meetingRoom }}</td> 
                     <td>
-                        <button class="btn">Cancel</button>
+                        <ul>
+                            <li *ngFor="let timeslot of booking.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                        </ul>
                     </td>
-
-                </tr>
-                <tr>
-                    <td>Conference Room A</td>
-                    <td>2024-03-02</td>
-                    <td>2:00 PM</td>
-                    <td>5:00 PM</td>
-                    <td>Presentation</td>
-                    <td>Confirmed</td>
-                    <td>789012</td>
+                    <td>{{ booking.purpose }}</td>
+                    <td>{{ booking._id}}</td>
                     <td>
-                        <button class="btn">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Training Room B</td>
-                    <td>2024-03-03</td>
-                    <td>9:00 AM</td>
-                    <td>12:00 PM</td>
-                    <td>Training Session</td>
-                    <td>Pending</td>
-                    <td>345678</td>
-                    <td>
-                        <button class="btn">Cancel</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Boardroom X</td>
-                    <td>2024-03-04</td>
-                    <td>3:00 PM</td>
-                    <td>4:00 PM</td>
-                    <td>Board Meeting</td>
-                    <td>Past</td>
-                    <td>901234</td>
-                    <td>
-                        <button class="btn">Cancel</button>
+                        <button class="btn" (click)="cancelBooking(booking._id,booking.date,booking.meetingRoom,booking.timeslots,booking.purpose)">Cancel</button>
                     </td>
                 </tr>
             </tbody>
         </table>
+        
+    </div>
+
+    <!-- Fourth Section: Date Picker or Calendar View or Past View -->
+    <div *ngIf="showPastBookings && !showBookingList && !showCalendarView" class="past-view">
+        <!-- Include your past bookings component here -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Meeting Room</th> <!-- Change 'Location' to 'Meeting Room' -->
+                    <th>Time Slots</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of this.retrievedPastBookingInfos">
+                    <td>{{ booking.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                    <td>{{ booking.meetingRoom }}</td> 
+                    <td>
+                        <ul>
+                            <li *ngFor="let timeslot of booking.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                        </ul>
+                    </td>
+                    <td>{{ booking.purpose }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+
+    <div *ngIf="showCalendarView && !showBookingList && !showPastBookings" class="date-picker">
+        <!-- Include your calendar view component here -->
+        <div class="dropdowns">
+            <div class="dropdown">
+                <label for="date">Select Date</label>
+                <input type="date" id="date" name="date" [(ngModel)]="selectedDate" (change)="toggleCalendarView()">
+            </div>
+            <br><br>
+            <!-- Add ngIf directive to conditionally show the table -->
+            <div id="calendar" *ngIf="selectedDate">
+                <table border="1">
+    <!-- Table Header Row -->
+    <thead>
+        <tr>
+            <!-- Empty cell for spacing -->
+            <th></th>
+            <!-- Header cells for columns A to T -->
+            <th>9:00 - 10:00</th>
+            <th>10:00 - 11:00</th>
+            <th>11:00 - 12:00</th>
+            <th>12:00 - 13:00</th>
+            <th>13:00 - 14:00</th>
+            <th>14:00 - 15:00</th>
+            <th>15:00 - 16:00</th>
+            <th>16:00 - 17:00</th>
+            <th>17:00 - 18:00</th>
+            <!-- Add headers for all 20 columns (A to T) -->
+            <!-- For brevity, only a few columns are shown -->
+        </tr>
+    </thead>
+    <!-- Table Body Rows -->
+    <tbody>
+        <!-- First Row -->
+        <tr *ngFor="let room of meetingRooms">
+            <!-- Row header for each room -->
+            <th>{{ room.name }}</th>
+            <!-- Cells for each time slot -->
+            <td *ngFor="let slot of timeSlots" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}"></td>
+        </tr>
+        <!-- Repeat the above rows for additional rows if needed -->
+    </tbody>
+</table>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="green-box-legend"></div>
+                        <span>Available</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="grey-box-legend"></div>
+                        <span>Booked</span>
+                    </div>
+                </div>
+                <br>
+                <div class="button-container">
+
+                    <button (click)="showMeetingRoomOneDetails()">
+                        <span *ngIf="!meetingRoomOneSelected">Meeting Room 1 Details</span>
+                        <span *ngIf="meetingRoomOneSelected">Meeting Room 1 Details</span>
+                        <i class="bi bi-toggle2-off ms-2" *ngIf="!meetingRoomOneSelected"></i>
+                        <i class="bi bi-toggle2-on ms-2" *ngIf="meetingRoomOneSelected"></i>
+                      </button>
+
+                      <button (click)="showMeetingRoomTwoDetails()">
+                        <span *ngIf="!meetingRoomTwoSelected">Meeting Room 2 Details</span>
+                        <span *ngIf="meetingRoomTwoSelected">Meeting Room 2 Details</span>
+                        <i class="bi bi-toggle2-off ms-2" *ngIf="!meetingRoomTwoSelected"></i>
+                        <i class="bi bi-toggle2-on ms-2" *ngIf="meetingRoomTwoSelected"></i>
+                      </button>
+
+
+                  </div>
+                <!-- load showmeetingroomoneDetails-->
+                    <ng-container *ngIf="meetingRoomOneSelected == true">
+                        <br>
+                        <h3>Meeting Room 1 Details</h3>
+                        <table>
+                        <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Time Slots</th>
+                              <th>Purpose</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomOne">
+                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                                <td>
+                                    <ul>
+                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                                    </ul>
+                                </td>
+                                <td>{{ calendar.purpose }}</td>
+                                <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
+                                <td>{{ calendar.email }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="meetingRoomTwoSelected == true">
+                        <br>
+                        <h3>Meeting Room 2 Details</h3>
+                        <table>
+                        <thead>
+                            <tr>
+                              <th>Date</th>
+                              <th>Time Slots</th>
+                              <th>Purpose</th>
+                              <th>Name</th>
+                              <th>Email</th>
+                            </tr>
+                          </thead>
+
+                          <tbody>
+                            <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomTwo">
+                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                                <td>
+                                    <ul>
+                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                                    </ul>
+                                </td>
+                                <td>{{ calendar.purpose }}</td>
+                                <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
+                                <td>{{ calendar.email }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </ng-container>
+                    
+            </div>
+        </div>
     </div>
 </div>
