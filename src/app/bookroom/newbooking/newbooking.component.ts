@@ -36,24 +36,7 @@ export class NewbookingComponent {
     '17:00-18:00'
   ];
 
-  retrievedCalendarDetailsMeetingRoomOne: any[] = [
-    {
-      date: new Date('2024-05-01'),
-      timeslots: ['09:00 AM', '11:00 AM'],
-      purpose: 'Meeting',
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'johndoe@example.com'
-    },
-    {
-      date: new Date('2024-05-02'),
-      timeslots: ['10:00 AM', '02:00 PM'],
-      purpose: 'Presentation',
-      firstName: 'Jane',
-      lastName: 'Smith',
-      email: 'janesmith@example.com'
-    }
-  ]
+  retrievedCalendarDetails: any[] = []
 
   constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router) {
     // Initialize minDate to the current date
@@ -95,8 +78,8 @@ export class NewbookingComponent {
       '17:00-18:00'
     ];
 
-
-    // For demonstration, I'm just setting showTimeSlots to true
+    this.retrievedCalendarDetails = []
+    
     this.showTimeSlots = true;
 
     let bodyData = {
@@ -127,6 +110,32 @@ export class NewbookingComponent {
           console.error('Error retrieving data:', error);
         }
       );
+
+      this.http.post<any>('http://localhost:9992/retrievecalendardetails', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log("booked details retrieved")
+            this.retrievedCalendarDetails = resultData.calendarDetails;
+
+          } else {
+            // Error: Handle error
+            console.log('Failed to retrieve data:', resultData.message);
+          }
+        },
+        (error) => {
+          // Error: Handle HTTP error
+          console.error('Error retrieving data:', error);
+        }
+      );
+
+
+
+
+
+
   }
 
   checkInputs(): void {
@@ -182,11 +191,13 @@ export class NewbookingComponent {
     // Reset selected room to null when date changes
     this.selectedRoom = null;
     this.showTimeSlots = false;
+    this.bookedDetailsSelected = false;
   }
 
   onRoomChange(): void {
     // Reset selected room to null when date changes
     this.showTimeSlots = false;
+    this.bookedDetailsSelected = false;
   }
 
   onNextButtonClick(): void {
