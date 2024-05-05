@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.route('/login').post(nonManagerialEmployeeController.loginUserControllerFn);
 router.route('/create').post(nonManagerialEmployeeController.createnonManagerialEmployeeControllerFn);
+router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployeesControllerFn);
 
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);

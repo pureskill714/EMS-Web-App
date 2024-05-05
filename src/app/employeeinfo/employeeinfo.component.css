@@ -1,0 +1,26 @@
+/* Table styles */
+.booking-list {
+    width: 90%; /* Set the desired width for the table */
+    margin-left: 40px;
+    border-collapse: collapse;
+  }
+  
+  .booking-list th,
+  .booking-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .booking-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  .booking-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .booking-list tr:hover {
+    background-color: #f0f0f0;
+  }

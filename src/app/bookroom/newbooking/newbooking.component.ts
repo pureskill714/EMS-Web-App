@@ -131,11 +131,6 @@ export class NewbookingComponent {
         }
       );
 
-
-
-
-
-
   }
 
   checkInputs(): void {

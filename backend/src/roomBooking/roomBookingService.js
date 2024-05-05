@@ -1,5 +1,5 @@
 const RoomBooking = require('./roomBookingModel');
-const { MongoClient, ObjectId } = require('mongodb');
+const { MongoClient} = require('mongodb');
 
 module.exports.createRoomBooking = async (roomBookingDetails) => {
     try {
@@ -17,7 +17,7 @@ module.exports.createRoomBooking = async (roomBookingDetails) => {
         if (conflictingTimeslots) {
             // If there are conflicting timeslots, return a rejection with status code 409
             return Promise.reject({ status: 409, message: 'Timeslots are already booked for the specified date and meeting room' });
-        }
+        } 
 
         // If no conflicts, create the new room booking
         const newRoomBooking = new RoomBooking({

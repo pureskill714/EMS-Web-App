@@ -22,7 +22,8 @@ var nonManagerialEmployeeSchema = new Schema({
     role: {
         type: String,
         required: true
-    }
+    },
+    isVerified: { type: Boolean, default: false }
 
 });
 

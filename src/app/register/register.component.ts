@@ -78,11 +78,11 @@ export class RegisterComponent {
     }
 
      // Check if email contains the required domain. Comment out if needed to register other emails
-     const validDomain = '@wizvision.com';
+     /*const validDomain = '@wizvision.com';
      if (!this.email.includes(validDomain)) {
          alert(`Email must be from ${validDomain}`);
          return; // Exit the function if email domain is invalid
-     }
+     }*/
 
     let bodyData = {
         "firstname": this.firstname,
