@@ -94,8 +94,8 @@ export class RegisterComponent {
     this.http.post("http://localhost:9992/create", bodyData).subscribe(
         (resultData: any) => {
             console.log(resultData);
-            alert("Account Registered Successfully! Redirecting To Login Page");
-            this.router.navigate(['/login']);
+            alert("Account Registered Successfully!");
+            this.router.navigate(['/registerconfirmation']);
         },
         (error) => {
           console.error("Error occurred while sending POST request:", error);

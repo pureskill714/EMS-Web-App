@@ -12,6 +12,7 @@ import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/can
 import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/bookingconfirmation.component';
 import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
   {
     component: RegisterComponent,
     path: 'register'
+  }
+  ,
+  {
+    component: RegisteraccountconfirmationComponent,
+    path: 'registerconfirmation'
   }
   ,
   {

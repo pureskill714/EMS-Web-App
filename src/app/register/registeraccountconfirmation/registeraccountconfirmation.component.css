@@ -1,0 +1,33 @@
+.container {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+  h1 {
+    color: #333;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+
+  button.return-button {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust padding to increase button size */
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Add transition effect for smooth hover */
+  }
+  
+  button.return-button:hover {
+    background-color: darkgreen; /* Darken button color on hover */
+  }
