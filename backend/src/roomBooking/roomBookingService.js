@@ -1,5 +1,9 @@
 const RoomBooking = require('./roomBookingModel');
-const { MongoClient} = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
+
+const nodemailer = require('nodemailer');
+//const encryptionModule = require('./encryptor'); // Import your encryptor module
+const { v4: uuidv4 } = require('uuid'); // Import uuid package and alias v4 method as uuidv4
 
 module.exports.createRoomBooking = async (roomBookingDetails) => {
     try {
@@ -31,11 +35,70 @@ module.exports.createRoomBooking = async (roomBookingDetails) => {
         });
 
         const result = await newRoomBooking.save();
+
+        // Generate a verification token using UUID
+        const verificationToken = uuidv4(); // Generate a random UUID (version 4)
+
+        // After saving to DB, send verification email
+        await sendBookingConfirmationnEmail(roomBookingDetails.email,roomBookingDetails.firstName,
+            roomBookingDetails.lastName,roomBookingDetails.date, roomBookingDetails.meetingRoom,
+            roomBookingDetails.timeslots,roomBookingDetails.purpose
+        );
+
+
         return result;
     } catch (error) {
         throw error;
     }
 };
+
+// Function to send Room Booking Confirmation email
+function sendBookingConfirmationnEmail(email,firstName,lastName,date,meetingRoom,timeslots,purpose) {
+    return new Promise((resolve, reject) => {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'wizvision600@gmail.com',
+                pass: 'xikf gvuy lzud lqnk'
+            }
+        });
+
+        const mailOptions = {
+            from: 'wizvision600@gmail.com',
+            to: email,
+            subject: 'Room Booking Confirmation',
+
+            html: `
+            <p>Dear ${firstName} ${lastName},</p>
+            <p>The following booking has been accepted successfully. The details are as follows:</p>
+            <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
+                <tr>
+                    <th style="border: 1px solid black; padding: 8px;">Date</th>
+                    <th style="border: 1px solid black; padding: 8px;">Meeting Room</th>
+                    <th style="border: 1px solid black; padding: 8px;">Timeslots</th>
+                    <th style="border: 1px solid black; padding: 8px;">Purpose</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 8px;">${date}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${meetingRoom}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${timeslots.join('<br>')}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${purpose}</td>
+                </tr>
+            </table>
+        `
+        };
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.error('Error sending email:', err);
+                reject(err); // Reject with error if email sending fails
+            } else {
+                console.log('Email sent:', info.response);
+                resolve(); // Resolve the promise if email sent successfully
+            }
+        });
+    });
+}
 
 module.exports.retrieveTimeslots = async (requestData) => {
     try {
@@ -389,16 +452,93 @@ module.exports.cancelBooking = async (requestData) => {
         await client.connect();
         const database = client.db(dbName);
         const collectionName = 'bookings';
-        
+
+        // Retrieve the booking details using the provided ObjectId
+        const booking = await database.collection(collectionName).findOne({ _id: new ObjectId(requestData.id) });
+
+        const cancellationDate = booking.date
+
+        // Extract month, day, and year components from the date object
+        const month = cancellationDate.getMonth() + 1; // Months are zero-based (January is 0), so add 1
+        const day = cancellationDate.getDate();
+        const year = cancellationDate.getFullYear();
+
+        // Construct the formatted date string in MM/DD/YYYY format
+        const formattedCancellationDate = `${year}-${month}-${day}`;
+
+        if (!booking) {
+            throw new Error('Booking not found'); // Handle if booking with the specified id is not found
+        }
+
         // MongoDB query to delete the document with the specified _id
         const result = await database.collection(collectionName).deleteOne({ _id: new ObjectId(requestData.id) });
 
         await client.close();
+
+        // Send cancellation email using retrieved booking details
+        await sendBookingCancellationEmail(
+            booking.email,
+            booking.firstName,
+            booking.lastName,
+            formattedCancellationDate,
+            booking.meetingRoom,
+            booking.timeslots,
+            booking.purpose
+        );
+
         return result;
     } catch (error) {
         throw error;
     }
 };
+
+// Function to send Room Booking Cancellation email
+function sendBookingCancellationEmail(email,firstName,lastName,date,meetingRoom,timeslots,purpose) {
+    return new Promise((resolve, reject) => {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'wizvision600@gmail.com',
+                pass: 'xikf gvuy lzud lqnk'
+            }
+        });
+
+        const mailOptions = {
+            from: 'wizvision600@gmail.com',
+            to: email,
+            subject: 'Room Cancellation Confirmation',
+
+            html: `
+            <p>Dear ${firstName} ${lastName},</p>
+            <p>The following booking has been cancelled successfully. The details are as follows:</p>
+            <table style="border-collapse: collapse; width: 100%; border: 1px solid black;">
+                <tr>
+                    <th style="border: 1px solid black; padding: 8px;">Date</th>
+                    <th style="border: 1px solid black; padding: 8px;">Meeting Room</th>
+                    <th style="border: 1px solid black; padding: 8px;">Timeslots</th>
+                    <th style="border: 1px solid black; padding: 8px;">Purpose</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid black; padding: 8px;">${date}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${meetingRoom}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${timeslots.join('<br>')}</td>
+                    <td style="border: 1px solid black; padding: 8px;">${purpose}</td>
+                </tr>
+            </table>
+        `
+        };
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.error('Error sending email:', err);
+                reject(err); // Reject with error if email sending fails
+            } else {
+                console.log('Email sent:', info.response);
+                resolve(); // Resolve the promise if email sent successfully
+            }
+        });
+    });
+}
 
 
 
