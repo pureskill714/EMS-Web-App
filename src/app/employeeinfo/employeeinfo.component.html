@@ -4,26 +4,24 @@
 
 <div class="booking-list-container">
     <table class="booking-list">
-    <thead>
-        <tr>
+        <thead>
+          <tr>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email Address</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>John</td>
-            <td>Doe</td>
-            <td>johndoeexample.com</td>
-        </tr>
-        <tr>
-            <td>Jane</td>
-            <td>Smith</td>
-            <td>janesmithexample.com</td>
-        </tr>
-        <!-- Add more rows as needed -->
-    </tbody>
-</table>
+            <th>Mobile No.</th>
+            <th>Department</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let retrievedEmployeeDetail of retrievedEmployeeDetails">
+            <td>{{ retrievedEmployeeDetail.firstname }}</td>
+            <td>{{ retrievedEmployeeDetail.lastname }}</td>
+            <td>{{ retrievedEmployeeDetail.email }}</td>
+            <td>{{ retrievedEmployeeDetail.mobileNo }}</td>
+            <td>{{ retrievedEmployeeDetail.department }}</td>
+          </tr>
+        </tbody>
+      </table>
 
 </div>
