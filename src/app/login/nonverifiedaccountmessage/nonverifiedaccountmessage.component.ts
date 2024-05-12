@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-registeraccountconfirmation',
-  templateUrl: './registeraccountconfirmation.component.html',
-  styleUrl: './registeraccountconfirmation.component.css'
+  selector: 'app-nonverifiedaccountmessage',
+  templateUrl: './nonverifiedaccountmessage.component.html',
+  styleUrl: './nonverifiedaccountmessage.component.css'
 })
-export class RegisteraccountconfirmationComponent {
+export class NonverifiedaccountmessageComponent {
 
   constructor(private router: Router) {
     
@@ -15,5 +15,6 @@ export class RegisteraccountconfirmationComponent {
   returnToHomePage(): void {
     this.router.navigate(['/']);
   }
+
 
 }

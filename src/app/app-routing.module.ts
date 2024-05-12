@@ -13,6 +13,7 @@ import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/boo
 import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
+import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     component: LoginComponent,
     path: 'login'
+  }
+  ,
+  {
+    component: NonverifiedaccountmessageComponent,
+    path: 'unverifiedaccount'
   }
   ,
   {

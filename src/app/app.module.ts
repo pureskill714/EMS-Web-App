@@ -22,6 +22,7 @@ import { BookingCancellationDialogComponent } from './bookroom/booking-cancellat
 import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
+import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { RegisteraccountconfirmationComponent } from './register/registeraccount
     EmployeeinfoComponent,
     ProfileComponent,
     RegisteraccountconfirmationComponent,
+    NonverifiedaccountmessageComponent,
   ],
   imports: [
     BrowserModule,

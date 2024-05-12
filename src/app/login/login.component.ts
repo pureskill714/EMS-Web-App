@@ -18,8 +18,9 @@ export class LoginComponent {
 
   isLogin: boolean = true;
   erroMessage: string = "";
-
+  
   showPassword: boolean = false;
+  isVerified: boolean = true;
 
   constructor(
     private router: Router,
@@ -44,6 +45,8 @@ export class LoginComponent {
     this.http.post("http://localhost:9992/login", bodyData).subscribe(
       (resultData: any) => {
         console.log(resultData);
+        console.log(resultData.role);
+        console.log(resultData.isVerified);
 
         if (resultData.status) {
           // Update authentication status using AuthService
@@ -52,18 +55,25 @@ export class LoginComponent {
           
           // Check if 'role' data is present in the response
           if (resultData.role) {
+            console.log("masuk sini dulu");
             const userRole = resultData.role;
             this.authService.storeUserData(this.email, resultData.firstname, resultData.lastname); // Store user data in browser storage
             this.userDataService.setFirstName(resultData.firstname);
             this.userDataService.setLastName(resultData.lastname);
+            
             // Perform role-based actions or redirection based on the user's role
-            if (userRole === 'non-managerial') {
-              this.router.navigateByUrl('dashboard');
-            } else if (userRole === 'project-manager') {
-              this.router.navigateByUrl('pm-dashboard');
-            } else {
-              this.router.navigateByUrl('dashboard');
+            if (resultData.isVerified === false){
+              this.router.navigateByUrl('unverifiedaccount');
             }
+
+            if (userRole === 'non-managerial' && resultData.isVerified === true) {
+              this.router.navigateByUrl('dashboard');
+            } 
+
+            else if (userRole === 'project-manager') {
+              this.router.navigateByUrl('pm-dashboard');
+            }
+
           } else {
             console.error("Role data not found in login response.");
             alert("Error occurred during login. Please try again.");

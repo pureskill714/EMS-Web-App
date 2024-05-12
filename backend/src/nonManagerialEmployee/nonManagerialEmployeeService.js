@@ -87,7 +87,7 @@ function sendVerificationEmail(email, verificationToken) {
                 } else {
                     var decrypted = encryptor.decrypt(result.password);
                     if (decrypted === nonManagerialEmployeeDetails.password) {
-                        resolve({ status: true, msg: "non-managerial employee Validated Successfully", role: result.role, firstname: result.firstname, lastname: result.lastname });
+                        resolve({ status: true, msg: "non-managerial employee Validated Successfully", role: result.role, firstname: result.firstname, lastname: result.lastname, isVerified: result.isVerified });
                     } else {
                         reject({ status: false, msg: "non-managerial employee Validation Failed" });
                     }
