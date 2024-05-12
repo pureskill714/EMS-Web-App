@@ -38,6 +38,39 @@ var loginUserControllerFn = async (req, res) => {
     }
 }
 
+var verifyAccountControllerFn = async (req, res) => {
+    try {
+        // Extract the verificationToken from the request body or query parameters
+        const verificationToken = req.body.token || req.query.token;
+
+        // Call the verifyAccount service function with the verificationToken
+        const result = await nonManagerialEmployeeService.verifyAccount(verificationToken);
+
+        // Handle the result from the service function
+        if (result.status) {
+            // If account verification is successful, send success response
+            res.status(200).json({
+                status: true,
+                message: result.msg,
+                updatedEmployee: result.updatedEmployee
+            });
+        } else {
+            // If account verification fails, send error response
+            res.status(400).json({
+                status: false,
+                message: result.msg
+            });
+        }
+    } catch (error) {
+        // Handle any errors that occur during account verification process
+        console.error(error);
+        res.status(500).json({
+            status: false,
+            message: "Error verifying account"
+        });
+    }
+};
+
 var getAllEmployeesControllerFn = async (req, res) => {
     try {
 
@@ -60,4 +93,4 @@ var getAllEmployeesControllerFn = async (req, res) => {
     }
   };
 
-module.exports = { createnonManagerialEmployeeControllerFn,loginUserControllerFn,getAllEmployeesControllerFn };
+module.exports = { createnonManagerialEmployeeControllerFn,loginUserControllerFn,getAllEmployeesControllerFn,verifyAccountControllerFn };

@@ -14,6 +14,7 @@ import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
+import { AccountverificationComponent } from './register/accountverification/accountverification.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,11 @@ const routes: Routes = [
   {
     component: NonverifiedaccountmessageComponent,
     path: 'unverifiedaccount'
+  }
+  ,
+  {
+    component: AccountverificationComponent,
+    path: 'verify/:token', 
   }
   ,
   {

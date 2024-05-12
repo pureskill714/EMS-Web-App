@@ -1,4 +1,5 @@
 var nonManagerialEmployeeModel = require('./nonManagerialEmployeeModel');
+const { MongoClient } = require('mongodb');
 var key = '123456789trytryrtyr';
 var encryptor = require('simple-encryptor')(key);
 
@@ -18,6 +19,9 @@ module.exports.createnonManagerialEmployeeDBService = (nonManagerialEmployeeDeta
                     // Create a new non-managerial employee instance
                     var nonManagerialEmployeeModelData = new nonManagerialEmployeeModel();
 
+                    // Generate a verification token using UUID
+                    const verificationToken = uuidv4(); // Generate a random UUID (version 4)
+
                     // Set employee details from request
                     nonManagerialEmployeeModelData.firstname = nonManagerialEmployeeDetails.firstname;
                     nonManagerialEmployeeModelData.lastname = nonManagerialEmployeeDetails.lastname;
@@ -25,12 +29,11 @@ module.exports.createnonManagerialEmployeeDBService = (nonManagerialEmployeeDeta
                     var encrypted = encryptor.encrypt(nonManagerialEmployeeDetails.password);
                     nonManagerialEmployeeModelData.password = encrypted;
                     nonManagerialEmployeeModelData.role = "non-managerial";
+                    nonManagerialEmployeeModelData.verificationToken = verificationToken;
 
                     // Save the employee data to the database
                     nonManagerialEmployeeModelData.save()
                         .then(result => {
-                            // Generate a verification token using UUID
-                            const verificationToken = uuidv4(); // Generate a random UUID (version 4)
                             
                             // Send verification email with the generated token
                             sendVerificationEmail(nonManagerialEmployeeModelData.email, verificationToken)
@@ -63,7 +66,7 @@ function sendVerificationEmail(email, verificationToken) {
             from: 'wizvision600@gmail.com',
             to: email,
             subject: 'Account Verification',
-            html: `Click <a href="http://yourapp.com/verify/${verificationToken}">here</a> to verify your account.`
+            html: `Click <a href="http://localhost:4200/verify/${verificationToken}">here</a> to verify your account.`
         };
 
         transporter.sendMail(mailOptions, (err, info) => {
@@ -98,3 +101,45 @@ function sendVerificationEmail(email, verificationToken) {
             });
     });
  };
+
+ module.exports.verifyAccount = async (verificationToken) => {
+    try {
+        // MongoDB connection URL
+        const uri = 'mongodb://localhost:27017';
+        // Database Name
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'nonmanagerialemployees';
+
+        // MongoDB query to update the document
+        const result = await database.collection(collectionName).updateOne(
+            { verificationToken: verificationToken },
+            { $set: { isVerified: true } }
+        );
+
+        // Close the MongoDB client connection
+        await client.close();
+
+        // Check the result of the update operation
+        if (result.modifiedCount === 1) {
+            // Document updated successfully
+            return { status: true, msg: "Employee verified successfully" };
+        } else {
+            // No document was updated (verificationToken not found)
+            return { status: false, msg: "Employee not found or update failed" };
+        }
+    } catch (error) {
+        // Handle errors during MongoDB operations
+        throw { status: false, msg: "Error updating employee verification status", error };
+    }
+};

@@ -23,8 +23,13 @@ var nonManagerialEmployeeSchema = new Schema({
         type: String,
         required: true
     },
-    isVerified: { type: Boolean, default: false }
-
+    isVerified: { 
+        type: Boolean, 
+        default: false 
+    },
+    verificationToken: { 
+        type: String
+    }
 });
 
 module.exports = mongoose.model('nonManagerialEmployee', nonManagerialEmployeeSchema);
