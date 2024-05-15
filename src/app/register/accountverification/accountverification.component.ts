@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-accountverification',
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './accountverification.component.css'
 })
 export class AccountverificationComponent implements OnInit {
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient,private router: Router) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -30,5 +31,11 @@ export class AccountverificationComponent implements OnInit {
       );
     });
   }
+
+  returnToHomePage(): void {
+    this.router.navigate(['/']);
+  }
+
+  
 
 }
