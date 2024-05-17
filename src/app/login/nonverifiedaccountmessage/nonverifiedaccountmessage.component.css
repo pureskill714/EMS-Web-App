@@ -31,3 +31,20 @@
   button.return-button:hover {
     background-color: darkgreen; /* Darken button color on hover */
   }
+
+  button.resent-button {
+    display: inline-block;
+    padding: 10px 20px; /* Adjust padding to increase button size */
+    background-color: #ffa500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Add transition effect for smooth hover */
+  }
+  
+  button.resent-button:hover {
+    background-color: #CC8400; /* Darken button color on hover */
+  }
+
+  

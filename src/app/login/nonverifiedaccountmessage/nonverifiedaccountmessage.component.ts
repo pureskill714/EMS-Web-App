@@ -16,5 +16,9 @@ export class NonverifiedaccountmessageComponent {
     this.router.navigate(['/']);
   }
 
+  resendVerificationEmail(): void {
+    this.router.navigate(['/']);
+  }
+
 
 }
