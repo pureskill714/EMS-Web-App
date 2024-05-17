@@ -81,6 +81,9 @@ function sendVerificationEmail(email, verificationToken) {
     });
 }
 
+
+
+
  module.exports.loginuserDBService = (nonManagerialEmployeeDetails) => {
     return new Promise((resolve, reject) => {
         nonManagerialEmployeeModel.findOne({ email: nonManagerialEmployeeDetails.email })
@@ -142,4 +145,40 @@ function sendVerificationEmail(email, verificationToken) {
         // Handle errors during MongoDB operations
         throw { status: false, msg: "Error updating employee verification status", error };
     }
+};
+
+module.exports.resendVerificationService = (bodyData) => {
+    return new Promise((resolve, reject) => {
+        const { email } = bodyData;
+        
+        if (!email) {
+            reject({ message: 'Email is required' });
+            return;
+        }
+        
+        // Generate a new verification token using UUID
+        const verificationToken = uuidv4();
+
+        // Find the employee by email
+        nonManagerialEmployeeModel.findOne({ email: email })
+            .then(employee => {
+                if (!employee) {
+                    reject({ message: 'Employee not found' });
+                } else {
+                    // Update the verification token in the database
+                    employee.verificationToken = verificationToken;
+
+                    // Save the updated employee data
+                    employee.save()
+                        .then(() => {
+                            // Send the verification email
+                            sendVerificationEmail(email, verificationToken)
+                                .then(() => resolve({ message: 'Verification email sent successfully' }))
+                                .catch(err => reject({ message: 'Failed to send verification email', error: err }));
+                        })
+                        .catch(err => reject({ message: 'Failed to update verification token', error: err }));
+                }
+            })
+            .catch(err => reject({ message: 'Database query failed', error: err }));
+    });
 };

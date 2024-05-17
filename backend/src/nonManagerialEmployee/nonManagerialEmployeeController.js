@@ -71,6 +71,38 @@ var verifyAccountControllerFn = async (req, res) => {
     }
 };
 
+var resendVerificationControllerFn = async (req, res) => {
+    try {
+        // Extract the email from the request body
+        const { email } = req.body;
+
+        // Call the resendVerificationService function with the email
+        const result = await  nonManagerialEmployeeService.resendVerificationService({ email });
+
+        // Handle the result from the service function
+        if (result) {
+            // If resending verification email is successful, send success response
+            res.status(200).json({
+                status: true,
+                message: 'Verification email sent successfully'
+            });
+        } else {
+            // If there is some issue in resending verification email, send error response
+            res.status(400).json({
+                status: false,
+                message: 'Failed to resend verification email'
+            });
+        }
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error(error);
+        res.status(500).json({
+            status: false,
+            message: 'Error resending verification email'
+        });
+    }
+};
+
 var getAllEmployeesControllerFn = async (req, res) => {
     try {
 
@@ -93,4 +125,9 @@ var getAllEmployeesControllerFn = async (req, res) => {
     }
   };
 
-module.exports = { createnonManagerialEmployeeControllerFn,loginUserControllerFn,getAllEmployeesControllerFn,verifyAccountControllerFn };
+module.exports = { createnonManagerialEmployeeControllerFn,
+                   loginUserControllerFn,
+                   getAllEmployeesControllerFn,
+                   verifyAccountControllerFn,
+                   resendVerificationControllerFn
+                 };
