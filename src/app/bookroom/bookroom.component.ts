@@ -122,40 +122,19 @@ export class BookroomComponent {
           if (resultData.status) {
             console.log('Calendar data received:', resultData);
 
-            // Extract array data for Meeting Room 1
-            const meetingRoom1Array = resultData.calendarInfo["Meeting Room 1"];
-            console.log("Meeting Room 1 timeslots:", meetingRoom1Array);
+            const meetingRooms : any = []; // Initialize an empty array to store meeting rooms
 
-            const meetingRoom2Array = resultData.calendarInfo["Meeting Room 2"];
-            console.log("Meeting Room 2 timeslots:", meetingRoom2Array);
-
-            this.retrievedMeetingRoomOneCalendarInfos = meetingRoom1Array
-            this.retrievedMeetingRoomTwoCalendarInfos = meetingRoom2Array
-
-            if (meetingRoom1Array === undefined || meetingRoom1Array.length === 0) {
-              console.log("meetingRoom1Array is empty")
-              this.retrievedMeetingRoomOneCalendarInfos = [];
-          } else {
-            console.log("meetingRoom1Array is NOT empty")
-            this.retrievedMeetingRoomOneCalendarInfos = meetingRoom1Array;
-           
-          }
-
-          if (meetingRoom2Array === undefined || meetingRoom2Array.length === 0) {
-            console.log("meetingRoom2Array is empty")
-            this.retrievedMeetingRoomTwoCalendarInfos = [];
-        } else {
-          console.log("meetingRoom2Array is NOT empty")
-          this.retrievedMeetingRoomTwoCalendarInfos = meetingRoom2Array;
-         
-        }
-
-
-            this.meetingRooms = [
-              { name: 'Meeting Room 1', calendarInfos: this.retrievedMeetingRoomOneCalendarInfos },
-              { name: 'Meeting Room 2', calendarInfos: this.retrievedMeetingRoomTwoCalendarInfos },
-              { name: 'Meeting Room 3', calendarInfos: [''] }
-            ]; 
+            // Iterate through each meeting room name and construct the meeting room object
+            this.meetingRoomNames.forEach(name => {
+              // Extract array data for the current meeting room
+              const calendarInfoArray = resultData.calendarInfo[name] || []; // Use default empty array if data is undefined
+    
+              // Push the meeting room object into the meetingRooms array
+              meetingRooms.push({ name: name, calendarInfos: calendarInfoArray });
+            });
+    
+            // Update the meetingRooms property with the dynamically created array
+            this.meetingRooms = meetingRooms;
           }
         });
         
