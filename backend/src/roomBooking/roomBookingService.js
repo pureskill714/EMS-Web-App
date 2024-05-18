@@ -345,7 +345,7 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
         await client.connect();
         const database = client.db(dbName);
         const collectionName = 'bookings';
-        
+
         // Define the fixed list of timeslots in the desired order
         const timeslotOrder = [
             '09:00-10:00',
@@ -364,7 +364,6 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
             {
                 $match: {
                     "date": { $eq: new Date(requestData.date) }
-                    
                 }
             },
             // Add a new field 'timeslotOrderIndex' based on the index of timeslot in timeslotOrder
@@ -398,6 +397,24 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
                     bookings: { $push: "$bookings" }
                 }
             },
+            // Lookup meeting room details from the meetingrooms collection
+            {
+                $lookup: {
+                    from: "meetingrooms",
+                    localField: "meetingRoom",
+                    foreignField: "name",
+                    as: "roomDetails"
+                }
+            },
+            // Unwind the roomDetails array
+            {
+                $unwind: "$roomDetails"
+            },
+            // Sort by roomOrder
+            {
+                $sort: { "roomDetails.roomOrder": 1 }
+            },
+            // Project the final result
             {
                 $project: {
                     _id: 0,

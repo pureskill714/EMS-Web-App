@@ -144,12 +144,7 @@ export class BookroomComponent {
         this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
-          console.log("masuk")
-          console.log(resultData);
-
-          if (resultData.status) {
-            console.log('Calendar details received (All Meeting Room ):', resultData);
-          }
+          console.log('Calendar details received (All Meeting Room ):' + resultData);
         });
 
       }
