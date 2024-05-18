@@ -344,7 +344,6 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
         const database = client.db(dbName);
-        const collectionName = 'bookings';
 
         // Define the fixed list of timeslots in the desired order
         const timeslotOrder = [
@@ -359,73 +358,84 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
             '17:00-18:00'
         ];
 
+        // Define the query date
+        const queryDate = new Date(requestData.date);
+
         // Construct MongoDB aggregation pipeline
         const pipeline = [
+            // Lookup bookings for each meeting room
             {
-                $match: {
-                    "date": { $eq: new Date(requestData.date) }
+                $lookup: {
+                    from: "bookings",
+                    let: { roomName: "$name" },
+                    pipeline: [
+                        {
+                            $match: {
+                                $expr: {
+                                    $and: [
+                                        { $eq: ["$date", queryDate] },
+                                        { $eq: ["$meetingRoom", "$$roomName"] }
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            $addFields: {
+                                timeslotOrderIndex: { $indexOfArray: [timeslotOrder, { $arrayElemAt: ["$timeslots", 0] }] }
+                            }
+                        },
+                        {
+                            $sort: { timeslotOrderIndex: 1 }
+                        }
+                    ],
+                    as: "bookings"
                 }
             },
-            // Add a new field 'timeslotOrderIndex' based on the index of timeslot in timeslotOrder
+            // Unwind bookings to sort them by timeslotOrderIndex
             {
-                $addFields: {
-                    timeslotOrderIndex: { $indexOfArray: [timeslotOrder, { $arrayElemAt: ["$timeslots", 0] }] }
+                $unwind: {
+                    path: "$bookings",
+                    preserveNullAndEmptyArrays: true
                 }
             },
+            // Sort by roomOrder (from meeting rooms) and timeslotOrderIndex (from bookings)
             {
-                $group: {
-                    _id: "$meetingRoom",
-                    meetingRoom: { $first: "$meetingRoom" },
-                    bookings: { $push: "$$ROOT" }
+                $sort: {
+                    roomOrder: 1,
+                    "bookings.timeslotOrderIndex": 1
                 }
             },
-            // Remove documents where meetingRoom is null
-            {
-                $match: { meetingRoom: { $ne: null } }
-            },
-            // Sort the bookings within each meeting room group by timeslotOrderIndex
-            {
-                $unwind: "$bookings"
-            },
-            {
-                $sort: { "bookings.timeslotOrderIndex": 1 }
-            },
+            // Group back to consolidate bookings under their respective meeting rooms
             {
                 $group: {
                     _id: "$_id",
-                    meetingRoom: { $first: "$meetingRoom" },
-                    bookings: { $push: "$bookings" }
+                    meetingRoom: { $first: "$name" },
+                    bookings: { $push: "$bookings" },
+                    roomOrder: { $first: "$roomOrder" }
                 }
-            },
-            // Lookup meeting room details from the meetingrooms collection
-            {
-                $lookup: {
-                    from: "meetingrooms",
-                    localField: "meetingRoom",
-                    foreignField: "name",
-                    as: "roomDetails"
-                }
-            },
-            // Unwind the roomDetails array
-            {
-                $unwind: "$roomDetails"
-            },
-            // Sort by roomOrder
-            {
-                $sort: { "roomDetails.roomOrder": 1 }
             },
             // Project the final result
             {
                 $project: {
                     _id: 0,
                     meetingRoom: 1,
-                    bookings: 1
+                    bookings: {
+                        $filter: {
+                            input: "$bookings",
+                            as: "booking",
+                            cond: { $ne: ["$$booking", null] }
+                        }
+                    }
                 }
+            },
+            // Sort by roomOrder again to ensure the final output order is correct
+            {
+                $sort: { roomOrder: 1 }
             }
         ];
 
         // Execute aggregation pipeline
-        const result = await database.collection(collectionName).aggregate(pipeline).toArray();
+        const result = await database.collection('meetingrooms').aggregate(pipeline).toArray();
 
         // Close MongoDB client connection
         await client.close();
