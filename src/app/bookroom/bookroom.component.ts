@@ -28,12 +28,13 @@ export class BookroomComponent {
   meetingRoomOneSelected : boolean = false;
   meetingRoomTwoSelected : boolean = false;
 
+  retrievedMeetingRoomNames : any = [];
+  meetingRoomNames : string[] = []; 
+  
+
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
-  meetingRooms = [
-    { name: 'Meeting Room 1', calendarInfos: [''] },
-    { name: 'Meeting Room 2', calendarInfos: [''] }
-  ];
+  meetingRooms : any = [];
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
@@ -55,6 +56,44 @@ export class BookroomComponent {
     } else {
       alert("THIS IS FAIL")
     }
+
+    this.http.get("http://localhost:9992/getmeetingrooms").subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+  
+          // Check if the response contains data and handle accordingly
+        if (resultData) {
+          console.log("retrieved meeting room names success");
+          this.retrievedMeetingRoomNames = resultData
+          console.log(this.retrievedMeetingRoomNames);
+          console.log(this.retrievedMeetingRoomNames[0].name);
+
+        // Loop through each object in the array
+        for (let i = 0; i < this.retrievedMeetingRoomNames.length; i++) {
+          // Extract the name property and add it to the string list
+          this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
+        }
+
+        console.log(this.meetingRoomNames);
+
+        // Loop through each meeting room name
+        this.meetingRoomNames.forEach(name => {
+          // Create a meeting room object with the name and an empty calendarInfos array
+          const meetingRoom = { name: name, calendarInfos: [''] };
+
+          // Add the meeting room object to the meetingRooms array
+          this.meetingRooms.push(meetingRoom);
+        });
+        
+        console.log(this.meetingRooms)
+
+        }
+        else {
+          console.log("retrieved meeting room names failed");
+        }
+      }
+      );
+
   }
 
   toggleCalendarView(): void {
@@ -65,10 +104,7 @@ export class BookroomComponent {
     this.showBookingList = false;
     this.showPastBookings = false;
 
-    this.meetingRooms = [
-      { name: 'Meeting Room 1', calendarInfos: [''] },
-      { name: 'Meeting Room 2', calendarInfos: [''] }
-    ];
+    //this.meetingRooms = [];
 
     this.retrievedCalendarDetailsMeetingRoomOne  = [];
     this.retrievedCalendarDetailsMeetingRoomTwo  = [];
@@ -117,7 +153,8 @@ export class BookroomComponent {
 
             this.meetingRooms = [
               { name: 'Meeting Room 1', calendarInfos: this.retrievedMeetingRoomOneCalendarInfos },
-              { name: 'Meeting Room 2', calendarInfos: this.retrievedMeetingRoomTwoCalendarInfos }
+              { name: 'Meeting Room 2', calendarInfos: this.retrievedMeetingRoomTwoCalendarInfos },
+              { name: 'Meeting Room 3', calendarInfos: [''] }
             ]; 
           }
         });
