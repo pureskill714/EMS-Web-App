@@ -110,13 +110,13 @@ const retrieveCalendarDetails = async (req, res) => {
     }
 };
 
-const retrieveCalendarMeetingRoomOneDetails = async (req, res) => {
+const retrieveCalendarMeetingRoomDetails = async (req, res) => {
     try {
         // Log the request body (optional)
         console.log(req.body);
 
         // Call the roomBookingService to retrieve calendar details using request data
-        const calendarDetailsMeetingRoomOne = await roomBookingService.retrieveCalendarMeetingRoomOneDetails(req.body);
+        const calendarDetailsMeetingRoomOne = await roomBookingService.retrieveCalendarMeetingRoomDetails(req.body);
 
         if (calendarDetailsMeetingRoomOne && calendarDetailsMeetingRoomOne.length > 0) {
             // Check if calendarDetailsMeetingRoomOneis not empty

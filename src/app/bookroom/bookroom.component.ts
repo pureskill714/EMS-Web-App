@@ -39,6 +39,7 @@ export class BookroomComponent {
   showBookingList: boolean = true;
   showPastBookings: boolean = false;
   selectedDate: Date | null = null;
+  selectedMeetingRooms: boolean[] = [];
 
   ngOnInit() {
     const userData = this.authService.getUserData();
@@ -288,12 +289,12 @@ export class BookroomComponent {
     })     
     }
 
-    showMeetingRoomOneDetails(): void {
-      this.meetingRoomOneSelected = !this.meetingRoomOneSelected;
-    }
+    showMeetingRoomDetails(index: number) {
+      // Toggle the selected state for the clicked meeting room
+      this.selectedMeetingRooms[index] = !this.selectedMeetingRooms[index];
   
-    showMeetingRoomTwoDetails(): void {
-      this.meetingRoomTwoSelected = !this.meetingRoomTwoSelected;
+      // Optionally: Add your logic to handle displaying meeting room details
+      console.log(`Showing details for ${this.meetingRoomNames[index]}`);
     }
 
   }

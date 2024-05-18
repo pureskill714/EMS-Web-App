@@ -135,24 +135,15 @@
                 </div>
                 <br>
                 <div class="button-container">
-
-                    <button (click)="showMeetingRoomOneDetails()">
-                        <span *ngIf="!meetingRoomOneSelected">Meeting Room 1 Details</span>
-                        <span *ngIf="meetingRoomOneSelected">Meeting Room 1 Details</span>
-                        <i class="bi bi-toggle2-off ms-2" *ngIf="!meetingRoomOneSelected"></i>
-                        <i class="bi bi-toggle2-on ms-2" *ngIf="meetingRoomOneSelected"></i>
-                      </button>
-
-                      <button (click)="showMeetingRoomTwoDetails()">
-                        <span *ngIf="!meetingRoomTwoSelected">Meeting Room 2 Details</span>
-                        <span *ngIf="meetingRoomTwoSelected">Meeting Room 2 Details</span>
-                        <i class="bi bi-toggle2-off ms-2" *ngIf="!meetingRoomTwoSelected"></i>
-                        <i class="bi bi-toggle2-on ms-2" *ngIf="meetingRoomTwoSelected"></i>
-                      </button>
-
-
+                    <button *ngFor="let room of meetingRoomNames; let i = index" (click)="showMeetingRoomDetails(i)">
+                      <span *ngIf="!selectedMeetingRooms[i]">{{ room }} Details</span>
+                      <span *ngIf="selectedMeetingRooms[i]">{{ room }} Details</span>
+                      <i class="bi bi-toggle2-off ms-2" *ngIf="!selectedMeetingRooms[i]"></i>
+                      <i class="bi bi-toggle2-on ms-2" *ngIf="selectedMeetingRooms[i]"></i>
+                    </button>
                   </div>
-                <!-- load showmeetingroomoneDetails-->
+
+                <!-- load showmeetingroomoneDetails
                     <ng-container *ngIf="meetingRoomOneSelected == true">
                         <br>
                         <h3>Meeting Room 1 Details</h3>
@@ -169,10 +160,10 @@
 
                           <tbody>
                             <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomOne">
-                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> 
                                 <td>
                                     <ul>
-                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> 
                                     </ul>
                                 </td>
                                 <td>{{ calendar.purpose }}</td>
@@ -199,10 +190,10 @@
 
                           <tbody>
                             <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomTwo">
-                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> <!-- Apply date pipe to format the date -->
+                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> 
                                 <td>
                                     <ul>
-                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> <!-- Change 'timeSlots' to 'timeslots' -->
+                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> 
                                     </ul>
                                 </td>
                                 <td>{{ calendar.purpose }}</td>
@@ -211,7 +202,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    </ng-container>
+                    </ng-container>-->
                     
             </div>
         </div>
