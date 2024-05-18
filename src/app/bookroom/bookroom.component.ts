@@ -16,11 +16,6 @@ import { BookingCancellationDialogComponent } from './booking-cancellation-dialo
 export class BookroomComponent {
   retrievedBookingInfos: any = [];
   retrievedPastBookingInfos : any = [];
-  retrievedMeetingRoomOneCalendarInfos: any = [];
-  retrievedMeetingRoomTwoCalendarInfos: any = [];
-
-  meetingRoomOneCalendartimeSlotsArray: string[] = [];
-  meetingRoomTwoCalendartimeSlotsArray: string[] = [];
 
   retrievedCalendarDetailsMeetingRoomOne: any = [];
   retrievedCalendarDetailsMeetingRoomTwo: any = [];
@@ -29,9 +24,8 @@ export class BookroomComponent {
   meetingRoomTwoSelected : boolean = false;
 
   retrievedMeetingRoomNames : any = [];
-  meetingRoomNames : string[] = []; 
+  meetingRoomNames : string[] = [];
   
-
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
   meetingRooms : any = [];
@@ -104,7 +98,16 @@ export class BookroomComponent {
     this.showBookingList = false;
     this.showPastBookings = false;
 
-    //this.meetingRooms = [];
+    this.meetingRooms = [];
+
+     // Loop through each meeting room name
+     this.meetingRoomNames.forEach(name => {
+      // Create a meeting room object with the name and an empty calendarInfos array
+      const meetingRoom = { name: name, calendarInfos: [''] };
+
+      // Add the meeting room object to the meetingRooms array
+      this.meetingRooms.push(meetingRoom);
+    });
 
     this.retrievedCalendarDetailsMeetingRoomOne  = [];
     this.retrievedCalendarDetailsMeetingRoomTwo  = [];
