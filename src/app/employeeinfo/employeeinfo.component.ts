@@ -30,7 +30,6 @@ export class EmployeeinfoComponent implements OnInit {
         if (resultData) {
           console.log("retrieved employee data success");
           this.retrievedEmployeeDetails = resultData;
-          console.log(this.retrievedEmployeeDetails[0])
         }
         else {
           console.log("retrieved employee data failed");

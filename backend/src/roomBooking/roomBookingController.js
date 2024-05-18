@@ -1,4 +1,5 @@
 const roomBookingService = require('./roomBookingService');
+const { MongoClient, ObjectId } = require('mongodb');
 
 const createRoomBookingControllerFn = async (req, res) => {
     try {
@@ -169,6 +170,28 @@ const cancelBookingControllerFn = async (req, res) => {
     }
 };
 
+var getMeetingRoomsControllerFn = async (req, res) => {
+    try {
+
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const collection = database.collection('meetingrooms');
+
+
+      // Fetch all meeting room names from MongoDB
+      const meetingRooms = await collection.find({}, { projection: { name: 1, _id: 0 } }).toArray();
+  
+      // Respond with the retrieved employees
+      res.status(200).json(meetingRooms);
+    } catch (error) {
+      console.error('Error fetching meeting room names', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
 
 module.exports = {
     createRoomBookingControllerFn,
@@ -179,5 +202,6 @@ module.exports = {
     retrieveCalendarDetails,
     retrieveCalendarMeetingRoomOneDetails,
     retrieveCalendarMeetingRoomTwoDetails,
-    cancelBookingControllerFn
+    cancelBookingControllerFn,
+    getMeetingRoomsControllerFn
 };

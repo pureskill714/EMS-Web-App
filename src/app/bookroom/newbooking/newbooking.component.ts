@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { BookingConfirmationDialogComponent } from '../booking-confirmation-dialog/booking-confirmation-dialog.component';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './newbooking.component.html',
   styleUrl: './newbooking.component.css'
 })
-export class NewbookingComponent {
+export class NewbookingComponent implements OnInit {
   selectedDate: string | null = null;
   selectedRoom: string | null = null;
   showTimeSlots: boolean = false;
@@ -21,6 +21,8 @@ export class NewbookingComponent {
   retrievedTimeSlots: string[] = [];
   minDate: string; // Define minDate property
 
+  retrievedMeetingRoomNames : any = [];
+  meetingRooms: string[] = []; // Add more rooms as needed
   bookedDetailsSelected : boolean = false;
 
     // Define your time slots here
@@ -37,6 +39,36 @@ export class NewbookingComponent {
   ];
 
   retrievedCalendarDetails: any[] = []
+
+  ngOnInit(): void {
+
+    this.http.get("http://localhost:9992/getmeetingrooms").subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+  
+          // Check if the response contains data and handle accordingly
+        if (resultData) {
+          console.log("retrieved meeting room names success");
+          this.retrievedMeetingRoomNames = resultData
+          console.log(this.retrievedMeetingRoomNames);
+          console.log(this.retrievedMeetingRoomNames[0].name);
+
+        // Loop through each object in the array
+        for (let i = 0; i < this.retrievedMeetingRoomNames.length; i++) {
+          // Extract the name property and add it to the string list
+          this.meetingRooms.push(this.retrievedMeetingRoomNames[i].name);
+        }
+
+        console.log(this.meetingRooms);
+
+        }
+        else {
+          console.log("retrieved meeting room names failed");
+        }
+      }
+      );
+
+  }
 
   constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router) {
     // Initialize minDate to the current date

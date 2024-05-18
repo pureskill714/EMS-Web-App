@@ -13,6 +13,8 @@ router.route('/resend-verification').post(nonManagerialEmployeeController.resend
 
 router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployeesControllerFn);
 
+
+router.get('/getmeetingrooms', roomBookingController.getMeetingRoomsControllerFn);
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);
