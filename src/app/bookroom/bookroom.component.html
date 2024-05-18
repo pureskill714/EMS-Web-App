@@ -143,66 +143,36 @@
                     </button>
                   </div>
 
-                <!-- load showmeetingroomoneDetails
-                    <ng-container *ngIf="meetingRoomOneSelected == true">
-                        <br>
-                        <h3>Meeting Room 1 Details</h3>
-                        <table>
+                  <div *ngFor="let room of meetingRoomNames; let i = index" class="room-details-container">
+                    <ng-container *ngIf="selectedMeetingRooms[i]">
+                      <br>
+                      <h3>{{ room }} Details</h3>
+                      <table>
                         <thead>
-                            <tr>
-                              <th>Date</th>
-                              <th>Time Slots</th>
-                              <th>Purpose</th>
-                              <th>Name</th>
-                              <th>Email</th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomOne">
-                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> 
-                                <td>
-                                    <ul>
-                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> 
-                                    </ul>
-                                </td>
-                                <td>{{ calendar.purpose }}</td>
-                                <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
-                                <td>{{ calendar.email }}</td>
-                            </tr>
+                          <tr>
+                            <th>Date</th>
+                            <th>Time Slots</th>
+                            <th>Purpose</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let calendar of retrievedAllMeetingRoomDetails[i].bookings">
+                            <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td>
+                            <td>
+                              <ul>
+                                <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li>
+                              </ul>
+                            </td>
+                            <td>{{ calendar.purpose }}</td>
+                            <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
+                            <td>{{ calendar.email }}</td>
+                          </tr>
                         </tbody>
-                    </table>
+                      </table>
                     </ng-container>
-                    
-                    <ng-container *ngIf="meetingRoomTwoSelected == true">
-                        <br>
-                        <h3>Meeting Room 2 Details</h3>
-                        <table>
-                        <thead>
-                            <tr>
-                              <th>Date</th>
-                              <th>Time Slots</th>
-                              <th>Purpose</th>
-                              <th>Name</th>
-                              <th>Email</th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            <tr *ngFor="let calendar of this.retrievedCalendarDetailsMeetingRoomTwo">
-                                <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td> 
-                                <td>
-                                    <ul>
-                                        <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li> 
-                                    </ul>
-                                </td>
-                                <td>{{ calendar.purpose }}</td>
-                                <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
-                                <td>{{ calendar.email }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </ng-container>-->
+                  
                     
             </div>
         </div>

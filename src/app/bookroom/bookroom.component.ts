@@ -29,6 +29,7 @@ export class BookroomComponent {
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
   meetingRooms : any = [];
+  retrievedAllMeetingRoomDetails : any = [];
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
@@ -61,7 +62,6 @@ export class BookroomComponent {
           console.log("retrieved meeting room names success");
           this.retrievedMeetingRoomNames = resultData
           console.log(this.retrievedMeetingRoomNames);
-          console.log(this.retrievedMeetingRoomNames[0].name);
 
         // Loop through each object in the array
         for (let i = 0; i < this.retrievedMeetingRoomNames.length; i++) {
@@ -110,9 +110,6 @@ export class BookroomComponent {
       this.meetingRooms.push(meetingRoom);
     });
 
-    this.retrievedCalendarDetailsMeetingRoomOne  = [];
-    this.retrievedCalendarDetailsMeetingRoomTwo  = [];
-
     let bodyData = {
       "date": this.selectedDate,
     };
@@ -144,7 +141,11 @@ export class BookroomComponent {
         this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
-          console.log('Calendar details received (All Meeting Room ):' + resultData);
+          console.log("received all meeting room details")
+          console.log(resultData);
+          //console.log(resultData[0]);
+          this.retrievedAllMeetingRoomDetails = resultData;
+          console.log(this.retrievedAllMeetingRoomDetails[0].bookings[0].date)
         });
 
       }
