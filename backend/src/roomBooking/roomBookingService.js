@@ -391,46 +391,23 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
                     as: "bookings"
                 }
             },
-            // Unwind bookings to sort them by timeslotOrderIndex
+            // Ensure the bookings array is always present
             {
-                $unwind: {
-                    path: "$bookings",
-                    preserveNullAndEmptyArrays: true
+                $addFields: {
+                    bookings: { $ifNull: ["$bookings", []] }
                 }
             },
-            // Sort by roomOrder (from meeting rooms) and timeslotOrderIndex (from bookings)
+            // Sort by roomOrder
             {
-                $sort: {
-                    roomOrder: 1,
-                    "bookings.timeslotOrderIndex": 1
-                }
-            },
-            // Group back to consolidate bookings under their respective meeting rooms
-            {
-                $group: {
-                    _id: "$_id",
-                    meetingRoom: { $first: "$name" },
-                    bookings: { $push: "$bookings" },
-                    roomOrder: { $first: "$roomOrder" }
-                }
+                $sort: { roomOrder: 1 }
             },
             // Project the final result
             {
                 $project: {
                     _id: 0,
-                    meetingRoom: 1,
-                    bookings: {
-                        $filter: {
-                            input: "$bookings",
-                            as: "booking",
-                            cond: { $ne: ["$$booking", null] }
-                        }
-                    }
+                    meetingRoom: "$name",
+                    bookings: 1
                 }
-            },
-            // Sort by roomOrder again to ensure the final output order is correct
-            {
-                $sort: { roomOrder: 1 }
             }
         ];
 
