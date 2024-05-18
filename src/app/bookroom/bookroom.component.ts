@@ -115,7 +115,6 @@ export class BookroomComponent {
 
     let bodyData = {
       "date": this.selectedDate,
-      //"email": this.userDataService.getEmail(),
     };
 
     this.http.post<any>('http://localhost:9992/retrievecalendarinfos', bodyData)
@@ -142,32 +141,16 @@ export class BookroomComponent {
           }
         });
         
-        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom1details', bodyData)
+        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
+          console.log("masuk")
           console.log(resultData);
 
           if (resultData.status) {
-            console.log('Calendar details received (Meeting Room 1):', resultData);
-            this.retrievedCalendarDetailsMeetingRoomOne = resultData.calendarDetailsMeetingRoomOne;
-            console.log(this.retrievedCalendarDetailsMeetingRoomOne);
-           
+            console.log('Calendar details received (All Meeting Room ):', resultData);
           }
         });
-
-        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom2details', bodyData)
-      .subscribe(
-        (resultData: any) => {
-          console.log(resultData);
-
-          if (resultData.status) {
-            console.log('Calendar details received (Meeting Room 2):', resultData);
-            this.retrievedCalendarDetailsMeetingRoomTwo = resultData.calendarDetailsMeetingRoomTwo;
-            console.log(this.retrievedCalendarDetailsMeetingRoomTwo);
-           
-          }
-        });
-        
 
       }
           

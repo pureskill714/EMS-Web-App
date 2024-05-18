@@ -337,7 +337,7 @@ module.exports.retrieveCalendarDetails = async (requestData) => {
     }
 };
 
-module.exports.retrieveCalendarMeetingRoomOneDetails = async (requestData) => {
+module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';
         const dbName = 'ems';
@@ -361,11 +361,10 @@ module.exports.retrieveCalendarMeetingRoomOneDetails = async (requestData) => {
 
         // Construct MongoDB aggregation pipeline
         const pipeline = [
-            // Match documents where meetingRoom is "Meeting Room 1" and date is '2024-05-11'
             {
                 $match: {
-                    meetingRoom: "Meeting Room 1",
                     "date": { $eq: new Date(requestData.date) }
+                    
                 }
             },
             // Add a new field 'timeslotOrderIndex' based on the index of timeslot in timeslotOrder
@@ -374,8 +373,38 @@ module.exports.retrieveCalendarMeetingRoomOneDetails = async (requestData) => {
                     timeslotOrderIndex: { $indexOfArray: [timeslotOrder, { $arrayElemAt: ["$timeslots", 0] }] }
                 }
             },
-            // Sort documents by 'timeslotOrderIndex' (ascending) and '_id' (ascending by default)
-            { $sort: { timeslotOrderIndex: 1 } }
+            {
+                $group: {
+                    _id: "$meetingRoom",
+                    meetingRoom: { $first: "$meetingRoom" },
+                    bookings: { $push: "$$ROOT" }
+                }
+            },
+            // Remove documents where meetingRoom is null
+            {
+                $match: { meetingRoom: { $ne: null } }
+            },
+            // Sort the bookings within each meeting room group by timeslotOrderIndex
+            {
+                $unwind: "$bookings"
+            },
+            {
+                $sort: { "bookings.timeslotOrderIndex": 1 }
+            },
+            {
+                $group: {
+                    _id: "$_id",
+                    meetingRoom: { $first: "$meetingRoom" },
+                    bookings: { $push: "$bookings" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    meetingRoom: 1,
+                    bookings: 1
+                }
+            }
         ];
 
         // Execute aggregation pipeline
@@ -389,60 +418,6 @@ module.exports.retrieveCalendarMeetingRoomOneDetails = async (requestData) => {
         throw error;
     }
 };
-
-module.exports.retrieveCalendarMeetingRoomTwoDetails = async (requestData) => {
-    try {
-        const uri = 'mongodb://localhost:27017';
-        const dbName = 'ems';
-        const client = new MongoClient(uri, { useUnifiedTopology: true });
-        await client.connect();
-        const database = client.db(dbName);
-        const collectionName = 'bookings';
-        
-        // Define the fixed list of timeslots in the desired order
-        const timeslotOrder = [
-            '09:00-10:00',
-            '10:00-11:00',
-            '11:00-12:00',
-            '12:00-13:00',
-            '13:00-14:00',
-            '14:00-15:00',
-            '15:00-16:00',
-            '16:00-17:00',
-            '17:00-18:00'
-        ];
-
-        // Construct MongoDB aggregation pipeline
-        const pipeline = [
-            // Match documents where meetingRoom is "Meeting Room 1" and date is '2024-05-11'
-            {
-                $match: {
-                    meetingRoom: "Meeting Room 2",
-                    "date": { $eq: new Date(requestData.date) }
-                }
-            },
-            // Add a new field 'timeslotOrderIndex' based on the index of timeslot in timeslotOrder
-            {
-                $addFields: {
-                    timeslotOrderIndex: { $indexOfArray: [timeslotOrder, { $arrayElemAt: ["$timeslots", 0] }] }
-                }
-            },
-            // Sort documents by 'timeslotOrderIndex' (ascending) and '_id' (ascending by default)
-            { $sort: { timeslotOrderIndex: 1 } }
-        ];
-
-        // Execute aggregation pipeline
-        const result = await database.collection(collectionName).aggregate(pipeline).toArray();
-
-        // Close MongoDB client connection
-        await client.close();
-
-        return result;
-    } catch (error) {
-        throw error;
-    }
-};
-
 
 module.exports.cancelBooking = async (requestData) => {
     try {

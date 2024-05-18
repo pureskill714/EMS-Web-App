@@ -110,43 +110,14 @@ const retrieveCalendarDetails = async (req, res) => {
     }
 };
 
-const retrieveCalendarMeetingRoomDetails = async (req, res) => {
+const retrieveCalendarMeetingRoomDetailsControllerFn = async (req, res) => {
     try {
-        // Log the request body (optional)
-        console.log(req.body);
-
-        // Call the roomBookingService to retrieve calendar details using request data
-        const calendarDetailsMeetingRoomOne = await roomBookingService.retrieveCalendarMeetingRoomDetails(req.body);
-
-        if (calendarDetailsMeetingRoomOne && calendarDetailsMeetingRoomOne.length > 0) {
-            // Check if calendarDetailsMeetingRoomOneis not empty
-            res.status(200).json({ status: true, calendarDetailsMeetingRoomOne: calendarDetailsMeetingRoomOne });
-        } else {
-            // Handle case where no calendar information is found
-            res.status(404).json({ status: false, message: "No calendar details found." });
-        }
-    } catch (error) {
-        // Handle server error
-        console.error("Error retrieving calendar details:", error);
-        res.status(500).json({ status: false, message: "Internal server error." });
-    }
-};
-
-const retrieveCalendarMeetingRoomTwoDetails = async (req, res) => {
-    try {
-        // Log the request body (optional)
-        console.log(req.body);
-
-        // Call the roomBookingService to retrieve calendar details using request data
-        const calendarDetailsMeetingRoomTwo = await roomBookingService.retrieveCalendarMeetingRoomTwoDetails(req.body);
-
-        if (calendarDetailsMeetingRoomTwo && calendarDetailsMeetingRoomTwo.length > 0) {
-            // Check if calendarDetailsMeetingRoomOneis not empty
-            res.status(200).json({ status: true, calendarDetailsMeetingRoomTwo: calendarDetailsMeetingRoomTwo });
-        } else {
-            // Handle case where no calendar information is found
-            res.status(404).json({ status: false, message: "No calendar details found." });
-        }
+        console.log(req.body); // Log request body for debugging if needed
+        
+        // Call the service function to retrieve calendar details using request data
+        const calendarDetailsAllMeetingRoom = await roomBookingService.retrieveCalendarMeetingRoomDetails(req.body);
+        
+        res.status(200).json(calendarDetailsAllMeetingRoom);
     } catch (error) {
         // Handle server error
         console.error("Error retrieving calendar details:", error);
@@ -200,8 +171,7 @@ module.exports = {
     retrievePastBookingInfosControllerFn,
     retrieveCalendarInfosControllerFn,
     retrieveCalendarDetails,
-    retrieveCalendarMeetingRoomOneDetails,
-    retrieveCalendarMeetingRoomTwoDetails,
+    retrieveCalendarMeetingRoomDetailsControllerFn ,
     cancelBookingControllerFn,
     getMeetingRoomsControllerFn
 };
