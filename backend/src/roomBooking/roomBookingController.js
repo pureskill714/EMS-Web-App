@@ -142,26 +142,28 @@ const cancelBookingControllerFn = async (req, res) => {
 };
 
 var getMeetingRoomsControllerFn = async (req, res) => {
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'ems';
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    
     try {
-
-        const uri = 'mongodb://localhost:27017';
-        const dbName = 'ems';
-        const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
         const database = client.db(dbName);
         const collection = database.collection('meetingrooms');
 
+        // Fetch all meeting room names sorted by roomOrder field from MongoDB
+        const meetingRooms = await collection.find({}, { projection: { name: 1, _id: 0 } }).sort({ roomOrder: 1 }).toArray();
 
-      // Fetch all meeting room names from MongoDB
-      const meetingRooms = await collection.find({}, { projection: { name: 1, _id: 0 } }).toArray();
-  
-      // Respond with the retrieved employees
-      res.status(200).json(meetingRooms);
+        // Respond with the retrieved meeting rooms
+        res.status(200).json(meetingRooms);
     } catch (error) {
-      console.error('Error fetching meeting room names', error);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error('Error fetching meeting room names', error);
+        res.status(500).json({ error: 'Internal server error' });
+    } finally {
+        // Ensure the client is closed in case of error or success
+        await client.close();
     }
-  };
+};
 
 
 module.exports = {
