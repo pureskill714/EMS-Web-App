@@ -20,9 +20,7 @@
         <div class="dropdown">
             <label for="roomselection">Room</label>
             <select id="roomselection" [(ngModel)]="selectedRoom" (ngModelChange)="onRoomChange(); checkInputs()" [disabled]="!selectedDate">
-                <option value="Meeting Room 1">Meeting Room 1</option>
-                <option value="Meeting Room 2">Meeting Room 2</option>
-                <!-- Add more room options as needed -->
+              <option *ngFor="let room of meetingRooms" [value]="room">{{ room }}</option>
             </select>
         </div>
         <div class="dropdown">
@@ -66,6 +64,7 @@
           <tr>
             <th>Date</th>
             <th>Time Slots</th>
+            <th>Meeting Room</th>
             <th>Purpose</th>
             <th>Name</th>
             <th>Email</th>
@@ -79,6 +78,7 @@
                 <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li>
               </ul>
             </td>
+            <td>{{ calendar.meetingRoom }}</td>
             <td>{{ calendar.purpose }}</td>
             <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
             <td>{{ calendar.email }}</td>

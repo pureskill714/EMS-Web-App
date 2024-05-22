@@ -13,14 +13,16 @@ router.route('/resend-verification').post(nonManagerialEmployeeController.resend
 
 router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployeesControllerFn);
 
+
+router.get('/getmeetingrooms', roomBookingController.getMeetingRoomsControllerFn);
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);
 router.route('/retrievepastbookinginfos').post(roomBookingController.retrievePastBookingInfosControllerFn);
+
 router.route('/retrievecalendarinfos').post(roomBookingController.retrieveCalendarInfosControllerFn);
 router.route('/retrievecalendardetails').post(roomBookingController.retrieveCalendarDetails);
-router.route('/retrievecalendarmeetingroom1details').post(roomBookingController.retrieveCalendarMeetingRoomOneDetails);
-router.route('/retrievecalendarmeetingroom2details').post(roomBookingController.retrieveCalendarMeetingRoomTwoDetails);
+router.route('/retrievecalendarmeetingroomdetails').post(roomBookingController.retrieveCalendarMeetingRoomDetailsControllerFn);
 router.route('/cancelbooking').post(roomBookingController.cancelBookingControllerFn);
 
 module.exports = router;

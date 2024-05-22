@@ -16,11 +16,6 @@ import { BookingCancellationDialogComponent } from './booking-cancellation-dialo
 export class BookroomComponent {
   retrievedBookingInfos: any = [];
   retrievedPastBookingInfos : any = [];
-  retrievedMeetingRoomOneCalendarInfos: any = [];
-  retrievedMeetingRoomTwoCalendarInfos: any = [];
-
-  meetingRoomOneCalendartimeSlotsArray: string[] = [];
-  meetingRoomTwoCalendartimeSlotsArray: string[] = [];
 
   retrievedCalendarDetailsMeetingRoomOne: any = [];
   retrievedCalendarDetailsMeetingRoomTwo: any = [];
@@ -28,12 +23,13 @@ export class BookroomComponent {
   meetingRoomOneSelected : boolean = false;
   meetingRoomTwoSelected : boolean = false;
 
+  retrievedMeetingRoomNames : any = [];
+  meetingRoomNames : string[] = [];
+  
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
-  meetingRooms = [
-    { name: 'Meeting Room 1', calendarInfos: [''] },
-    { name: 'Meeting Room 2', calendarInfos: [''] }
-  ];
+  meetingRooms : any = [];
+  retrievedAllMeetingRoomDetails : any = [];
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
@@ -44,6 +40,7 @@ export class BookroomComponent {
   showBookingList: boolean = true;
   showPastBookings: boolean = false;
   selectedDate: Date | null = null;
+  selectedMeetingRooms: boolean[] = [];
 
   ngOnInit() {
     const userData = this.authService.getUserData();
@@ -55,6 +52,43 @@ export class BookroomComponent {
     } else {
       alert("THIS IS FAIL")
     }
+
+    this.http.get("http://localhost:9992/getmeetingrooms").subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+  
+          // Check if the response contains data and handle accordingly
+        if (resultData) {
+          console.log("retrieved meeting room names success");
+          this.retrievedMeetingRoomNames = resultData
+          console.log(this.retrievedMeetingRoomNames);
+
+        // Loop through each object in the array
+        for (let i = 0; i < this.retrievedMeetingRoomNames.length; i++) {
+          // Extract the name property and add it to the string list
+          this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
+        }
+
+        console.log(this.meetingRoomNames);
+
+        // Loop through each meeting room name
+        this.meetingRoomNames.forEach(name => {
+          // Create a meeting room object with the name and an empty calendarInfos array
+          const meetingRoom = { name: name, calendarInfos: [''] };
+
+          // Add the meeting room object to the meetingRooms array
+          this.meetingRooms.push(meetingRoom);
+        });
+        
+        console.log(this.meetingRooms)
+
+        }
+        else {
+          console.log("retrieved meeting room names failed");
+        }
+      }
+      );
+
   }
 
   toggleCalendarView(): void {
@@ -65,17 +99,19 @@ export class BookroomComponent {
     this.showBookingList = false;
     this.showPastBookings = false;
 
-    this.meetingRooms = [
-      { name: 'Meeting Room 1', calendarInfos: [''] },
-      { name: 'Meeting Room 2', calendarInfos: [''] }
-    ];
+    this.meetingRooms = [];
 
-    this.retrievedCalendarDetailsMeetingRoomOne  = [];
-    this.retrievedCalendarDetailsMeetingRoomTwo  = [];
+     // Loop through each meeting room name
+     this.meetingRoomNames.forEach(name => {
+      // Create a meeting room object with the name and an empty calendarInfos array
+      const meetingRoom = { name: name, calendarInfos: [''] };
+
+      // Add the meeting room object to the meetingRooms array
+      this.meetingRooms.push(meetingRoom);
+    });
 
     let bodyData = {
       "date": this.selectedDate,
-      //"email": this.userDataService.getEmail(),
     };
 
     this.http.post<any>('http://localhost:9992/retrievecalendarinfos', bodyData)
@@ -86,68 +122,31 @@ export class BookroomComponent {
           if (resultData.status) {
             console.log('Calendar data received:', resultData);
 
-            // Extract array data for Meeting Room 1
-            const meetingRoom1Array = resultData.calendarInfo["Meeting Room 1"];
-            console.log("Meeting Room 1 timeslots:", meetingRoom1Array);
+            const meetingRooms : any = []; // Initialize an empty array to store meeting rooms
 
-            const meetingRoom2Array = resultData.calendarInfo["Meeting Room 2"];
-            console.log("Meeting Room 2 timeslots:", meetingRoom2Array);
-
-            this.retrievedMeetingRoomOneCalendarInfos = meetingRoom1Array
-            this.retrievedMeetingRoomTwoCalendarInfos = meetingRoom2Array
-
-            if (meetingRoom1Array === undefined || meetingRoom1Array.length === 0) {
-              console.log("meetingRoom1Array is empty")
-              this.retrievedMeetingRoomOneCalendarInfos = [];
-          } else {
-            console.log("meetingRoom1Array is NOT empty")
-            this.retrievedMeetingRoomOneCalendarInfos = meetingRoom1Array;
-           
-          }
-
-          if (meetingRoom2Array === undefined || meetingRoom2Array.length === 0) {
-            console.log("meetingRoom2Array is empty")
-            this.retrievedMeetingRoomTwoCalendarInfos = [];
-        } else {
-          console.log("meetingRoom2Array is NOT empty")
-          this.retrievedMeetingRoomTwoCalendarInfos = meetingRoom2Array;
-         
-        }
-
-
-            this.meetingRooms = [
-              { name: 'Meeting Room 1', calendarInfos: this.retrievedMeetingRoomOneCalendarInfos },
-              { name: 'Meeting Room 2', calendarInfos: this.retrievedMeetingRoomTwoCalendarInfos }
-            ]; 
+            // Iterate through each meeting room name and construct the meeting room object
+            this.meetingRoomNames.forEach(name => {
+              // Extract array data for the current meeting room
+              const calendarInfoArray = resultData.calendarInfo[name] || []; // Use default empty array if data is undefined
+    
+              // Push the meeting room object into the meetingRooms array
+              meetingRooms.push({ name: name, calendarInfos: calendarInfoArray });
+            });
+    
+            // Update the meetingRooms property with the dynamically created array
+            this.meetingRooms = meetingRooms;
           }
         });
         
-        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom1details', bodyData)
+        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
+          console.log("received all meeting room details")
           console.log(resultData);
-
-          if (resultData.status) {
-            console.log('Calendar details received (Meeting Room 1):', resultData);
-            this.retrievedCalendarDetailsMeetingRoomOne = resultData.calendarDetailsMeetingRoomOne;
-            console.log(this.retrievedCalendarDetailsMeetingRoomOne);
-           
-          }
+          //console.log(resultData[0]);
+          this.retrievedAllMeetingRoomDetails = resultData;
+          console.log(this.retrievedAllMeetingRoomDetails[0].bookings[0].date)
         });
-
-        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroom2details', bodyData)
-      .subscribe(
-        (resultData: any) => {
-          console.log(resultData);
-
-          if (resultData.status) {
-            console.log('Calendar details received (Meeting Room 2):', resultData);
-            this.retrievedCalendarDetailsMeetingRoomTwo = resultData.calendarDetailsMeetingRoomTwo;
-            console.log(this.retrievedCalendarDetailsMeetingRoomTwo);
-           
-          }
-        });
-        
 
       }
           
@@ -269,12 +268,12 @@ export class BookroomComponent {
     })     
     }
 
-    showMeetingRoomOneDetails(): void {
-      this.meetingRoomOneSelected = !this.meetingRoomOneSelected;
-    }
+    showMeetingRoomDetails(index: number) {
+      // Toggle the selected state for the clicked meeting room
+      this.selectedMeetingRooms[index] = !this.selectedMeetingRooms[index];
   
-    showMeetingRoomTwoDetails(): void {
-      this.meetingRoomTwoSelected = !this.meetingRoomTwoSelected;
+      // Optionally: Add your logic to handle displaying meeting room details
+      console.log(`Showing details for ${this.meetingRoomNames[index]}`);
     }
 
   }
