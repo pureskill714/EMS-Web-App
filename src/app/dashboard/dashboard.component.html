@@ -56,3 +56,20 @@
     </button>
   </div>
 
+  <div *ngFor="let room of meetingRoomNames; let i = index" class="room-details-container">
+    <ng-container *ngIf="selectedMeetingRooms[i]">
+      <br>
+      <h3>{{ room }} Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time Slots</th>
+            <th>Purpose</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+      </table>
+    </ng-container>
+
