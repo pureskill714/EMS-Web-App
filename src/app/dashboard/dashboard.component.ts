@@ -11,26 +11,13 @@ import { HttpClient } from '@angular/common/http';
 export class DashboardComponent implements OnInit {
   retrievedMeetingRoomNames : any = [];
   meetingRoomNames: string[] = [];
+  meetingRooms: any = [];
   selectedRoom: string = ""
   selectedMeetingRooms: boolean[] = [];
   retrievedAllMeetingRoomDetails : any = [];
 
   // Define the meeting rooms and their calendar information
-  meetingRoomsTimeSlots = [
-    {
-      name: 'Room A',
-      calendarInfos: ['09:00', '13:00'] // Time slots occupied in 'HH:mm' format
-    },
-    {
-      name: 'Room B',
-      calendarInfos: ['10:00', '14:00'] // Time slots occupied in 'HH:mm' format
-    },
-    {
-      name: 'Room C',
-      calendarInfos: ['11:00', '15:00'] // Time slots occupied in 'HH:mm' format
-    }
-    // Add more rooms as needed
-  ];
+  meetingRoomsTimeSlots = [];
 
   // Define the time slots
   timeSlots = [
@@ -76,8 +63,18 @@ export class DashboardComponent implements OnInit {
           // Extract the name property and add it to the string list
           this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
         }
-
         console.log(this.meetingRoomNames);
+
+          // Loop through each meeting room name
+      this.meetingRoomNames.forEach(name => {
+        // Create a meeting room object with the name and an empty calendarInfos array
+        const meetingRoom = { name: name, calendarInfos: [''] };
+
+        // Add the meeting room object to the meetingRooms array
+        this.meetingRooms.push(meetingRoom);
+        console.log("meeting room with calendar")
+        console.log(this.meetingRooms)
+      });
 
         }
         else {
