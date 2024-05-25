@@ -10,10 +10,10 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { BookroomComponent } from './bookroom/bookroom.component';
 import { NewbookingComponent } from './bookroom/newbooking/newbooking.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 import { BookingConfirmationDialogComponent } from './bookroom/booking-confirmation-dialog/booking-confirmation-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
@@ -24,6 +24,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,6 @@ import { AccountverificationComponent } from './register/accountverification/acc
     HeaderComponent,
     BookroomComponent,
     NewbookingComponent,
-    ProjectManagerDashboardComponent,
     BookingConfirmationDialogComponent,
     CancelbookingComponent,
     BookingconfirmationComponent,
@@ -45,6 +45,8 @@ import { AccountverificationComponent } from './register/accountverification/acc
     RegisteraccountconfirmationComponent,
     NonverifiedaccountmessageComponent,
     AccountverificationComponent,
+    AdminDashboardComponent,
+    HeaderAdminComponent,
   ],
   imports: [
     BrowserModule,
