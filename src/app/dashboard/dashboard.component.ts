@@ -20,18 +20,7 @@ export class DashboardComponent implements OnInit {
   meetingRoomsTimeSlots = [];
 
   // Define the time slots
-  timeSlots = [
-    '09:00 - 10:00',
-    '10:00 - 11:00',
-    '11:00 - 12:00',
-    '12:00 - 13:00',
-    '13:00 - 14:00',
-    '14:00 - 15:00',
-    '15:00 - 16:00',
-    '16:00 - 17:00',
-    '17:00 - 18:00'
-    // Add more time slots as needed
-  ];
+  timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
   constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient) {
   }
@@ -58,24 +47,14 @@ export class DashboardComponent implements OnInit {
           console.log(this.retrievedMeetingRoomNames);
           console.log(this.retrievedMeetingRoomNames[0].name);
 
+        //this.meetingRooms = [];
+
         // Loop through each object in the array
         for (let i = 0; i < this.retrievedMeetingRoomNames.length; i++) {
           // Extract the name property and add it to the string list
           this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
         }
         console.log(this.meetingRoomNames);
-
-          // Loop through each meeting room name
-      this.meetingRoomNames.forEach(name => {
-        // Create a meeting room object with the name and an empty calendarInfos array
-        const meetingRoom = { name: name, calendarInfos: [''] };
-
-        // Add the meeting room object to the meetingRooms array
-        this.meetingRooms.push(meetingRoom);
-        console.log("meeting room with calendar")
-        console.log(this.meetingRooms)
-      });
-
         }
         else {
           console.log("retrieved meeting room names failed");
@@ -86,6 +65,32 @@ export class DashboardComponent implements OnInit {
       let bodyData = {
         "date": new Date().toISOString().split('T')[0] // Set to today's date in YYYY-MM-DD format
       };
+
+      this.http.post<any>('http://localhost:9992/retrievecalendarinfos', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log('Calendar data received:', resultData);
+
+            const meetingRooms : any = []; // Initialize an empty array to store meeting rooms
+
+            // Iterate through each meeting room name and construct the meeting room object
+            this.meetingRoomNames.forEach(name => {
+              // Extract array data for the current meeting room
+              const calendarInfoArray = resultData.calendarInfo[name] || []; // Use default empty array if data is undefined
+    
+              // Push the meeting room object into the meetingRooms array
+              meetingRooms.push({ name: name, calendarInfos: calendarInfoArray });
+            });
+    
+            // Update the meetingRooms property with the dynamically created array
+            this.meetingRooms = meetingRooms;
+            console.log("meeting room taik below")
+            console.log(this.meetingRooms)
+          }
+        });
 
       this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
