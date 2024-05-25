@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   meetingRoomNames: string[] = [];
   selectedRoom: string = ""
   selectedMeetingRooms: boolean[] = [];
+  retrievedAllMeetingRoomDetails : any = [];
 
   // Define the meeting rooms and their calendar information
   meetingRoomsTimeSlots = [
@@ -84,6 +85,20 @@ export class DashboardComponent implements OnInit {
         }
       }
       );
+
+      let bodyData = {
+        "date": new Date().toISOString().split('T')[0] // Set to today's date in YYYY-MM-DD format
+      };
+
+      this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log("received all meeting room details")
+          console.log(resultData);
+          //console.log(resultData[0]);
+          this.retrievedAllMeetingRoomDetails = resultData;
+          console.log(this.retrievedAllMeetingRoomDetails[0].bookings[0].date)
+        });
   }
 
   // Method to check if a time slot is occupied
