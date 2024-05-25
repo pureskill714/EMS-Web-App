@@ -177,6 +177,10 @@ th {
 .grey-box {
     background-color: #ccc; /* Use any shade of grey you prefer */
 }
+/* Style for the purple box */
+.purple-box {
+    background-color: purple;
+}
 
 /* Style for the legend container */
 .legend {
@@ -205,5 +209,12 @@ th {
     width: 20px;
     height: 20px;
     background-color: #ccc;
+    margin-right: 5px;
+}
+/* Style for the purple box legend */
+.purple-box-legend {
+    width: 20px;
+    height: 20px;
+    background-color: purple;
     margin-right: 5px;
 }
