@@ -10,29 +10,39 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DashboardComponent implements OnInit {
   retrievedMeetingRoomNames : any = [];
-  meetingRooms: string[] = [];
+  meetingRoomNames: string[] = [];
   selectedRoom: string = ""
+  selectedMeetingRooms: boolean[] = [];
 
-  retrievedCalendarDetails = [
+  // Define the meeting rooms and their calendar information
+  meetingRoomsTimeSlots = [
     {
-      date: new Date(),
-      timeslots: ['09:00 AM - 10:00 AM', '10:00 AM - 11:00 AM'],
-      meetingRoom: 'Meeting Room 1',
-      purpose: 'Team Meeting',
-      firstName: 'John',
-      lastName: 'Doe',
-      email: 'john.doe@example.com'
+      name: 'Room A',
+      calendarInfos: ['09:00', '13:00'] // Time slots occupied in 'HH:mm' format
     },
     {
-      date: new Date(),
-      timeslots: ['01:00 PM - 02:00 PM', '02:00 PM - 03:00 PM'],
-      meetingRoom: 'Meeting Room 2',
-      purpose: 'Client Presentation',
-      firstName: 'Jane',
-      lastName: 'Smith',
-      email: 'jane.smith@example.com'
+      name: 'Room B',
+      calendarInfos: ['10:00', '14:00'] // Time slots occupied in 'HH:mm' format
+    },
+    {
+      name: 'Room C',
+      calendarInfos: ['11:00', '15:00'] // Time slots occupied in 'HH:mm' format
     }
-    // Add more calendar details as needed
+    // Add more rooms as needed
+  ];
+
+  // Define the time slots
+  timeSlots = [
+    '09:00 - 10:00',
+    '10:00 - 11:00',
+    '11:00 - 12:00',
+    '12:00 - 13:00',
+    '13:00 - 14:00',
+    '14:00 - 15:00',
+    '15:00 - 16:00',
+    '16:00 - 17:00',
+    '17:00 - 18:00'
+    // Add more time slots as needed
   ];
 
   constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient) {
@@ -63,10 +73,10 @@ export class DashboardComponent implements OnInit {
         // Loop through each object in the array
         for (let i = 0; i < this.retrievedMeetingRoomNames.length; i++) {
           // Extract the name property and add it to the string list
-          this.meetingRooms.push(this.retrievedMeetingRoomNames[i].name);
+          this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
         }
 
-        console.log(this.meetingRooms);
+        console.log(this.meetingRoomNames);
 
         }
         else {
@@ -76,12 +86,22 @@ export class DashboardComponent implements OnInit {
       );
   }
 
-  // Dummy functions
-  onRoomChange() {
-    // Dummy function body
-    console.log('Room changed to:', this.selectedRoom);
+  // Method to check if a time slot is occupied
+  isTimeSlotOccupied(calendarInfos: string[], slot: string): boolean {
+    // Extract the start time from the slot string
+    const startTime = slot.split(' - ')[0];
+    // Check if the start time is in the calendarInfos array
+    return calendarInfos.includes(startTime);
   }
 
+  showMeetingRoomDetails(index: number) {
+    // Toggle the selected state for the clicked meeting room
+    this.selectedMeetingRooms[index] = !this.selectedMeetingRooms[index];
 
+    // Optionally: Add your logic to handle displaying meeting room details
+    console.log(`Showing details for ${this.meetingRoomNames[index]}`);
+  }
+
+  
 
 }
