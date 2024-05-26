@@ -54,7 +54,21 @@ export class DashboardComponent implements OnInit {
           // Extract the name property and add it to the string list
           this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
         }
+        console.log("meeting room names below")
         console.log(this.meetingRoomNames);
+
+        // Loop through each meeting room name
+        this.meetingRoomNames.forEach(name => {
+          // Create a meeting room object with the name and an empty calendarInfos array
+          const meetingRoom = { name: name, calendarInfos: [''] };
+
+          // Add the meeting room object to the meetingRooms array
+          console.log("meeting room default below")
+          console.log(this.meetingRooms)
+          this.meetingRooms.push(meetingRoom);
+        });
+
+
         }
         else {
           console.log("retrieved meeting room names failed");
