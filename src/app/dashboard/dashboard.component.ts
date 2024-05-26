@@ -133,8 +133,4 @@ export class DashboardComponent implements OnInit {
     console.log(`Showing details for ${this.meetingRoomNames[index]}`);
   }
 
-  
-
-  
-
 }

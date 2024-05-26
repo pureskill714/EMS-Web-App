@@ -1,2 +1,92 @@
 <app-header-admin></app-header-admin>
-<p>admin-dashboard works!</p>
+<br>
+<h1 style="text-align: center;">Today's Meeting Rooms Schedule</h1>
+<br>
+<table border="1">
+   <!-- Table Header Row -->
+   <thead>
+    <tr>
+        <!-- Empty cell for spacing -->
+        <th></th>
+        <!-- Header cells for columns A to T -->
+        <th>9:00 - 10:00</th>
+        <th>10:00 - 11:00</th>
+        <th>11:00 - 12:00</th>
+        <th>12:00 - 13:00</th>
+        <th>13:00 - 14:00</th>
+        <th>14:00 - 15:00</th>
+        <th>15:00 - 16:00</th>
+        <th>16:00 - 17:00</th>
+        <th>17:00 - 18:00</th>
+        <!-- Add headers for all 20 columns (A to T) -->
+        <!-- For brevity, only a few columns are shown -->
+    </tr>
+</thead>
+<!-- Table Body Rows -->
+<tbody>
+    <!-- First Row -->
+    <tr *ngFor="let room of meetingRooms">
+        <!-- Row header for each room -->
+        <th>{{ room.name }}</th>
+        <!-- Cells for each time slot -->
+        <td *ngFor="let slot of timeSlots" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}"></td>
+    </tr>
+    <!-- Repeat the above rows for additional rows if needed -->
+</tbody>
+</table>
+
+<div class="legend">
+    <div class="legend-item">
+        <div class="green-box-legend"></div>
+        <span>Available</span>
+    </div>
+    <div class="legend-item">
+        <div class="grey-box-legend"></div>
+        <span>Booked</span>
+    </div>
+    <div class="legend-item">
+        <div class="purple-box-legend"></div>
+        <span>Reserved</span>
+    </div>
+</div>
+
+<br>
+<div class="button-container">
+    <button *ngFor="let room of meetingRoomNames; let i = index" (click)="showMeetingRoomDetails(i)">
+      <span *ngIf="!selectedMeetingRooms[i]">{{ room }} Details</span>
+      <span *ngIf="selectedMeetingRooms[i]">{{ room }} Details</span>
+      <i class="bi bi-toggle2-off ms-2" *ngIf="!selectedMeetingRooms[i]"></i>
+      <i class="bi bi-toggle2-on ms-2" *ngIf="selectedMeetingRooms[i]"></i>
+    </button>
+  </div>
+
+  <div *ngFor="let room of meetingRoomNames; let i = index" class="room-details-container">
+    <ng-container *ngIf="selectedMeetingRooms[i]">
+      <br>
+      <h3>{{ room }} Details</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time Slots</th>
+            <th>Purpose</th>
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let calendar of retrievedAllMeetingRoomDetails[i].bookings">
+              <td>{{ calendar.date | date: 'yyyy-MM-dd' }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let timeslot of calendar.timeslots">{{ timeslot }}</li>
+                </ul>
+              </td>
+              <td>{{ calendar.purpose }}</td>
+              <td>{{ calendar.firstName + ' ' + calendar.lastName }}</td>
+              <td>{{ calendar.email }}</td>
+            </tr>
+          </tbody>
+      </table>
+    </ng-container>
+
