@@ -1,0 +1,28 @@
+<app-header-admin></app-header-admin>
+<br>
+<h1 style="text-align: center;">Admin Room Management</h1>
+<div class="container">
+    <button class="btn btn-primary add-button" (click)="addMeetingRoom()">Add New Meeting Room</button>
+    <p>Room Order determines the sequence in which meeting rooms are displayed in the dashboard and calendar views. </p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Room Name</th>
+          <th>Room Order</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let room of meetingRoomNames">
+          <td>{{ room.name }}</td>
+          <td>{{ room.roomOrder }}</td>
+          <td>
+            <button class="btn btn-secondary action-button" (click)="editRoomOrder(room)">Edit Room Order</button>
+          <button class="btn btn-secondary action-button" (click)="editRoomName(room)">Edit Name</button>
+          <button class="btn btn-danger action-button" (click)="deleteRoom(room)">Delete Room</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+

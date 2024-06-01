@@ -15,6 +15,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
+import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
 
 const routes: Routes = [
   {
@@ -87,6 +88,11 @@ const routes: Routes = [
   {
     component: ProfileComponent,
     path: 'profile'
+  }
+  ,
+  {
+    component: ManageRoomsComponent ,
+    path: 'manage-rooms'
   }
 
 ];

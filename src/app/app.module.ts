@@ -25,6 +25,7 @@ import { RegisteraccountconfirmationComponent } from './register/registeraccount
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     AccountverificationComponent,
     AdminDashboardComponent,
     HeaderAdminComponent,
+    ManageRoomsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,44 @@
+.container {
+    padding: 20px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Optional: spacing between header and the rest of the content */
+  }
+  
+  .header-title {
+    /* Additional styling for the header if needed */
+  }
+  
+  .add-button {
+    background-color: #007bff;
+    color: white;
+    margin-bottom: 20px;
+  }
+  
+  .table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .table th {
+    background-color: #f2f2f2;
+    text-align: left;
+  }
+  
+  .action-button {
+    margin-right: 10px; /* Adjust the value as needed */
+  }
+  
+  .action-button:last-child {
+    margin-right: 0; /* Ensure no extra margin on the last button */
+  }
+  
