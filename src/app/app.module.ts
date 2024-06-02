@@ -26,6 +26,7 @@ import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountme
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
+import { AddroomConfirmationDialogComponent } from './manage-rooms/addroom-confirmation-dialog/addroom-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
     AdminDashboardComponent,
     HeaderAdminComponent,
     ManageRoomsComponent,
+    AddroomConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,

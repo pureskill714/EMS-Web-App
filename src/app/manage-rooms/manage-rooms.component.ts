@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { AddroomConfirmationDialogComponent } from './addroom-confirmation-dialog/addroom-confirmation-dialog.component';
 
 interface MeetingRoom {
   name: string;
@@ -19,7 +21,7 @@ export class ManageRoomsComponent {
   
   meetingRooms: any = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private dialog: MatDialog) {
   }
 
 
@@ -70,6 +72,15 @@ export class ManageRoomsComponent {
   }
 
   addMeetingRoom() {
+    const dialogRef = this.dialog.open(AddroomConfirmationDialogComponent, {
+      width: '420px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+      data: {}
+    });
+
+
     const newRoom: MeetingRoom = { name: 'New Room', order: this.meetingRooms.length + 1 };
     this.meetingRooms.push(newRoom);
   }
