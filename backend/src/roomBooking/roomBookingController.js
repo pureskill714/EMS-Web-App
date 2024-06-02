@@ -141,6 +141,26 @@ const cancelBookingControllerFn = async (req, res) => {
     }
 };
 
+const addNewMeetingRoomControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await roomBookingService.addNewMeetingRoomService(req.body);
+
+        if (result) {
+            res.send({ status: true, message: 'New Meeting Room added successfully' });
+        } else {
+            res.send({ status: false, message: 'Error creating New Meeting Room' });
+        }
+    } catch (error) {
+        if (error.status && error.message) {
+            res.status(error.status).json({ error: error.message });
+        } else {
+            console.log(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+};
+
 var getMeetingRoomsControllerFn = async (req, res) => {
     const uri = 'mongodb://localhost:27017';
     const dbName = 'ems';
@@ -175,5 +195,6 @@ module.exports = {
     retrieveCalendarDetails,
     retrieveCalendarMeetingRoomDetailsControllerFn ,
     cancelBookingControllerFn,
+    addNewMeetingRoomControllerFn,
     getMeetingRoomsControllerFn
 };

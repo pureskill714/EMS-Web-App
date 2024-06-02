@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AddroomConfirmationDialogComponent } from './addroom-confirmation-dialog/addroom-confirmation-dialog.component';
+import { UserDataService } from '../user-data.service';
+import { Router } from '@angular/router';
 
 interface MeetingRoom {
   name: string;
@@ -21,7 +23,7 @@ export class ManageRoomsComponent {
   
   meetingRooms: any = [];
 
-  constructor(private http: HttpClient,private dialog: MatDialog) {
+  constructor(private http: HttpClient,private dialog: MatDialog,private userDataService: UserDataService,private router: Router) {
   }
 
 
@@ -83,6 +85,30 @@ export class ManageRoomsComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'confirm') {
         // Handle the confirmation action
+        let bodyData = {
+          "newMeetingRoom": this.userDataService.getnewMeetingRoomName(),
+          "newRoomOrder": this.userDataService.getnewRoomOrder()
+      };
+
+      this.http.post("http://localhost:9992/addmeetingrooms", bodyData).subscribe(
+          (resultData: any) => {
+              console.log(resultData);
+              //alert("Room Booking Successfully");
+              this.router.navigate(['/admin-dashboard']);
+          },
+          (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            if (error.status === 409) { 
+                alert("Error adding new meeting room.Room name or room order already in use");
+            } else {
+                alert("Error adding new meeting room. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+            }
+            // You can handle the error further as needed
+        }
+        );
+
+
+
         console.log('Add new meeting room confirmed');
       }
       else{
@@ -90,8 +116,7 @@ export class ManageRoomsComponent {
       }
     })
 
-    const newRoom: MeetingRoom = { name: 'New Room', order: this.meetingRooms.length + 1 };
-    this.meetingRooms.push(newRoom);
+   
   }
 
   editRoomOrder(room: MeetingRoom) {

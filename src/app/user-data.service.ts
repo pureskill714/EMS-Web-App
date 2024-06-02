@@ -17,6 +17,10 @@ export class UserDataService {
   private cancelledTimeSlots: string[] = [];
   private cancelledPurpose : string | null = null;
 
+
+  private newMeetingRoomName : string | null = null;
+  private newRoomOrder : number | null = null;
+
   constructor() {}
 
   setEmail(email: string) {
@@ -118,5 +122,22 @@ export class UserDataService {
   getCancelledPurpose(): string | null {
     return this.cancelledPurpose ;
   }
+
+  setNewMeetingRoomName(meetingRoomName: string | null = null) {
+    this.newMeetingRoomName = meetingRoomName;
+  }
+
+  getnewMeetingRoomName(): string | null {
+    return this.newMeetingRoomName;
+  }
+
+  setNewRoomOrder(roomOrder: number| null = null) {
+    this.newRoomOrder = roomOrder;
+  }
+
+  getnewRoomOrder(): number | null {
+    return this.newRoomOrder;
+  }
+
 
 }

@@ -15,6 +15,9 @@ router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployee
 
 
 router.get('/getmeetingrooms', roomBookingController.getMeetingRoomsControllerFn);
+router.route('/addmeetingrooms').post(roomBookingController.addNewMeetingRoomControllerFn);
+
+
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);
 router.route('/retrievebookingtimeslots').post(roomBookingController.retrieveBookingTimeslotsControllerFn);
 router.route('/retrievebookinginfos').post(roomBookingController.retrieveBookingInfosControllerFn);

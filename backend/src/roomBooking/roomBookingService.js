@@ -1,4 +1,6 @@
 const RoomBooking = require('./roomBookingModel');
+const MeetingRoom = require('./meetingRoomModel');
+
 const { MongoClient, ObjectId } = require('mongodb');
 
 const nodemailer = require('nodemailer');
@@ -518,6 +520,35 @@ function sendBookingCancellationEmail(email,firstName,lastName,date,meetingRoom,
         });
     });
 }
+
+module.exports.addNewMeetingRoomService = async (meetingRoomDetails) => {
+    try {
+        // Check if there are any existing rooms with the same name or room order
+        const existingRoomByName = await MeetingRoom.findOne({ name: meetingRoomDetails.newMeetingRoom });
+        const existingRoomByOrder = await MeetingRoom.findOne({ roomOrder: meetingRoomDetails.newRoomOrder });
+
+        if (existingRoomByName) {
+            return Promise.reject({ status: 409, message: 'Meeting room name is already taken' });
+        }
+
+        if (existingRoomByOrder) {
+            return Promise.reject({ status: 409, message: 'Meeting room order is already taken' });
+        }
+
+        // If no conflicts, create the new meeting room
+        const newMeetingRoom = new MeetingRoom({
+            name: meetingRoomDetails.newMeetingRoom,
+            roomOrder: meetingRoomDetails.newRoomOrder
+        });
+
+        const result = await newMeetingRoom.save();
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
 
 
 
