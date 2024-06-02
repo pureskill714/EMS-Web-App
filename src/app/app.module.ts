@@ -27,6 +27,8 @@ import { AccountverificationComponent } from './register/accountverification/acc
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
 import { AddroomConfirmationDialogComponent } from './manage-rooms/addroom-confirmation-dialog/addroom-confirmation-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import { AddroomConfirmationDialogComponent } from './manage-rooms/addroom-confi
     BrowserAnimationsModule,
     FormsModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent]
