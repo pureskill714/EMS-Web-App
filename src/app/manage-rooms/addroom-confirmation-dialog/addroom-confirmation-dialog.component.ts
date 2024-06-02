@@ -8,6 +8,8 @@ import { UserDataService } from '../../user-data.service';
   styleUrl: './addroom-confirmation-dialog.component.css'
 })
 export class AddroomConfirmationDialogComponent {
+  meetingRoomName: string = '';
+  roomOrder: number | null = null;
 
   constructor(public dialogRef: MatDialogRef<AddroomConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {
@@ -19,8 +21,8 @@ export class AddroomConfirmationDialogComponent {
     this.dialogRef.close('back');
   }
 
-  onCancelButton(): void {
-    this.dialogRef.close('cancel');
+  onConfirm(): void {
+    this.dialogRef.close('confirm');
   }
 
 }

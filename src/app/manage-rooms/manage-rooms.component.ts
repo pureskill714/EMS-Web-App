@@ -80,6 +80,15 @@ export class ManageRoomsComponent {
       data: {}
     });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // Handle the confirmation action
+        console.log('Add new meeting room confirmed');
+      }
+      else{
+        console.log('Add new room cancelled');
+      }
+    })
 
     const newRoom: MeetingRoom = { name: 'New Room', order: this.meetingRooms.length + 1 };
     this.meetingRooms.push(newRoom);
