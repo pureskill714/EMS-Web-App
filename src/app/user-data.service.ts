@@ -21,6 +21,8 @@ export class UserDataService {
   private newMeetingRoomName : string | null = null;
   private newRoomOrder : number | null = null;
 
+  private deletedMeetingRoomName : string | null = null;
+
   constructor() {}
 
   setEmail(email: string) {
@@ -137,6 +139,14 @@ export class UserDataService {
 
   getnewRoomOrder(): number | null {
     return this.newRoomOrder;
+  }
+
+  setDeletedMeetingRoom(meetingRoomName: string | null = null) {
+    this.deletedMeetingRoomName = meetingRoomName;
+  }
+
+  getDeletedMeetingRoom(): string | null {
+    return this.deletedMeetingRoomName;
   }
 
 

@@ -9,6 +9,7 @@
         <tr>
           <th>Room Name</th>
           <th>Room Order</th>
+          <th>Room ID</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -16,10 +17,11 @@
         <tr *ngFor="let room of meetingRoomNames">
           <td>{{ room.name }}</td>
           <td>{{ room.roomOrder }}</td>
+          <td>{{ room._id }}</td>
           <td>
             <button class="btn btn-secondary action-button" (click)="editRoomOrder(room)">Edit Room Order</button>
           <button class="btn btn-secondary action-button" (click)="editRoomName(room)">Edit Name</button>
-          <button class="btn btn-danger action-button" (click)="deleteRoom(room)">Delete Room</button>
+          <button class="btn btn-danger action-button" (click)="deleteMeetingRoom(room._id,room.name)">Delete Room</button>
           </td>
         </tr>
       </tbody>

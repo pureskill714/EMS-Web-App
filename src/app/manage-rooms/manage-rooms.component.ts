@@ -136,10 +136,23 @@ export class ManageRoomsComponent {
   }
 
   deleteRoom(room: MeetingRoom) {
+
     // Add logic to delete the room
     const index = this.meetingRooms.indexOf(room);
     if (index !== -1) {
       this.meetingRooms.splice(index, 1);
     }
   }
+
+  deleteMeetingRoom(roomId: string, meetingRoomName: string) {
+    this.userDataService.setDeletedMeetingRoom(meetingRoomName);
+    console.log(roomId)
+    console.log(meetingRoomName)
+    
+    let bodyData = {
+      "id": roomId,
+    };
+  }
+
+
 }
