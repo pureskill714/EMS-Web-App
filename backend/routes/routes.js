@@ -24,6 +24,7 @@ router.route('/retrievebookinginfos').post(roomBookingController.retrieveBooking
 router.route('/retrievepastbookinginfos').post(roomBookingController.retrievePastBookingInfosControllerFn);
 
 router.route('/retrievecalendarinfos').post(roomBookingController.retrieveCalendarInfosControllerFn);
+router.route('/retrievecalendarinfoswithnames').post(roomBookingController.retrieveCalendarInfosWithNamesControllerFn);
 router.route('/retrievecalendardetails').post(roomBookingController.retrieveCalendarDetails);
 router.route('/retrievecalendarmeetingroomdetails').post(roomBookingController.retrieveCalendarMeetingRoomDetailsControllerFn);
 router.route('/cancelbooking').post(roomBookingController.cancelBookingControllerFn);

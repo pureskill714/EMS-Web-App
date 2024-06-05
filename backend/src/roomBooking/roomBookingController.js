@@ -88,6 +88,26 @@ const retrieveCalendarInfosControllerFn = async (req, res) => {
     }
 };
 
+const retrieveCalendarInfosWithNamesControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const calendarInfoWithNames = await roomBookingService.retrieveCalendarInfoWithNames(req.body);
+
+        if (calendarInfoWithNames && Object.keys(calendarInfoWithNames).length > 0) {
+            // Check if calendarInfoWithNames is not empty
+            res.status(200).json({ status: true, calendarInfoWithNames: calendarInfoWithNames });
+        } else {
+            // Handle case where no calendar information is found
+            res.status(404).json({ status: false, message: "No calendar information (with names) found." });
+        }
+    } catch (error) {
+        // Handle server error
+        console.error("Error retrieving calendar information (with names):", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
+
 const retrieveCalendarDetails = async (req, res) => {
     try {
         // Log the request body (optional)
@@ -192,6 +212,7 @@ module.exports = {
     retrieveBookingInfosControllerFn,
     retrievePastBookingInfosControllerFn,
     retrieveCalendarInfosControllerFn,
+    retrieveCalendarInfosWithNamesControllerFn,
     retrieveCalendarDetails,
     retrieveCalendarMeetingRoomDetailsControllerFn ,
     cancelBookingControllerFn,

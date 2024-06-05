@@ -106,6 +106,17 @@ export class DashboardComponent implements OnInit {
           }
         });
 
+
+        this.http.post<any>('http://localhost:9992/retrievecalendarinfoswithnames', bodyData)
+        .subscribe(
+          (resultData: any) => {
+            console.log(resultData);
+  
+            if (resultData.status) {
+              console.log('Calendar data (with names) received:', resultData);
+            }
+          });
+
       this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {

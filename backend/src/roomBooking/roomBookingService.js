@@ -286,6 +286,73 @@ module.exports.retrieveCalendarInfo = async (requestData) => {
     }
 };
 
+module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const bookingsCollection = database.collection('bookings');
+        const meetingRoomsCollection = database.collection('meetingrooms');
+
+        // Date for the query
+        const queryDate = new Date(requestData.date);
+
+        // Query to find documents with the specific date
+        const bookings = await bookingsCollection.find(
+            { date: queryDate },
+            { projection: { meetingRoom: 1, purpose: 1, timeslots: 1, firstName: 1, lastName: 1 } }
+        ).toArray();
+
+        // Fetch the room order information
+        const roomOrders = await meetingRoomsCollection.find({}, { projection: { name: 1, roomOrder: 1 } }).toArray();
+        const roomOrderMap = {};
+        roomOrders.forEach(room => {
+            roomOrderMap[room.name] = room.roomOrder;
+        });
+
+        // Process the results to group by meeting room
+        const meetingRooms = {};
+        bookings.forEach(result => {
+            const meetingRoom = result.meetingRoom;
+            if (!meetingRooms[meetingRoom]) {
+                meetingRooms[meetingRoom] = {
+                    roomOrder: roomOrderMap[meetingRoom],
+                    slots: []
+                };
+            }
+
+            result.timeslots.forEach(timeslot => {
+                meetingRooms[meetingRoom].slots.push({
+                    timeslot: timeslot,
+                    firstName: result.firstName,
+                    lastName: result.lastName,
+                    purpose: result.purpose
+                });
+            });
+        });
+
+        // Sort the meeting rooms by roomOrder
+        const sortedMeetingRooms = Object.keys(meetingRooms).sort((a, b) => {
+            return meetingRooms[a].roomOrder - meetingRooms[b].roomOrder;
+        });
+
+        // Prepare the final result
+        const resultArray = sortedMeetingRooms.map(room => ({
+            meetingRoom: room,
+            slots: meetingRooms[room].slots
+        }));
+
+        await client.close();
+
+        return resultArray;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 module.exports.retrieveCalendarDetails = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';
