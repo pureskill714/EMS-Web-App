@@ -24,14 +24,19 @@
 </thead>
 <!-- Table Body Rows -->
 <tbody>
-    <!-- First Row -->
-    <tr *ngFor="let room of meetingRooms">
-        <!-- Row header for each room -->
-        <th>{{ room.name }}</th>
-        <!-- Cells for each time slot -->
-        <td *ngFor="let slot of timeSlots" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}"></td>
-    </tr>
-    <!-- Repeat the above rows for additional rows if needed -->
+  <!-- First Row -->
+  <tr *ngFor="let room of meetingRooms; let i = index">
+      <!-- Row header for each room -->
+      <th>{{ room.name }}</th>
+      <!-- Cells for each time slot -->
+      <td *ngFor="let slot of timeSlots; let j = index" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}">
+     
+        <ng-container *ngIf="isTimeSlotOccupied(room.calendarInfos, slot) && retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots[j]">
+          <p>{{ retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots[j].firstName }} {{ retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots[j].lastName }}</p>
+        </ng-container>
+
+      </td>
+  </tr>
 </tbody>
 </table>
 

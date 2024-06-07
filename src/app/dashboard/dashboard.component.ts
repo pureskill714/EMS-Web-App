@@ -22,6 +22,8 @@ export class DashboardComponent implements OnInit {
   // Define the time slots
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
+  retrievedCalendarInfoWithNames : any = [];
+
   constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient) {
   }
 
@@ -101,7 +103,7 @@ export class DashboardComponent implements OnInit {
     
             // Update the meetingRooms property with the dynamically created array
             this.meetingRooms = meetingRooms;
-            console.log("meeting room taik below")
+            console.log("this.meetingRooms variable below")
             console.log(this.meetingRooms)
           }
         });
@@ -114,6 +116,9 @@ export class DashboardComponent implements OnInit {
   
             if (resultData.status) {
               console.log('Calendar data (with names) received:', resultData);
+              this.retrievedCalendarInfoWithNames = resultData;
+              console.log(this.retrievedCalendarInfoWithNames.calendarInfoWithNames[0].slots[0].firstName);
+              console.log(this.retrievedCalendarInfoWithNames.calendarInfoWithNames[0].slots[0].timeslot);
             }
           });
 
