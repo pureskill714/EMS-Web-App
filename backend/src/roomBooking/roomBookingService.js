@@ -315,75 +315,59 @@ module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
         // Query to find documents with the specific date
         const results = await bookingsCollection.find(
             { date: queryDate },
-            { meetingRoom: 1, purpose: 1, timeslots: 1, firstName: 1, lastName: 1 }
+            { projection: { meetingRoom: 1, purpose: 1, timeslots: 1, firstName: 1, lastName: 1 } }
         ).toArray();
 
         // Fetch the room order information
-        const roomOrders = await meetingRoomsCollection.find({}, { name: 1, roomOrder: 1 }).toArray();
+        const roomOrders = await meetingRoomsCollection.find({}, { projection: { name: 1, roomOrder: 1 } }).toArray();
         const roomOrderMap = {};
-        roomOrders.forEach(function(room) {
+        roomOrders.forEach(room => {
             roomOrderMap[room.name] = room.roomOrder;
         });
 
         // Process the results to group by meeting room
         const meetingRooms = {};
 
-        results.forEach(function(result) {
-            var meetingRoom = result.meetingRoom;
-            if (!meetingRooms[meetingRoom]) {
-                meetingRooms[meetingRoom] = {
-                    roomOrder: roomOrderMap[meetingRoom],
-                    slots: []
-                };
-            }
-
-            result.timeslots.forEach(function(timeslot) {
-                meetingRooms[meetingRoom].slots.push({
+        // Initialize meeting rooms from roomOrders
+        roomOrders.forEach(room => {
+            meetingRooms[room.name] = {
+                roomOrder: room.roomOrder,
+                slots: timeslotOrder.map(timeslot => ({
                     timeslot: timeslot,
-                    firstName: result.firstName,
-                    lastName: result.lastName,
-                    purpose: result.purpose
-                });
-            });
+                    firstName: '', // Empty first name
+                    lastName: '',  // Empty last name
+                    purpose: ''    // Empty purpose
+                }))
+            };
         });
 
-        // Iterate over each meeting room
-        Object.keys(meetingRooms).forEach(function(room) {
-            // Create a map to quickly check if a timeslot is occupied in the room
-            const occupiedTimeslots = {};
-            meetingRooms[room].slots.forEach(function(slot) {
-                occupiedTimeslots[slot.timeslot] = true;
-            });
-
-            // Iterate over each timeslot in the fixed order
-            timeslotOrder.forEach(function(timeslot) {
-                // If the timeslot is not occupied, add it with empty values
-                if (!occupiedTimeslots[timeslot]) {
-                    meetingRooms[room].slots.push({
-                        timeslot: timeslot,
-                        firstName: '', // Empty first name
-                        lastName: '',  // Empty last name
-                        purpose: ''    // Empty purpose
-                    });
+        // Merge the booking data into the initialized meeting rooms
+        results.forEach(result => {
+            const meetingRoom = result.meetingRoom;
+            result.timeslots.forEach(timeslot => {
+                const slot = meetingRooms[meetingRoom].slots.find(slot => slot.timeslot === timeslot);
+                if (slot) {
+                    slot.firstName = result.firstName;
+                    slot.lastName = result.lastName;
+                    slot.purpose = result.purpose;
                 }
-            });
-
-            // Sort the slots within the room based on the fixed order
-            meetingRooms[room].slots.sort(function(a, b) {
-                return timeslotOrder.indexOf(a.timeslot) - timeslotOrder.indexOf(b.timeslot);
             });
         });
 
         // Sort the meeting rooms by roomOrder
-        const sortedMeetingRooms = Object.keys(meetingRooms).sort(function(a, b) {
+        const sortedMeetingRooms = Object.keys(meetingRooms).sort((a, b) => {
             return meetingRooms[a].roomOrder - meetingRooms[b].roomOrder;
         });
 
-        // Return the sorted meeting rooms
-        return sortedMeetingRooms.map(room => ({
+        // Print the results
+        const resultArray = sortedMeetingRooms.map(room => ({
             roomName: room,
             slots: meetingRooms[room].slots
         }));
+
+        await client.close();
+
+        return resultArray;
     } catch (error) {
         throw error;
     }
