@@ -31,8 +31,10 @@
       <!-- Cells for each time slot -->
       <td *ngFor="let slot of timeSlots; let j = index" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}">
      
-        <ng-container *ngIf="isTimeSlotOccupied(room.calendarInfos, slot) && retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots[j]">
-          <p>{{ retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots[j].firstName }} {{ retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots[j].lastName }}</p>
+        <ng-container *ngIf="isTimeSlotOccupied(room.calendarInfos, slot)">
+          <ng-container *ngIf="getNextAvailableSlot(retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots, j) as availableSlot">
+            <p>{{ availableSlot?.firstName }} {{ availableSlot?.lastName }}</p>
+          </ng-container>
         </ng-container>
 
       </td>

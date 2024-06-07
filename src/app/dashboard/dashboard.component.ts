@@ -3,6 +3,12 @@ import { UserDataService } from './../user-data.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 
+// Define an interface for the slot structure
+interface Slot {
+  firstName: string;
+  lastName: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,6 +22,7 @@ export class DashboardComponent implements OnInit {
   selectedMeetingRooms: boolean[] = [];
   retrievedAllMeetingRoomDetails : any = [];
 
+  
   // Define the meeting rooms and their calendar information
   meetingRoomsTimeSlots = [];
 
@@ -147,6 +154,16 @@ export class DashboardComponent implements OnInit {
 
     // Optionally: Add your logic to handle displaying meeting room details
     console.log(`Showing details for ${this.meetingRoomNames[index]}`);
+  }
+
+  getNextAvailableSlot(slots: Slot[] | undefined, startIndex: number) {
+    if (!slots) return null;
+    for (let i = startIndex; i < slots.length; i++) {
+      if (slots[i]) {
+        return slots[i];
+      }
+    }
+    return null;
   }
 
 }

@@ -299,23 +299,37 @@ module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
         // Date for the query
         const queryDate = new Date(requestData.date);
 
+        // Define the fixed list of timeslots in the desired order
+        const timeslotOrder = [
+            '09:00-10:00',
+            '10:00-11:00',
+            '11:00-12:00',
+            '12:00-13:00',
+            '13:00-14:00',
+            '14:00-15:00',
+            '15:00-16:00',
+            '16:00-17:00',
+            '17:00-18:00'
+        ];
+
         // Query to find documents with the specific date
-        const bookings = await bookingsCollection.find(
+        const results = await bookingsCollection.find(
             { date: queryDate },
-            { projection: { meetingRoom: 1, purpose: 1, timeslots: 1, firstName: 1, lastName: 1 } }
+            { meetingRoom: 1, purpose: 1, timeslots: 1, firstName: 1, lastName: 1 }
         ).toArray();
 
         // Fetch the room order information
-        const roomOrders = await meetingRoomsCollection.find({}, { projection: { name: 1, roomOrder: 1 } }).toArray();
+        const roomOrders = await meetingRoomsCollection.find({}, { name: 1, roomOrder: 1 }).toArray();
         const roomOrderMap = {};
-        roomOrders.forEach(room => {
+        roomOrders.forEach(function(room) {
             roomOrderMap[room.name] = room.roomOrder;
         });
 
         // Process the results to group by meeting room
         const meetingRooms = {};
-        bookings.forEach(result => {
-            const meetingRoom = result.meetingRoom;
+
+        results.forEach(function(result) {
+            var meetingRoom = result.meetingRoom;
             if (!meetingRooms[meetingRoom]) {
                 meetingRooms[meetingRoom] = {
                     roomOrder: roomOrderMap[meetingRoom],
@@ -323,7 +337,7 @@ module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
                 };
             }
 
-            result.timeslots.forEach(timeslot => {
+            result.timeslots.forEach(function(timeslot) {
                 meetingRooms[meetingRoom].slots.push({
                     timeslot: timeslot,
                     firstName: result.firstName,
@@ -333,20 +347,43 @@ module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
             });
         });
 
+        // Iterate over each meeting room
+        Object.keys(meetingRooms).forEach(function(room) {
+            // Create a map to quickly check if a timeslot is occupied in the room
+            const occupiedTimeslots = {};
+            meetingRooms[room].slots.forEach(function(slot) {
+                occupiedTimeslots[slot.timeslot] = true;
+            });
+
+            // Iterate over each timeslot in the fixed order
+            timeslotOrder.forEach(function(timeslot) {
+                // If the timeslot is not occupied, add it with empty values
+                if (!occupiedTimeslots[timeslot]) {
+                    meetingRooms[room].slots.push({
+                        timeslot: timeslot,
+                        firstName: '', // Empty first name
+                        lastName: '',  // Empty last name
+                        purpose: ''    // Empty purpose
+                    });
+                }
+            });
+
+            // Sort the slots within the room based on the fixed order
+            meetingRooms[room].slots.sort(function(a, b) {
+                return timeslotOrder.indexOf(a.timeslot) - timeslotOrder.indexOf(b.timeslot);
+            });
+        });
+
         // Sort the meeting rooms by roomOrder
-        const sortedMeetingRooms = Object.keys(meetingRooms).sort((a, b) => {
+        const sortedMeetingRooms = Object.keys(meetingRooms).sort(function(a, b) {
             return meetingRooms[a].roomOrder - meetingRooms[b].roomOrder;
         });
 
-        // Prepare the final result
-        const resultArray = sortedMeetingRooms.map(room => ({
-            meetingRoom: room,
+        // Return the sorted meeting rooms
+        return sortedMeetingRooms.map(room => ({
+            roomName: room,
             slots: meetingRooms[room].slots
         }));
-
-        await client.close();
-
-        return resultArray;
     } catch (error) {
         throw error;
     }
