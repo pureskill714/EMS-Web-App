@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 interface Slot {
   firstName: string;
   lastName: string;
+  purpose: string;
 }
 
 @Component({

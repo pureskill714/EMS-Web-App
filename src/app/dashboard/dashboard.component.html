@@ -34,6 +34,7 @@
         <ng-container *ngIf="isTimeSlotOccupied(room.calendarInfos, slot)">
           <ng-container *ngIf="getNextAvailableSlot(retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots, j) as availableSlot">
             <p>{{ availableSlot?.firstName }} {{ availableSlot?.lastName }}</p>
+            <p>{{ availableSlot.purpose }}</p>
           </ng-container>
         </ng-container>
 
