@@ -181,6 +181,22 @@ const addNewMeetingRoomControllerFn = async (req, res) => {
     }
 };
 
+const deleteMeetingRoomControllerFn = async (req, res) => {
+    try {
+        console.log(req.body); // Log request body for debugging if needed
+        const cancelResult = await roomBookingService.deleteMeetingRoomService(req.body); // Assuming req.body contains the necessary data
+
+        if (cancelResult.deletedCount === 1) {
+            res.status(200).json({ status: true, message: "meeting room deleted successfully." });
+        } else {
+            res.status(404).json({ status: false, message: "meeting room deleted not found or already cancelled." });
+        }
+    } catch (error) {
+        console.error("Error deleting meeting room:", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
 var getMeetingRoomsControllerFn = async (req, res) => {
     const uri = 'mongodb://localhost:27017';
     const dbName = 'ems';
@@ -217,5 +233,6 @@ module.exports = {
     retrieveCalendarMeetingRoomDetailsControllerFn ,
     cancelBookingControllerFn,
     addNewMeetingRoomControllerFn,
+    deleteMeetingRoomControllerFn,
     getMeetingRoomsControllerFn
 };

@@ -152,6 +152,26 @@ export class ManageRoomsComponent {
     let bodyData = {
       "id": roomId,
     };
+
+    this.http.post("http://localhost:9992/deletemeetingrooms", bodyData).subscribe(
+      (resultData: any) => {
+          console.log(resultData);
+          //alert("Room Booking Successfully");
+          this.router.navigate(['/admin-dashboard']);
+      },
+      (error) => {
+        console.error("Error occurred while sending POST request:", error);
+        if (error.status === 409) { 
+            alert("Error deleting new meeting room.Room may already be deleted");
+        } else {
+            alert("Error adding new meeting room. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+        }
+        // You can handle the error further as needed
+    }
+    );
+
+
+
   }
 
 

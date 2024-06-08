@@ -637,6 +637,35 @@ module.exports.addNewMeetingRoomService = async (meetingRoomDetails) => {
     }
 };
 
+module.exports.deleteMeetingRoomService = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const collectionName = 'meetingrooms';
+
+        // Retrieve the booking details using the provided ObjectId
+        const meetingRoom = await database.collection(collectionName).findOne({ _id: new ObjectId(requestData.id) });
+
+        if (!meetingRoom) {
+            throw new Error('Meeting Room not found'); // Handle if booking with the specified id is not found
+        }
+
+        // MongoDB query to delete the document with the specified _id
+        const result = await database.collection(collectionName).deleteOne({ _id: new ObjectId(requestData.id) });
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
 
 
 
