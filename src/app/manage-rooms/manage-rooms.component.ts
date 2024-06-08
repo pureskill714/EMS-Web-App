@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AddroomConfirmationDialogComponent } from './addroom-confirmation-dialog/addroom-confirmation-dialog.component';
+import { DeleteroomConfirmationDialogComponent } from './deleteroom-confirmation-dialog/deleteroom-confirmation-dialog.component';
 import { UserDataService } from '../user-data.service';
 import { Router } from '@angular/router';
 
@@ -140,7 +141,7 @@ export class ManageRoomsComponent {
     console.log(roomId)
     console.log(meetingRoomName)
     
-    const dialogRef = this.dialog.open(AddroomConfirmationDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteroomConfirmationDialogComponent, {
       width: '420px',
       panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
       hasBackdrop: true, // Display backdrop behind the dialog
