@@ -135,41 +135,49 @@ export class ManageRoomsComponent {
     }
   }
 
-  deleteRoom(room: MeetingRoom) {
-
-    // Add logic to delete the room
-    const index = this.meetingRooms.indexOf(room);
-    if (index !== -1) {
-      this.meetingRooms.splice(index, 1);
-    }
-  }
-
   deleteMeetingRoom(roomId: string, meetingRoomName: string) {
     this.userDataService.setDeletedMeetingRoom(meetingRoomName);
     console.log(roomId)
     console.log(meetingRoomName)
     
-    let bodyData = {
-      "id": roomId,
-    };
+    const dialogRef = this.dialog.open(AddroomConfirmationDialogComponent, {
+      width: '420px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+      data: {}
+    });
 
-    this.http.post("http://localhost:9992/deletemeetingrooms", bodyData).subscribe(
-      (resultData: any) => {
-          console.log(resultData);
-          //alert("Room Booking Successfully");
-          this.router.navigate(['/admin-dashboard']);
-      },
-      (error) => {
-        console.error("Error occurred while sending POST request:", error);
-        if (error.status === 409) { 
-            alert("Error deleting new meeting room.Room may already be deleted");
-        } else {
-            alert("Error adding new meeting room. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // Handle the confirmation action
+        let bodyData = {
+          "id": roomId,
+        };
+
+        this.http.post("http://localhost:9992/deletemeetingrooms", bodyData).subscribe(
+          (resultData: any) => {
+              console.log(resultData);
+              //alert("Room Booking Successfully");
+              this.router.navigate(['/admin-dashboard']);
+          },
+          (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            if (error.status === 409) { 
+                alert("Error deleting new meeting room.Room may already be deleted");
+            } else {
+                alert("Error adding new meeting room. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+            }
+            // You can handle the error further as needed
         }
-        // You can handle the error further as needed
-    }
-    );
+        );
 
+        console.log('Meeting room deletion confirmed');
+      }
+      else{
+        console.log('Delete meeting room function cancelled');
+      }
+    })
 
 
   }
