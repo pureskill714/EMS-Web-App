@@ -8,14 +8,17 @@ import { UserDataService } from '../../user-data.service';
   styleUrl: './deleteroom-confirmation-dialog.component.css'
 })
 export class DeleteroomConfirmationDialogComponent {
-  meetingRoomName: string | null = this.userDataService.getDeletedMeetingRoom();
+  meetingRoomName: string | null = "";
+  
   
 
   constructor(public dialogRef: MatDialogRef<DeleteroomConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any, private userDataService: UserDataService) 
-  {
-    
+  {}
 
+  ngOnInit() {
+     this.meetingRoomName = this.userDataService.getDeletedMeetingRoom();
   }
+
 
   onBackButton(): void {
     this.dialogRef.close('back');

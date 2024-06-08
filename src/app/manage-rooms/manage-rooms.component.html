@@ -20,7 +20,7 @@
           <td>{{ room._id }}</td>
           <td>
             <button class="btn btn-secondary action-button" (click)="editRoomOrder(room)">Edit Room Order</button>
-          <button class="btn btn-secondary action-button" (click)="editRoomName(room)">Edit Name</button>
+          <button class="btn btn-secondary action-button" (click)="editRoomName(room._id,room.name)">Edit Name</button>
           <button class="btn btn-danger action-button" (click)="deleteMeetingRoom(room._id,room.name)">Delete Room</button>
           </td>
         </tr>

@@ -1,0 +1,16 @@
+<h2 mat-dialog-title class="centered-title">Edit Meeting Room Name</h2>
+<div mat-dialog-content>
+    <p>Enter the new meeting room name for {{ oldMeetingRoomName }} </p>
+    <p>Note : Changing the meeting room name will update all previous bookings to reflect the new name</p>
+    <div fxLayout="column" fxLayoutGap="8px"> <!-- Adjust fxLayoutGap as needed -->
+        <!-- First input for meeting room name -->
+        <mat-form-field appearance="fill">
+            <mat-label>New Meeting Room Name</mat-label>
+            <input matInput placeholder="Meeting room name" [(ngModel)]="newMeetingRoomName">
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="button" class="btn btn-danger" (click)="onBackButton()">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="onConfirm()">Confirm Name Edit</button>
+</div>

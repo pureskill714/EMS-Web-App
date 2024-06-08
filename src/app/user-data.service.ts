@@ -21,6 +21,8 @@ export class UserDataService {
   private newMeetingRoomName : string | null = null;
   private newRoomOrder : number | null = null;
 
+  private oldMeetingRoomName : string | null = null;
+
   private deletedMeetingRoomName : string | null = null;
 
   constructor() {}
@@ -131,6 +133,14 @@ export class UserDataService {
 
   getnewMeetingRoomName(): string | null {
     return this.newMeetingRoomName;
+  }
+
+  setOldMeetingRoomName(meetingRoomName: string | null = null) {
+    this.oldMeetingRoomName = meetingRoomName;
+  }
+
+  getOldMeetingRoomName(): string | null {
+    return this.oldMeetingRoomName;
   }
 
   setNewRoomOrder(roomOrder: number| null = null) {

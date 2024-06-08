@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AddroomConfirmationDialogComponent } from './addroom-confirmation-dialog/addroom-confirmation-dialog.component';
 import { DeleteroomConfirmationDialogComponent } from './deleteroom-confirmation-dialog/deleteroom-confirmation-dialog.component';
+import { EditroomnameConfirmationDialogComponent } from './editroomname-confirmation-dialog/editroomname-confirmation-dialog.component';
 import { UserDataService } from '../user-data.service';
 import { Router } from '@angular/router';
 
@@ -128,12 +129,34 @@ export class ManageRoomsComponent {
     }
   }
 
-  editRoomName(room: MeetingRoom) {
+  editRoomName(roomId: string, meetingRoomName: string) {
+     this.userDataService.setOldMeetingRoomName(meetingRoomName)
     // Add logic to edit room name
-    const newName = prompt('Enter new name:', room.name);
-    if (newName !== null) {
-      room.name = newName;
-    }
+    const dialogRef = this.dialog.open(EditroomnameConfirmationDialogComponent, {
+      width: '430px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // Handle the confirmation action
+
+        let bodyData = {
+          "id": roomId,
+        };
+
+        console.log('Edit new meeting room confirmed');
+      }
+      else{
+        console.log('Edit new room cancelled');
+      }
+    })
+
+
+
   }
 
   deleteMeetingRoom(roomId: string, meetingRoomName: string) {
