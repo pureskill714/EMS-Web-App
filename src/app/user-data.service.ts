@@ -17,7 +17,7 @@ export class UserDataService {
   private cancelledTimeSlots: string[] = [];
   private cancelledPurpose : string | null = null;
 
-
+  private meetingRoom : string | null = null;
   private newMeetingRoomName : string | null = null;
   private newRoomOrder : number | null = null;
 
@@ -50,6 +50,14 @@ export class UserDataService {
 
   getLastName(): string | null {
     return this.lastName;
+  }
+
+  setMeetingRoom(meetingRoom: string) {
+    this.meetingRoom = meetingRoom;
+  }
+
+  getMeetingRoom(): string | null {
+    return this.meetingRoom;
   }
 
   setSelectedBookingRoom(room: string | null = null) {

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AddroomConfirmationDialogComponent } from './addroom-confirmation-dialog/addroom-confirmation-dialog.component';
 import { DeleteroomConfirmationDialogComponent } from './deleteroom-confirmation-dialog/deleteroom-confirmation-dialog.component';
 import { EditroomnameConfirmationDialogComponent } from './editroomname-confirmation-dialog/editroomname-confirmation-dialog.component';
+import { EditroomorderConfirmationDialogComponent } from './editroomorder-confirmation-dialog/editroomorder-confirmation-dialog.component';
 import { UserDataService } from '../user-data.service';
 import { Router } from '@angular/router';
 
@@ -121,12 +122,36 @@ export class ManageRoomsComponent {
    
   }
 
-  editRoomOrder(room: MeetingRoom) {
+  editRoomOrder(roomId: string, meetingRoomName: string) {
     // Add logic to edit room order
-    const newOrder = prompt('Enter new order:', room.order.toString());
-    if (newOrder !== null) {
-      room.order = parseInt(newOrder, 10);
-    }
+    console.log(roomId)
+    this.userDataService.setMeetingRoom(meetingRoomName);
+
+    const dialogRef = this.dialog.open(EditroomorderConfirmationDialogComponent, {
+      width: '430px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // Handle the confirmation action
+      
+        let bodyData = {
+          "id": roomId,
+        };
+
+        console.log('Edit new meeting room confirmed');
+      }
+      else{
+        console.log('Edit new room cancelled');
+      }
+    })
+
+
+    
   }
 
   editRoomName(roomId: string, oldMeetingRoomName: string) {

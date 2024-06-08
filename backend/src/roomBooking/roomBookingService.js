@@ -670,6 +670,24 @@ module.exports.editMeetingRoomNameService = async (requestData) => {
     }
 };
 
+module.exports.editMeetingRoomOrderService = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const meetingRoomsCollection = database.collection('meetingrooms');
+        
+        // MongoDB query
+        
+
+        
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports.deleteMeetingRoomService = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';

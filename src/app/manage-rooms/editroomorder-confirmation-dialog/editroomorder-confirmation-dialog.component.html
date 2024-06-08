@@ -1,0 +1,15 @@
+<h2 mat-dialog-title class="centered-title">Edit Meeting Room Order</h2>
+<div mat-dialog-content>
+    <p>Enter the new room sort order for {{ meetingRoomName }} </p>
+    <div fxLayout="column" fxLayoutGap="1px"> <!-- Adjust fxLayoutGap as needed -->
+        <!-- First input for meeting room name -->
+        <mat-form-field appearance="fill">
+            <mat-label>New Meeting Room Order</mat-label>
+            <input matInput placeholder="Room order" [(ngModel)]="newMeetingRoomOrder" type="number">
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="button" class="btn btn-danger" (click)="onBackButton()">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="onConfirm()">Confirm Edit Order</button>
+</div>
