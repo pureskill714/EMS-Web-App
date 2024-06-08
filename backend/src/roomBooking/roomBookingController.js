@@ -181,6 +181,26 @@ const addNewMeetingRoomControllerFn = async (req, res) => {
     }
 };
 
+const editMeetingRoomNameControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await roomBookingService.editMeetingRoomNameService(req.body);
+
+        if (result) {
+            res.send({ status: true, message: 'Meeting Room name edited successfully' });
+        } else {
+            res.send({ status: false, message: 'Error editing meeting room name' });
+        }
+    } catch (error) {
+        if (error.status && error.message) {
+            res.status(error.status).json({ error: error.message });
+        } else {
+            console.log(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+};
+
 const deleteMeetingRoomControllerFn = async (req, res) => {
     try {
         console.log(req.body); // Log request body for debugging if needed
@@ -233,6 +253,7 @@ module.exports = {
     retrieveCalendarMeetingRoomDetailsControllerFn ,
     cancelBookingControllerFn,
     addNewMeetingRoomControllerFn,
+    editMeetingRoomNameControllerFn,
     deleteMeetingRoomControllerFn,
     getMeetingRoomsControllerFn
 };

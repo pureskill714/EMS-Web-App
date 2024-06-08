@@ -129,8 +129,8 @@ export class ManageRoomsComponent {
     }
   }
 
-  editRoomName(roomId: string, meetingRoomName: string) {
-     this.userDataService.setOldMeetingRoomName(meetingRoomName)
+  editRoomName(roomId: string, oldMeetingRoomName: string) {
+     this.userDataService.setOldMeetingRoomName(oldMeetingRoomName)
     // Add logic to edit room name
     const dialogRef = this.dialog.open(EditroomnameConfirmationDialogComponent, {
       width: '430px',
@@ -145,8 +145,26 @@ export class ManageRoomsComponent {
         // Handle the confirmation action
 
         let bodyData = {
-          "id": roomId,
+          "oldMeetingRoomName": oldMeetingRoomName,
+          "newMeetingRoomName": this.userDataService.getnewMeetingRoomName(),
         };
+
+        this.http.post("http://localhost:9992/editmeetingroomname", bodyData).subscribe(
+          (resultData: any) => {
+              console.log(resultData);
+              //alert("Room Booking Successfully");
+              this.router.navigate(['/admin-dashboard']);
+          },
+          (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            if (error.status === 409) { 
+                alert("Error editing new meeting room name. Room may not exist anymore");
+            } else {
+                alert("Error editing new meeting room name. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+            }
+            // You can handle the error further as needed
+        }
+        );
 
         console.log('Edit new meeting room confirmed');
       }
