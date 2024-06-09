@@ -113,12 +113,21 @@
     <!-- Table Body Rows -->
     <tbody>
         <!-- First Row -->
-        <tr *ngFor="let room of meetingRooms">
-            <!-- Row header for each room -->
-            <th>{{ room.name }}</th>
-            <!-- Cells for each time slot -->
-            <td *ngFor="let slot of timeSlots" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}"></td>
-        </tr>
+        <tr *ngFor="let room of meetingRooms; let i = index">
+          <!-- Row header for each room -->
+          <th>{{ room.name }}</th>
+          <!-- Cells for each time slot -->
+          <td *ngFor="let slot of timeSlots; let j = index" [ngClass]="{'green-box': !isTimeSlotOccupied(room.calendarInfos, slot), 'grey-box': isTimeSlotOccupied(room.calendarInfos, slot)}">
+         
+            <ng-container *ngIf="isTimeSlotOccupied(room.calendarInfos, slot)">
+              <ng-container *ngIf="getNextAvailableSlot(retrievedCalendarInfoWithNames.calendarInfoWithNames[i]?.slots, j) as availableSlot">
+                <h6><b>{{ availableSlot?.firstName }} {{ availableSlot?.lastName }}</b></h6>
+              <h6>{{ availableSlot?.purpose }}</h6>
+              </ng-container>
+            </ng-container>
+    
+          </td>
+      </tr>
         <!-- Repeat the above rows for additional rows if needed -->
     </tbody>
 </table>

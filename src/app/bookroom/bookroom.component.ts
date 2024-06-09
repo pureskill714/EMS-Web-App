@@ -7,6 +7,12 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { BookingCancellationDialogComponent } from './booking-cancellation-dialog/booking-cancellation-dialog.component';
 
+// Define an interface for the slot structure
+interface Slot {
+  firstName: string;
+  lastName: string;
+  purpose: string;
+}
 
 @Component({
   selector: 'app-bookroom',
@@ -30,6 +36,8 @@ export class BookroomComponent {
 
   meetingRooms : any = [];
   retrievedAllMeetingRoomDetails : any = [];
+
+  retrievedCalendarInfoWithNames : any = [];
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
@@ -137,6 +145,17 @@ export class BookroomComponent {
             this.meetingRooms = meetingRooms;
           }
         });
+
+        this.http.post<any>('http://localhost:9992/retrievecalendarinfoswithnames', bodyData)
+        .subscribe(
+          (resultData: any) => {
+            console.log(resultData);
+  
+            if (resultData.status) {
+              console.log('Calendar data (with names) received:', resultData);
+              this.retrievedCalendarInfoWithNames = resultData;
+            }
+          });
         
         this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
@@ -274,6 +293,16 @@ export class BookroomComponent {
   
       // Optionally: Add your logic to handle displaying meeting room details
       console.log(`Showing details for ${this.meetingRoomNames[index]}`);
+    }
+
+    getNextAvailableSlot(slots: Slot[] | undefined, startIndex: number) {
+      if (!slots) return null;
+      for (let i = startIndex; i < slots.length; i++) {
+        if (slots[i]) {
+          return slots[i];
+        }
+      }
+      return null;
     }
 
   }
