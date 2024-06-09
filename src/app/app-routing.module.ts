@@ -16,6 +16,7 @@ import { RegisteraccountconfirmationComponent } from './register/registeraccount
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
 import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 const routes: Routes = [
   {
@@ -94,7 +95,11 @@ const routes: Routes = [
     component: ManageRoomsComponent ,
     path: 'manage-rooms'
   }
-
+  ,
+  {
+    component: NotAuthorizedComponent ,
+    path: 'not-authorized'
+  }
 ];
 
 @NgModule({

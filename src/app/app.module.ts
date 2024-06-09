@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { DeleteroomConfirmationDialogComponent } from './manage-rooms/deleteroom-confirmation-dialog/deleteroom-confirmation-dialog.component';
 import { EditroomnameConfirmationDialogComponent } from './manage-rooms/editroomname-confirmation-dialog/editroomname-confirmation-dialog.component';
 import { EditroomorderConfirmationDialogComponent } from './manage-rooms/editroomorder-confirmation-dialog/editroomorder-confirmation-dialog.component';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { EditroomorderConfirmationDialogComponent } from './manage-rooms/editroo
     DeleteroomConfirmationDialogComponent,
     EditroomnameConfirmationDialogComponent,
     EditroomorderConfirmationDialogComponent,
+    NotAuthorizedComponent,
   ],
   imports: [
     BrowserModule,

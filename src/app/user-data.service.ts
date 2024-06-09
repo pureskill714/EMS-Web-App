@@ -7,6 +7,8 @@ export class UserDataService {
   private email: string | null = null;
   private firstName: string | null = null;
   private lastName: string | null = null;
+  private role : string | null = null;
+
   private selectedBookingRoom: string | null = null;
   private selectedBookingDate: string | null = null;
   private inputBookingPurpose: string | null = null;
@@ -50,6 +52,14 @@ export class UserDataService {
 
   getLastName(): string | null {
     return this.lastName;
+  }
+
+  setRole(role: string) {
+    this.role = role;
+  }
+
+  getRole(): string | null {
+    return this.role;
   }
 
   setMeetingRoom(meetingRoom: string) {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from './../user-data.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 // Define an interface for the slot structure
 interface Slot {
@@ -23,6 +24,8 @@ export class AdminDashboardComponent {
   selectedMeetingRooms: boolean[] = [];
   retrievedAllMeetingRoomDetails : any = [];
 
+  roleCheck: string | null = null;
+
   // Define the meeting rooms and their calendar information
   meetingRoomsTimeSlots = [];
 
@@ -31,7 +34,19 @@ export class AdminDashboardComponent {
   // Define the time slots
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
 
-  constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient) {
+  constructor(private userDataService: UserDataService,
+    private authService: AuthService,
+    private http: HttpClient,
+    private router: Router) 
+  {
+    this.roleCheck = this.userDataService.getRole();
+    console.log("role check below")
+    console.log(this.roleCheck)
+    if (this.roleCheck != "admin") {
+      this.router.navigate(["not-authorized"]);
+      this.authService.kickUser(); // Call AuthService kick user method
+    }
+
   }
 
   ngOnInit() {

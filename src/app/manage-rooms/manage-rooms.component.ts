@@ -7,6 +7,7 @@ import { EditroomnameConfirmationDialogComponent } from './editroomname-confirma
 import { EditroomorderConfirmationDialogComponent } from './editroomorder-confirmation-dialog/editroomorder-confirmation-dialog.component';
 import { UserDataService } from '../user-data.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 interface MeetingRoom {
   name: string;
@@ -26,7 +27,19 @@ export class ManageRoomsComponent {
   
   meetingRooms: any = [];
 
-  constructor(private http: HttpClient,private dialog: MatDialog,private userDataService: UserDataService,private router: Router) {
+  roleCheck: string | null = null;
+
+  constructor(private http: HttpClient,private dialog: MatDialog,
+    private userDataService: UserDataService,private router: Router,
+    private authService: AuthService,) {
+      
+    this.roleCheck = this.userDataService.getRole();
+    console.log("role check below")
+    console.log(this.roleCheck)
+    if (this.roleCheck != "admin") {
+      this.router.navigate(["not-authorized"]);
+      this.authService.kickUser(); // Call AuthService kick user method
+    }
   }
 
 
