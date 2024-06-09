@@ -3,6 +3,13 @@ import { UserDataService } from './../user-data.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 
+// Define an interface for the slot structure
+interface Slot {
+  firstName: string;
+  lastName: string;
+  purpose: string;
+}
+
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -18,6 +25,8 @@ export class AdminDashboardComponent {
 
   // Define the meeting rooms and their calendar information
   meetingRoomsTimeSlots = [];
+
+  retrievedCalendarInfoWithNames : any = [];
 
   // Define the time slots
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
@@ -106,6 +115,17 @@ export class AdminDashboardComponent {
           }
         });
 
+        this.http.post<any>('http://localhost:9992/retrievecalendarinfoswithnames', bodyData)
+        .subscribe(
+          (resultData: any) => {
+            console.log(resultData);
+  
+            if (resultData.status) {
+              console.log('Calendar data (with names) received:', resultData);
+              this.retrievedCalendarInfoWithNames = resultData;
+            }
+          });
+
       this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
@@ -131,6 +151,16 @@ export class AdminDashboardComponent {
 
     // Optionally: Add your logic to handle displaying meeting room details
     console.log(`Showing details for ${this.meetingRoomNames[index]}`);
+  }
+
+  getNextAvailableSlot(slots: Slot[] | undefined, startIndex: number) {
+    if (!slots) return null;
+    for (let i = startIndex; i < slots.length; i++) {
+      if (slots[i]) {
+        return slots[i];
+      }
+    }
+    return null;
   }
 
 }
