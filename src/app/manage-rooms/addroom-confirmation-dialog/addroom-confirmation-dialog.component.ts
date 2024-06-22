@@ -10,6 +10,8 @@ import { UserDataService } from '../../user-data.service';
 export class AddroomConfirmationDialogComponent {
   meetingRoomName: string = '';
   roomOrder: number | null = null;
+  roomCapacity: number | null = null;
+  meetingRoomLocation: string = '';
 
   constructor(public dialogRef: MatDialogRef<AddroomConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {
