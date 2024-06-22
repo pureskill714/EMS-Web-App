@@ -38,6 +38,7 @@ import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmati
 import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
 import { BookingCancellationDialogAdminComponent } from './manage-bookings/booking-cancellation-dialog-admin/booking-cancellation-dialog-admin.component';
 import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
+import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
 
 
 @NgModule({
@@ -73,6 +74,7 @@ import { CancelbookingconfirmationadminComponent } from './manage-bookings/cance
     ManageBookingsComponent,
     BookingCancellationDialogAdminComponent,
     CancelbookingconfirmationadminComponent,
+    NewbookingadminComponent,
   ],
   imports: [
     BrowserModule,

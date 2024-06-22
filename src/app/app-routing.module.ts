@@ -22,6 +22,7 @@ import { DeleteroomconfirmationComponent } from './manage-rooms/deleteroomconfir
 import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmation/editroomconfirmation.component';
 import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
 import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
+import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
 
 
 const routes: Routes = [
@@ -126,6 +127,12 @@ const routes: Routes = [
     component: CancelbookingconfirmationadminComponent,
     path: 'cancelbooking-admin'
 
+  }
+  ,
+  {
+    component: NewbookingadminComponent,
+    path: 'newbooking-admin'
+    
   }
   ,
   {
