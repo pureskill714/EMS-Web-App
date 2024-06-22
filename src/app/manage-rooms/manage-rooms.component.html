@@ -9,7 +9,8 @@
         <tr>
           <th>Room Name</th>
           <th>Room Order</th>
-          <th>Room ID</th>
+          <th>Capacity</th>
+          <th>Location</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -17,7 +18,8 @@
         <tr *ngFor="let room of meetingRoomNames">
           <td>{{ room.name }}</td>
           <td>{{ room.roomOrder }}</td>
-          <td>{{ room._id }}</td>
+          <td>{{ room.capacity }}</td>
+          <td>{{ room.location }}</td>
           <td>
             <button class="btn btn-secondary action-button" (click)="editRoomOrder(room._id,room.name)">Edit Room Order</button>
           <button class="btn btn-secondary action-button" (click)="editRoomName(room._id,room.name)">Edit Name</button>

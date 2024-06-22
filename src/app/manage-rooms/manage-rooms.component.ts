@@ -53,8 +53,6 @@ export class ManageRoomsComponent {
           console.log("retrieved meeting room names success at admin management");
           this.retrievedMeetingRoomNames = resultData
           console.log(this.retrievedMeetingRoomNames);
-          console.log(this.retrievedMeetingRoomNames[1].name);
-          console.log(this.retrievedMeetingRoomNames[1].roomOrder);
 
         //this.meetingRooms = [];
 

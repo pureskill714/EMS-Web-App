@@ -248,7 +248,7 @@ var getMeetingRoomsControllerFn = async (req, res) => {
         const collection = database.collection('meetingrooms');
 
         // Fetch all meeting room names sorted by roomOrder field from MongoDB
-        const meetingRooms = await collection.find({}, { projection: { name: 1, roomOrder: 1, _id: 1 } }).sort({ roomOrder: 1 }).toArray();
+        const meetingRooms = await collection.find({}, { projection: { name: 1, roomOrder: 1, _id: 1,capacity:1,location:1 } }).sort({ roomOrder: 1 }).toArray();
 
         // Respond with the retrieved meeting rooms
         res.status(200).json(meetingRooms);
