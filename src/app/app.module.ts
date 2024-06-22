@@ -35,6 +35,9 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { AddroomconfirmationComponent } from './manage-rooms/addroomconfirmation/addroomconfirmation.component';
 import { DeleteroomconfirmationComponent } from './manage-rooms/deleteroomconfirmation/deleteroomconfirmation.component';
 import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmation/editroomconfirmation.component';
+import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
+import { BookingCancellationDialogAdminComponent } from './manage-bookings/booking-cancellation-dialog-admin/booking-cancellation-dialog-admin.component';
+import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
 
 
 @NgModule({
@@ -67,6 +70,9 @@ import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmati
     AddroomconfirmationComponent,
     DeleteroomconfirmationComponent,
     EditroomconfirmationComponent,
+    ManageBookingsComponent,
+    BookingCancellationDialogAdminComponent,
+    CancelbookingconfirmationadminComponent,
   ],
   imports: [
     BrowserModule,

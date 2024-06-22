@@ -20,6 +20,9 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { AddroomconfirmationComponent } from './manage-rooms/addroomconfirmation/addroomconfirmation.component';
 import { DeleteroomconfirmationComponent } from './manage-rooms/deleteroomconfirmation/deleteroomconfirmation.component';
 import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmation/editroomconfirmation.component';
+import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
+import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
+
 
 const routes: Routes = [
   {
@@ -112,6 +115,16 @@ const routes: Routes = [
   {
     component: EditroomconfirmationComponent,
     path : 'confirm-edit-room'
+  }
+  ,
+  {
+    component: ManageBookingsComponent,
+    path: 'manage-bookings'
+  }
+  ,
+  {
+    component: CancelbookingconfirmationadminComponent,
+    path: 'cancelbooking-admin'
 
   }
   ,
