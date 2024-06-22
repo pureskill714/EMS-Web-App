@@ -17,6 +17,7 @@ import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountme
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
 import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { AddroomconfirmationComponent } from './manage-rooms/addroomconfirmation/addroomconfirmation.component';
 
 const routes: Routes = [
   {
@@ -94,6 +95,11 @@ const routes: Routes = [
   {
     component: ManageRoomsComponent ,
     path: 'manage-rooms'
+  }
+  ,
+  {
+    component: AddroomconfirmationComponent ,
+    path: 'confirm-add-room'
   }
   ,
   {
