@@ -258,7 +258,7 @@ export class NewbookingadminComponent implements OnInit {
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
-              this.router.navigate(['/confirmbooking']);
+              this.router.navigate(['/confirmbooking-admin']);
           },
           (error) => {
             console.error("Error occurred while sending POST request:", error);

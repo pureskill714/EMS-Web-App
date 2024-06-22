@@ -39,6 +39,7 @@ import { ManageBookingsComponent } from './manage-bookings/manage-bookings.compo
 import { BookingCancellationDialogAdminComponent } from './manage-bookings/booking-cancellation-dialog-admin/booking-cancellation-dialog-admin.component';
 import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
 import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
+import { BookingconfirmationadminComponent } from './manage-bookings/bookingconfirmationadmin/bookingconfirmationadmin.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newb
     BookingCancellationDialogAdminComponent,
     CancelbookingconfirmationadminComponent,
     NewbookingadminComponent,
+    BookingconfirmationadminComponent,
   ],
   imports: [
     BrowserModule,
