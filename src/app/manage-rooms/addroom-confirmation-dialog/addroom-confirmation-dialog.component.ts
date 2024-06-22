@@ -26,6 +26,8 @@ export class AddroomConfirmationDialogComponent {
   onConfirm(): void {
     this.userDataService.setNewMeetingRoomName(this.meetingRoomName);
     this.userDataService.setNewRoomOrder(this.roomOrder);
+    this.userDataService.setRoomCapacity(this.roomCapacity);
+    this.userDataService.setMeetingRoomLocation(this.meetingRoomLocation);
     this.dialogRef.close('confirm');
   }
 

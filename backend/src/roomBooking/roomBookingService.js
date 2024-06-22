@@ -626,7 +626,9 @@ module.exports.addNewMeetingRoomService = async (meetingRoomDetails) => {
         // If no conflicts, create the new meeting room
         const newMeetingRoom = new MeetingRoom({
             name: meetingRoomDetails.newMeetingRoom,
-            roomOrder: meetingRoomDetails.newRoomOrder
+            roomOrder: meetingRoomDetails.newRoomOrder,
+            location: meetingRoomDetails.meetingRoomLocation,
+            capacity: meetingRoomDetails.roomCapacity,
         });
 
         const result = await newMeetingRoom.save();

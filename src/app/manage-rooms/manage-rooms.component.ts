@@ -103,7 +103,9 @@ export class ManageRoomsComponent {
         // Handle the confirmation action
         let bodyData = {
           "newMeetingRoom": this.userDataService.getnewMeetingRoomName(),
-          "newRoomOrder": this.userDataService.getnewRoomOrder()
+          "newRoomOrder": this.userDataService.getnewRoomOrder(),
+          "roomCapacity": this.userDataService.getRoomCapacity(),
+          "meetingRoomLocation": this.userDataService.getMeetingRoomLocation()
       };
 
       this.http.post("http://localhost:9992/addmeetingrooms", bodyData).subscribe(

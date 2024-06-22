@@ -23,6 +23,9 @@ export class UserDataService {
   private newMeetingRoomName : string | null = null;
   private newRoomOrder : number | null = null;
 
+  private roomCapacity : number | null = null;
+  private meetingRoomLocation : string | null = null;
+
   private oldMeetingRoomName : string | null = null;
 
   private deletedMeetingRoomName : string | null = null;
@@ -167,6 +170,22 @@ export class UserDataService {
 
   getnewRoomOrder(): number | null {
     return this.newRoomOrder;
+  }
+
+  setRoomCapacity(roomCapacity: number| null = null) {
+    this.roomCapacity = roomCapacity
+  }
+
+  getRoomCapacity(): number | null {
+    return this.roomCapacity;
+  }
+
+  setMeetingRoomLocation(meetingRoomLocation: string | null = null) {
+    this.meetingRoomLocation = meetingRoomLocation;
+  }
+
+  getMeetingRoomLocation(): string | null {
+    return this.meetingRoomLocation;
   }
 
   setDeletedMeetingRoom(meetingRoomName: string | null = null) {
