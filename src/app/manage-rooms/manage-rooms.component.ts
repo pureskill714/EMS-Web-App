@@ -209,7 +209,7 @@ export class ManageRoomsComponent {
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
-              this.router.navigate(['/admin-dashboard']);
+              this.router.navigate(['/confirm-edit-room']);
           },
           (error) => {
             console.error("Error occurred while sending POST request:", error);

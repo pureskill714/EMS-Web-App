@@ -19,6 +19,7 @@ import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 import { AddroomconfirmationComponent } from './manage-rooms/addroomconfirmation/addroomconfirmation.component';
 import { DeleteroomconfirmationComponent } from './manage-rooms/deleteroomconfirmation/deleteroomconfirmation.component';
+import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmation/editroomconfirmation.component';
 
 const routes: Routes = [
   {
@@ -106,6 +107,12 @@ const routes: Routes = [
   {
     component: DeleteroomconfirmationComponent,
     path: 'confirm-delete-room'
+  }
+  ,
+  {
+    component: EditroomconfirmationComponent,
+    path : 'confirm-edit-room'
+
   }
   ,
   {

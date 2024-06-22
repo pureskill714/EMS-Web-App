@@ -21,8 +21,10 @@
           <td>{{ room.capacity }}</td>
           <td>{{ room.location }}</td>
           <td>
+            <button class="btn btn-secondary action-button" (click)="editRoomName(room._id,room.name)">Edit Name</button>
             <button class="btn btn-secondary action-button" (click)="editRoomOrder(room._id,room.name)">Edit Room Order</button>
-          <button class="btn btn-secondary action-button" (click)="editRoomName(room._id,room.name)">Edit Name</button>
+            <button class="btn btn-secondary action-button">Edit Capacity</button>
+            <button class="btn btn-secondary action-button">Edit Location</button>
           <button class="btn btn-danger action-button" (click)="deleteMeetingRoom(room._id,room.name)">Delete Room</button>
           </td>
         </tr>
