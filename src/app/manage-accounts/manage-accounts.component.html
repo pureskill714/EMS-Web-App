@@ -1,0 +1,27 @@
+<app-header-admin></app-header-admin>
+
+<br><br>
+
+<div class="booking-list-container">
+    <table class="booking-list">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let retrievedEmployeeDetail of retrievedEmployeeDetails">
+            <td>{{ retrievedEmployeeDetail.firstname }}</td>
+            <td>{{ retrievedEmployeeDetail.lastname }}</td>
+            <td>{{ retrievedEmployeeDetail.email }}</td>
+            <td>
+              <button class="btn btn-danger">Delete Account</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>

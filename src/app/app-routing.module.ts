@@ -24,6 +24,7 @@ import { ManageBookingsComponent } from './manage-bookings/manage-bookings.compo
 import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
 import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
 import { BookingconfirmationadminComponent } from './manage-bookings/bookingconfirmationadmin/bookingconfirmationadmin.component';
+import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
 
 
 const routes: Routes = [
@@ -139,6 +140,12 @@ const routes: Routes = [
   {
     component: BookingconfirmationadminComponent,
     path: 'confirmbooking-admin'
+
+  }
+  ,
+  {
+    component: ManageAccountsComponent,
+    path: 'manage-accounts'
 
   }
   ,

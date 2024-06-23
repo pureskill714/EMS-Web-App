@@ -1,0 +1,39 @@
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-manage-accounts',
+  templateUrl: './manage-accounts.component.html',
+  styleUrl: './manage-accounts.component.css'
+})
+export class ManageAccountsComponent {
+  retrievedEmployeeDetails: any[] = []
+
+  constructor(
+    private router: Router,
+    private http: HttpClient,) {}
+
+    ngOnInit(): void {
+      this.getEmployeeDetails();
+    }
+
+    getEmployeeDetails() {
+      
+      this.http.get("http://localhost:9992/getemployeedetails").subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+  
+          // Check if the response contains data and handle accordingly
+        if (resultData) {
+          console.log("retrieved employee data success");
+          this.retrievedEmployeeDetails = resultData;
+        }
+        else {
+          console.log("retrieved employee data failed");
+        }
+      }
+      );
+    }
+
+}
