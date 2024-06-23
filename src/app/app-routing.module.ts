@@ -25,6 +25,7 @@ import { CancelbookingconfirmationadminComponent } from './manage-bookings/cance
 import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
 import { BookingconfirmationadminComponent } from './manage-bookings/bookingconfirmationadmin/bookingconfirmationadmin.component';
 import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 const routes: Routes = [
@@ -150,8 +151,13 @@ const routes: Routes = [
   }
   ,
   {
-    component: NotAuthorizedComponent ,
+    component: NotAuthorizedComponent,
     path: 'not-authorized'
+  }
+  ,
+  {
+    component: ForgotPasswordComponent,
+    path: 'forgot-password'
   }
 ];
 
