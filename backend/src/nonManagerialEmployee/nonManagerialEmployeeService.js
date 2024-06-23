@@ -1,5 +1,5 @@
 var nonManagerialEmployeeModel = require('./nonManagerialEmployeeModel');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 var key = '123456789trytryrtyr';
 var encryptor = require('simple-encryptor')(key);
 
@@ -80,8 +80,6 @@ function sendVerificationEmail(email, verificationToken) {
         });
     });
 }
-
-
 
 
  module.exports.loginuserDBService = (nonManagerialEmployeeDetails) => {
@@ -181,4 +179,31 @@ module.exports.resendVerificationService = (bodyData) => {
             })
             .catch(err => reject({ message: 'Database query failed', error: err }));
     });
+};
+
+module.exports.deleteAccountService = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const collectionName = 'nonmanagerialemployees';
+
+        // Retrieve the account details using the provided ObjectId
+        const account = await database.collection(collectionName).findOne({ _id: new ObjectId(requestData.id) });
+
+        if (!account) {
+            throw new Error('Account not found'); // Handle if account with the specified id is not found
+        }
+
+        // MongoDB query to delete the document with the specified _id
+        const result = await database.collection(collectionName).deleteOne({ _id: new ObjectId(requestData.id) });
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
 };

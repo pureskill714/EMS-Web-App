@@ -12,7 +12,7 @@ router.route('/verify-account').post(nonManagerialEmployeeController.verifyAccou
 router.route('/resend-verification').post(nonManagerialEmployeeController.resendVerificationControllerFn);
 
 router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployeesControllerFn);
-
+router.route('/deleteaccount').post(nonManagerialEmployeeController.deleteAccountControllerFn);
 
 router.get('/getmeetingrooms', roomBookingController.getMeetingRoomsControllerFn);
 router.route('/addmeetingrooms').post(roomBookingController.addNewMeetingRoomControllerFn);

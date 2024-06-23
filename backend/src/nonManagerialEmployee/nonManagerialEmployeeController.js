@@ -125,9 +125,32 @@ var getAllEmployeesControllerFn = async (req, res) => {
     }
   };
 
+  var deleteAccountControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        var status = await nonManagerialEmployeeService.deleteAccountService(req.body);
+        console.log(status);
+
+        if (status) {
+            res.send({ "status": true, "message": "Account deleted successfully" });
+        } else {
+            res.send({ "status": false, "message": "Error deleting account" });
+        }
+    } catch (err) {
+        console.log(err);
+        if (err.message === 'Account not found') {
+            res.status(404).json({ error: 'Account not found' });
+        } else {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+}
+
+
 module.exports = { createnonManagerialEmployeeControllerFn,
                    loginUserControllerFn,
                    getAllEmployeesControllerFn,
                    verifyAccountControllerFn,
-                   resendVerificationControllerFn
+                   resendVerificationControllerFn,
+                   deleteAccountControllerFn
                  };
