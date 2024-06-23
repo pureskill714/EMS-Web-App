@@ -10,10 +10,10 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HeaderComponent } from './header/header.component';
+import { HeaderAdminComponent } from './header-admin/header-admin.component';
 import { BookroomComponent } from './bookroom/bookroom.component';
 import { NewbookingComponent } from './bookroom/newbooking/newbooking.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 import { BookingConfirmationDialogComponent } from './bookroom/booking-confirmation-dialog/booking-confirmation-dialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
@@ -24,6 +24,24 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
 import { AccountverificationComponent } from './register/accountverification/accountverification.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { ManageRoomsComponent } from './manage-rooms/manage-rooms.component';
+import { AddroomConfirmationDialogComponent } from './manage-rooms/addroom-confirmation-dialog/addroom-confirmation-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
+import { DeleteroomConfirmationDialogComponent } from './manage-rooms/deleteroom-confirmation-dialog/deleteroom-confirmation-dialog.component';
+import { EditroomnameConfirmationDialogComponent } from './manage-rooms/editroomname-confirmation-dialog/editroomname-confirmation-dialog.component';
+import { EditroomorderConfirmationDialogComponent } from './manage-rooms/editroomorder-confirmation-dialog/editroomorder-confirmation-dialog.component';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { AddroomconfirmationComponent } from './manage-rooms/addroomconfirmation/addroomconfirmation.component';
+import { DeleteroomconfirmationComponent } from './manage-rooms/deleteroomconfirmation/deleteroomconfirmation.component';
+import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmation/editroomconfirmation.component';
+import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
+import { BookingCancellationDialogAdminComponent } from './manage-bookings/booking-cancellation-dialog-admin/booking-cancellation-dialog-admin.component';
+import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
+import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
+import { BookingconfirmationadminComponent } from './manage-bookings/bookingconfirmationadmin/bookingconfirmationadmin.component';
+import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +53,6 @@ import { AccountverificationComponent } from './register/accountverification/acc
     HeaderComponent,
     BookroomComponent,
     NewbookingComponent,
-    ProjectManagerDashboardComponent,
     BookingConfirmationDialogComponent,
     CancelbookingComponent,
     BookingconfirmationComponent,
@@ -45,6 +62,23 @@ import { AccountverificationComponent } from './register/accountverification/acc
     RegisteraccountconfirmationComponent,
     NonverifiedaccountmessageComponent,
     AccountverificationComponent,
+    AdminDashboardComponent,
+    HeaderAdminComponent,
+    ManageRoomsComponent,
+    AddroomConfirmationDialogComponent,
+    DeleteroomConfirmationDialogComponent,
+    EditroomnameConfirmationDialogComponent,
+    EditroomorderConfirmationDialogComponent,
+    NotAuthorizedComponent,
+    AddroomconfirmationComponent,
+    DeleteroomconfirmationComponent,
+    EditroomconfirmationComponent,
+    ManageBookingsComponent,
+    BookingCancellationDialogAdminComponent,
+    CancelbookingconfirmationadminComponent,
+    NewbookingadminComponent,
+    BookingconfirmationadminComponent,
+    ManageAccountsComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,7 +87,8 @@ import { AccountverificationComponent } from './register/accountverification/acc
     BrowserAnimationsModule,
     FormsModule,
     MatFormFieldModule,
-    HttpClientModule
+    HttpClientModule,
+    MatButtonModule
   ],
   providers: [provideClientHydration()],
   bootstrap: [AppComponent]

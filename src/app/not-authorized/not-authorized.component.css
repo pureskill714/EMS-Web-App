@@ -1,0 +1,24 @@
+.not-authorized-container {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .not-authorized-container h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .not-authorized-container p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+  }
+  
+  .not-authorized-container a {
+    text-decoration: none;
+    color: #007bff;
+    font-size: 1em;
+  }
+  
+  .not-authorized-container a:hover {
+    text-decoration: underline;
+  }

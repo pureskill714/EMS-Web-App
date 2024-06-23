@@ -59,6 +59,7 @@ export class LoginComponent {
             this.authService.storeUserData(this.email, resultData.firstname, resultData.lastname); // Store user data in browser storage
             this.userDataService.setFirstName(resultData.firstname);
             this.userDataService.setLastName(resultData.lastname);
+            this.userDataService.setRole(resultData.role);
             
             // Perform role-based actions or redirection based on the user's role
             if (resultData.isVerified === false){
@@ -69,8 +70,8 @@ export class LoginComponent {
               this.router.navigateByUrl('dashboard');
             } 
 
-            else if (userRole === 'project-manager') {
-              this.router.navigateByUrl('pm-dashboard');
+            else if (userRole === 'admin') {
+              this.router.navigateByUrl('admin-dashboard');
             }
 
           } else {

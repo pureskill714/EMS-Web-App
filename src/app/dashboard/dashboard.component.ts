@@ -3,6 +3,13 @@ import { UserDataService } from './../user-data.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 
+// Define an interface for the slot structure
+interface Slot {
+  firstName: string;
+  lastName: string;
+  purpose: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,11 +23,14 @@ export class DashboardComponent implements OnInit {
   selectedMeetingRooms: boolean[] = [];
   retrievedAllMeetingRoomDetails : any = [];
 
+  
   // Define the meeting rooms and their calendar information
   meetingRoomsTimeSlots = [];
 
   // Define the time slots
   timeSlots: string[] = ['09:00-10:00', '10:00-11:00', '11:00-12:00', '12:00-13:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00'];
+
+  retrievedCalendarInfoWithNames : any = [];
 
   constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient) {
   }
@@ -54,7 +64,21 @@ export class DashboardComponent implements OnInit {
           // Extract the name property and add it to the string list
           this.meetingRoomNames.push(this.retrievedMeetingRoomNames[i].name);
         }
+        console.log("meeting room names below")
         console.log(this.meetingRoomNames);
+
+        // Loop through each meeting room name
+        this.meetingRoomNames.forEach(name => {
+          // Create a meeting room object with the name and an empty calendarInfos array
+          const meetingRoom = { name: name, calendarInfos: [''] };
+
+          // Add the meeting room object to the meetingRooms array
+          console.log("meeting room default below")
+          console.log(this.meetingRooms)
+          this.meetingRooms.push(meetingRoom);
+        });
+
+
         }
         else {
           console.log("retrieved meeting room names failed");
@@ -87,10 +111,24 @@ export class DashboardComponent implements OnInit {
     
             // Update the meetingRooms property with the dynamically created array
             this.meetingRooms = meetingRooms;
-            console.log("meeting room taik below")
+            console.log("this.meetingRooms variable below")
             console.log(this.meetingRooms)
           }
         });
+
+
+        this.http.post<any>('http://localhost:9992/retrievecalendarinfoswithnames', bodyData)
+        .subscribe(
+          (resultData: any) => {
+            console.log(resultData);
+  
+            if (resultData.status) {
+              console.log('Calendar data (with names) received:', resultData);
+              this.retrievedCalendarInfoWithNames = resultData;
+              console.log(this.retrievedCalendarInfoWithNames.calendarInfoWithNames[0].slots[0].firstName);
+              console.log(this.retrievedCalendarInfoWithNames.calendarInfoWithNames[0].slots[0].timeslot);
+            }
+          });
 
       this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
@@ -119,8 +157,14 @@ export class DashboardComponent implements OnInit {
     console.log(`Showing details for ${this.meetingRoomNames[index]}`);
   }
 
-  
-
-  
+  getNextAvailableSlot(slots: Slot[] | undefined, startIndex: number) {
+    if (!slots) return null;
+    for (let i = startIndex; i < slots.length; i++) {
+      if (slots[i]) {
+        return slots[i];
+      }
+    }
+    return null;
+  }
 
 }

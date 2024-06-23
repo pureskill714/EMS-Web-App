@@ -21,7 +21,11 @@ export class AuthService {
 
     // Redirect to homepage after logout
     this.router.navigateByUrl('/');
+  }
 
+  kickUser(): void {
+    this.isLoggedIn = false;
+    this.clearUserData();
   }
 
   isAuthenticated(): boolean {

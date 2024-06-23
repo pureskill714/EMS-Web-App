@@ -7,6 +7,8 @@ export class UserDataService {
   private email: string | null = null;
   private firstName: string | null = null;
   private lastName: string | null = null;
+  private role : string | null = null;
+
   private selectedBookingRoom: string | null = null;
   private selectedBookingDate: string | null = null;
   private inputBookingPurpose: string | null = null;
@@ -16,6 +18,17 @@ export class UserDataService {
   private cancelledRoom: string | null = null;
   private cancelledTimeSlots: string[] = [];
   private cancelledPurpose : string | null = null;
+
+  private meetingRoom : string | null = null;
+  private newMeetingRoomName : string | null = null;
+  private newRoomOrder : number | null = null;
+
+  private roomCapacity : number | null = null;
+  private meetingRoomLocation : string | null = null;
+
+  private oldMeetingRoomName : string | null = null;
+
+  private deletedMeetingRoomName : string | null = null;
 
   constructor() {}
 
@@ -42,6 +55,22 @@ export class UserDataService {
 
   getLastName(): string | null {
     return this.lastName;
+  }
+
+  setRole(role: string) {
+    this.role = role;
+  }
+
+  getRole(): string | null {
+    return this.role;
+  }
+
+  setMeetingRoom(meetingRoom: string) {
+    this.meetingRoom = meetingRoom;
+  }
+
+  getMeetingRoom(): string | null {
+    return this.meetingRoom;
   }
 
   setSelectedBookingRoom(room: string | null = null) {
@@ -118,5 +147,54 @@ export class UserDataService {
   getCancelledPurpose(): string | null {
     return this.cancelledPurpose ;
   }
+
+  setNewMeetingRoomName(meetingRoomName: string | null = null) {
+    this.newMeetingRoomName = meetingRoomName;
+  }
+
+  getnewMeetingRoomName(): string | null {
+    return this.newMeetingRoomName;
+  }
+
+  setOldMeetingRoomName(meetingRoomName: string | null = null) {
+    this.oldMeetingRoomName = meetingRoomName;
+  }
+
+  getOldMeetingRoomName(): string | null {
+    return this.oldMeetingRoomName;
+  }
+
+  setNewRoomOrder(roomOrder: number| null = null) {
+    this.newRoomOrder = roomOrder;
+  }
+
+  getnewRoomOrder(): number | null {
+    return this.newRoomOrder;
+  }
+
+  setRoomCapacity(roomCapacity: number| null = null) {
+    this.roomCapacity = roomCapacity
+  }
+
+  getRoomCapacity(): number | null {
+    return this.roomCapacity;
+  }
+
+  setMeetingRoomLocation(meetingRoomLocation: string | null = null) {
+    this.meetingRoomLocation = meetingRoomLocation;
+  }
+
+  getMeetingRoomLocation(): string | null {
+    return this.meetingRoomLocation;
+  }
+
+  setDeletedMeetingRoom(meetingRoomName: string | null = null) {
+    this.deletedMeetingRoomName = meetingRoomName;
+  }
+
+  getDeletedMeetingRoom(): string | null {
+    return this.deletedMeetingRoomName;
+  }
+
 
 }

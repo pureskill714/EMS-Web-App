@@ -1,0 +1,22 @@
+<header>
+    <div class="logo">
+        <!-- Your logo placeholder goes here -->
+        <img src="assets/wizvision_logo.png" alt="Logo">
+    </div>
+    <nav class="nav-links">
+        <ul>
+            <li><a routerLink="/admin-dashboard">Dashboard</a></li>
+            <li><a routerLink="/manage-rooms">Manage Rooms</a></li>
+            <li><a routerLink="/manage-bookings">Manage Bookings</a></li>
+            <li><a routerLink="/manage-accounts">Manage Accounts</a></li>
+
+            <!-- Add more tabs as needed -->
+        </ul>
+    </nav>
+    <div class="user-info">
+        <!-- Display the user's full name -->
+         <span>Welcome, {{ fullName }}</span>
+        <!-- Button to Log out -->
+        <button type="button" class="btn btn-danger" (click)="logout()">Log Out</button>
+    </div>
+</header>

@@ -1,0 +1,220 @@
+.dropdown {
+    margin-left: 20px; /* Adjust the margin as needed */
+}
+
+.dropdown label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.dropdown select {
+    width: 200px; /* Adjust the width as needed */
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.dropdown select:hover {
+    border-color: #aaa;
+}
+
+.dropdown select:focus {
+    border-color: #007bff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.square-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Header styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header .left h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.header .right .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Button styles */
+.buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+
+}
+
+.buttons .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.button-container button{
+    margin-left: 20px; /* Adjust the value as needed */
+  }
+
+/* Table styles */
+.booking-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.booking-list th,
+.booking-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.booking-list th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.booking-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.booking-list tr:hover {
+    background-color: #f0f0f0;
+}
+
+.booking-list td button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.booking-list td button:hover {
+    background-color: #c82333;
+}
+
+/* Style for the table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+/* Style for table cells */
+th, td {
+    border: 1px solid black; /* Border for each cell */
+    padding: 8px;
+    text-align: center;
+}
+/* Style for column headers */
+th {
+    background-color: #f2f2f2;
+}
+
+/* Style the dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Style the label */
+  .dropdown label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  /* Style the date input */
+  .dropdown input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  /* Style the calendar dropdown when active */
+.dropdown input[type="date"]:focus {
+    border-color: #007bff; /* Change color to your desired focus color */
+  }
+
+   /* Style for the green box */
+.green-box {
+    background-color: green;
+}
+
+/* Style for the grey box */
+.grey-box {
+    background-color: #ccc; /* Use any shade of grey you prefer */
+}
+/* Style for the purple box */
+.purple-box {
+    background-color: purple;
+}
+
+/* Style for the legend container */
+.legend {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+/* Style for each legend item */
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-right: 100px;
+}
+
+/* Style for the green box */
+.green-box-legend {
+    width: 20px;
+    height: 20px;
+    background-color: green;
+    margin-right: 5px;
+}
+
+/* Style for the grey box */
+.grey-box-legend {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc;
+    margin-right: 5px;
+}
+/* Style for the purple box legend */
+.purple-box-legend {
+    width: 20px;
+    height: 20px;
+    background-color: purple;
+    margin-right: 5px;
+}

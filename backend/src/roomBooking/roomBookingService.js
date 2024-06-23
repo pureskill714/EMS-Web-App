@@ -1,4 +1,6 @@
 const RoomBooking = require('./roomBookingModel');
+const MeetingRoom = require('./meetingRoomModel');
+
 const { MongoClient, ObjectId } = require('mongodb');
 
 const nodemailer = require('nodemailer');
@@ -284,6 +286,94 @@ module.exports.retrieveCalendarInfo = async (requestData) => {
     }
 };
 
+module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const bookingsCollection = database.collection('bookings');
+        const meetingRoomsCollection = database.collection('meetingrooms');
+
+        // Date for the query
+        const queryDate = new Date(requestData.date);
+
+        // Define the fixed list of timeslots in the desired order
+        const timeslotOrder = [
+            '09:00-10:00',
+            '10:00-11:00',
+            '11:00-12:00',
+            '12:00-13:00',
+            '13:00-14:00',
+            '14:00-15:00',
+            '15:00-16:00',
+            '16:00-17:00',
+            '17:00-18:00'
+        ];
+
+        // Query to find documents with the specific date
+        const results = await bookingsCollection.find(
+            { date: queryDate },
+            { projection: { meetingRoom: 1, purpose: 1, timeslots: 1, firstName: 1, lastName: 1 } }
+        ).toArray();
+
+        // Fetch the room order information
+        const roomOrders = await meetingRoomsCollection.find({}, { projection: { name: 1, roomOrder: 1 } }).toArray();
+        const roomOrderMap = {};
+        roomOrders.forEach(room => {
+            roomOrderMap[room.name] = room.roomOrder;
+        });
+
+        // Process the results to group by meeting room
+        const meetingRooms = {};
+
+        // Initialize meeting rooms from roomOrders
+        roomOrders.forEach(room => {
+            meetingRooms[room.name] = {
+                roomOrder: room.roomOrder,
+                slots: timeslotOrder.map(timeslot => ({
+                    timeslot: timeslot,
+                    firstName: '', // Empty first name
+                    lastName: '',  // Empty last name
+                    purpose: ''    // Empty purpose
+                }))
+            };
+        });
+
+        // Merge the booking data into the initialized meeting rooms
+        results.forEach(result => {
+            const meetingRoom = result.meetingRoom;
+            result.timeslots.forEach(timeslot => {
+                const slot = meetingRooms[meetingRoom].slots.find(slot => slot.timeslot === timeslot);
+                if (slot) {
+                    slot.firstName = result.firstName;
+                    slot.lastName = result.lastName;
+                    slot.purpose = result.purpose;
+                }
+            });
+        });
+
+        // Sort the meeting rooms by roomOrder
+        const sortedMeetingRooms = Object.keys(meetingRooms).sort((a, b) => {
+            return meetingRooms[a].roomOrder - meetingRooms[b].roomOrder;
+        });
+
+        // Print the results
+        const resultArray = sortedMeetingRooms.map(room => ({
+            roomName: room,
+            slots: meetingRooms[room].slots
+        }));
+
+        await client.close();
+
+        return resultArray;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
 module.exports.retrieveCalendarDetails = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';
@@ -518,6 +608,132 @@ function sendBookingCancellationEmail(email,firstName,lastName,date,meetingRoom,
         });
     });
 }
+
+module.exports.addNewMeetingRoomService = async (meetingRoomDetails) => {
+    try {
+        // Check if there are any existing rooms with the same name or room order
+        const existingRoomByName = await MeetingRoom.findOne({ name: meetingRoomDetails.newMeetingRoom });
+        const existingRoomByOrder = await MeetingRoom.findOne({ roomOrder: meetingRoomDetails.newRoomOrder });
+
+        if (existingRoomByName) {
+            return Promise.reject({ status: 409, message: 'Meeting room name is already taken' });
+        }
+
+        if (existingRoomByOrder) {
+            return Promise.reject({ status: 409, message: 'Meeting room order is already taken' });
+        }
+
+        // If no conflicts, create the new meeting room
+        const newMeetingRoom = new MeetingRoom({
+            name: meetingRoomDetails.newMeetingRoom,
+            roomOrder: meetingRoomDetails.newRoomOrder,
+            location: meetingRoomDetails.meetingRoomLocation,
+            capacity: meetingRoomDetails.roomCapacity,
+        });
+
+        const result = await newMeetingRoom.save();
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+module.exports.editMeetingRoomNameService = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const meetingRoomsCollection = database.collection('meetingrooms');
+        const bookingsCollection = database.collection('bookings');
+        
+        const oldName = requestData.oldMeetingRoomName;
+        const newName = requestData.newMeetingRoomName;
+
+        // Update the meeting room name in the meetingRooms collection
+        await meetingRoomsCollection.updateOne(
+            { name: oldName },
+            { $set: { name: newName } }
+        );
+
+        // Update all bookings to reflect the new meeting room name
+        const result = await bookingsCollection.updateMany(
+            { meetingRoom: oldName },
+            { $set: { meetingRoom: newName } }
+        );
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+module.exports.editMeetingRoomOrderService = async (requestData) => {
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'ems';
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const meetingRoomsCollection = database.collection('meetingrooms');
+
+        // Extract the _id and newRoomOrder from requestData
+        const oid = new ObjectId(requestData.id); // Make sure requestData.id is a valid ObjectId string
+        const newRoomOrder = requestData.newRoomOrder; // The new roomOrder you want to set
+
+        // Update the document
+        const result = await meetingRoomsCollection.updateOne(
+            { _id: oid },
+            { $set: { roomOrder: newRoomOrder } }
+        );
+
+        if (result.matchedCount > 0) {
+            return { success: true, message: `Successfully updated the roomOrder of document with _id: ${oid} to ${newRoomOrder}` };
+        } else {
+            return { success: false, message: `No document found with _id: ${oid}` };
+        }
+    } catch (error) {
+        throw error;
+    } finally {
+        // Ensure the client will close when you finish/error
+        await client.close();
+    }
+};
+
+module.exports.deleteMeetingRoomService = async (requestData) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        await client.connect();
+        const database = client.db(dbName);
+        const collectionName = 'meetingrooms';
+
+        // Retrieve the booking details using the provided ObjectId
+        const meetingRoom = await database.collection(collectionName).findOne({ _id: new ObjectId(requestData.id) });
+
+        if (!meetingRoom) {
+            throw new Error('Meeting Room not found'); // Handle if booking with the specified id is not found
+        }
+
+        // MongoDB query to delete the document with the specified _id
+        const result = await database.collection(collectionName).deleteOne({ _id: new ObjectId(requestData.id) });
+
+        await client.close();
+
+        return result;
+    } catch (error) {
+        throw error;
+    }
+};
+
+
+
 
 
 

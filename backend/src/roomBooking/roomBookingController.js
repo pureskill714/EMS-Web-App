@@ -88,6 +88,26 @@ const retrieveCalendarInfosControllerFn = async (req, res) => {
     }
 };
 
+const retrieveCalendarInfosWithNamesControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const calendarInfoWithNames = await roomBookingService.retrieveCalendarInfoWithNames(req.body);
+
+        if (calendarInfoWithNames && Object.keys(calendarInfoWithNames).length > 0) {
+            // Check if calendarInfoWithNames is not empty
+            res.status(200).json({ status: true, calendarInfoWithNames: calendarInfoWithNames });
+        } else {
+            // Handle case where no calendar information is found
+            res.status(404).json({ status: false, message: "No calendar information (with names) found." });
+        }
+    } catch (error) {
+        // Handle server error
+        console.error("Error retrieving calendar information (with names):", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
+
 const retrieveCalendarDetails = async (req, res) => {
     try {
         // Log the request body (optional)
@@ -141,6 +161,82 @@ const cancelBookingControllerFn = async (req, res) => {
     }
 };
 
+const addNewMeetingRoomControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await roomBookingService.addNewMeetingRoomService(req.body);
+
+        if (result) {
+            res.send({ status: true, message: 'New Meeting Room added successfully' });
+        } else {
+            res.send({ status: false, message: 'Error creating New Meeting Room' });
+        }
+    } catch (error) {
+        if (error.status && error.message) {
+            res.status(error.status).json({ error: error.message });
+        } else {
+            console.log(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+};
+
+const editMeetingRoomNameControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await roomBookingService.editMeetingRoomNameService(req.body);
+
+        if (result) {
+            res.send({ status: true, message: 'Meeting Room name edited successfully' });
+        } else {
+            res.send({ status: false, message: 'Error editing meeting room name' });
+        }
+    } catch (error) {
+        if (error.status && error.message) {
+            res.status(error.status).json({ error: error.message });
+        } else {
+            console.log(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+};
+
+const editMeetingRoomOrderControllerFn = async (req, res) => {
+    try {
+        console.log(req.body);
+        const result = await roomBookingService.editMeetingRoomOrderService(req.body);
+
+        if (result) {
+            res.send({ status: true, message: 'Meeting Room order edited successfully' });
+        } else {
+            res.send({ status: false, message: 'Error editing meeting room order' });
+        }
+    } catch (error) {
+        if (error.status && error.message) {
+            res.status(error.status).json({ error: error.message });
+        } else {
+            console.log(error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+};
+
+const deleteMeetingRoomControllerFn = async (req, res) => {
+    try {
+        console.log(req.body); // Log request body for debugging if needed
+        const cancelResult = await roomBookingService.deleteMeetingRoomService(req.body); // Assuming req.body contains the necessary data
+
+        if (cancelResult.deletedCount === 1) {
+            res.status(200).json({ status: true, message: "meeting room deleted successfully." });
+        } else {
+            res.status(404).json({ status: false, message: "meeting room deleted not found or already cancelled." });
+        }
+    } catch (error) {
+        console.error("Error deleting meeting room:", error);
+        res.status(500).json({ status: false, message: "Internal server error." });
+    }
+};
+
 var getMeetingRoomsControllerFn = async (req, res) => {
     const uri = 'mongodb://localhost:27017';
     const dbName = 'ems';
@@ -152,7 +248,7 @@ var getMeetingRoomsControllerFn = async (req, res) => {
         const collection = database.collection('meetingrooms');
 
         // Fetch all meeting room names sorted by roomOrder field from MongoDB
-        const meetingRooms = await collection.find({}, { projection: { name: 1, _id: 0 } }).sort({ roomOrder: 1 }).toArray();
+        const meetingRooms = await collection.find({}, { projection: { name: 1, roomOrder: 1, _id: 1,capacity:1,location:1 } }).sort({ roomOrder: 1 }).toArray();
 
         // Respond with the retrieved meeting rooms
         res.status(200).json(meetingRooms);
@@ -172,8 +268,13 @@ module.exports = {
     retrieveBookingInfosControllerFn,
     retrievePastBookingInfosControllerFn,
     retrieveCalendarInfosControllerFn,
+    retrieveCalendarInfosWithNamesControllerFn,
     retrieveCalendarDetails,
     retrieveCalendarMeetingRoomDetailsControllerFn ,
     cancelBookingControllerFn,
+    addNewMeetingRoomControllerFn,
+    editMeetingRoomNameControllerFn,
+    editMeetingRoomOrderControllerFn,
+    deleteMeetingRoomControllerFn,
     getMeetingRoomsControllerFn
 };

@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="centered-title">Add New Meeting Room</h2>
+<div mat-dialog-content>
+    <p>Enter the new meeting room name and the order you want it to be displayed</p>
+    <p>Room Capacity & Room Location are optional fields</p>
+    <div fxLayout="column" fxLayoutGap="8px"> <!-- Adjust fxLayoutGap as needed -->
+        <!-- First input for meeting room name -->
+        <mat-form-field appearance="fill">
+            <mat-label>Meeting Room Name</mat-label>
+            <input matInput placeholder="Meeting Room Name" [(ngModel)]="meetingRoomName">
+        </mat-form-field>
+        <!-- Second input for room capacity -->
+        <mat-form-field appearance="fill">
+            <mat-label>Room Capacity</mat-label>
+            <input matInput placeholder="Room Capacity" [(ngModel)]=" roomCapacity" type="number">
+        </mat-form-field>
+        <!-- third input for room Location -->
+        <mat-form-field appearance="fill">
+            <mat-label>Room Location</mat-label>
+            <input matInput placeholder="Room Location" [(ngModel)]="meetingRoomLocation">
+        </mat-form-field>
+        <!-- third input for room order -->
+        <mat-form-field appearance="fill">
+            <mat-label>Room Order</mat-label>
+            <input matInput placeholder="Room Order" [(ngModel)]="roomOrder" type="number">
+        </mat-form-field>
+    </div>
+</div>
+<div mat-dialog-actions align="end">
+    <button type="button" class="btn btn-danger" (click)="onBackButton()">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="onConfirm()">Add Room</button>
+</div>
