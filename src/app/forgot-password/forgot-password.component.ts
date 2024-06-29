@@ -8,9 +8,18 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
-  forgotPasswordForm!: FormGroup;
+  forgotPasswordForm: FormGroup;
+  message: string;
+  isError: boolean;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+  
+  constructor(private fb: FormBuilder, private http: HttpClient) {
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+    this.message = '';
+    this.isError = false;
+  }
 
   ngOnInit(): void {
     this.forgotPasswordForm = this.fb.group({
@@ -25,11 +34,17 @@ export class ForgotPasswordComponent implements OnInit {
         .subscribe(
           response => {
             // Handle success response
-            console.log('Reset link sent', response);
+            this.message = 'Email successfully sent. Please check your email for further instructions';
+            this.isError = false;
           },
           error => {
             // Handle error response
-            console.log('Error sending reset link', error);
+            if (error.status === 400) {
+              this.message = 'Email not found in database';
+            } else {
+              this.message = 'Email not found in database';
+            }
+            this.isError = true;
           }
         );
     }
