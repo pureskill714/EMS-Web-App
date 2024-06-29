@@ -16,17 +16,24 @@ export class ResetPasswordComponent {
       const token = params['token'];
 
       // Create a request body containing the resetToken
-      const bodyData = { token: token };
+      const bodyData = { resetToken: token };
 
       // Send POST request to backend for account password change
-      this.http.post<any>('http://localhost:9992/reset-password', bodyData).subscribe(
-        () => {
-          // Handle successful verification (e.g., show success message)
-          console.log('Account password changed successfully!');
+      this.http.post<any>('http://localhost:9992/verifyResetPassword', bodyData).subscribe(
+        (response) => {
+          // Handle successful verification
+          if (response.success) {
+            console.log('Reset Token found in DB');
+            // Display success message or take appropriate action
+          } else {
+            console.log('Reset Token not found in DB');
+            // Display error message or take appropriate action
+          }
         },
-        error => {
-          // Handle verification error (e.g., show error message)
-          console.error('Error changing account password:', error);
+        (error) => {
+          // Handle verification error
+          console.error('Error verifying reset token:', error);
+          // Display error message or take appropriate action
         }
       );
     });

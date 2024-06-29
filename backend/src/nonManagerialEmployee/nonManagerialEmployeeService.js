@@ -312,6 +312,42 @@ function sendForgotPasswordEmail(email, resetToken) {
     });
 }
 
+module.exports.verifyResetPasswordService = async (resetToken) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'nonmanagerialemployees'; // Adjust based on your collection name
+
+        // MongoDB query to find the document with resetToken
+        const result = await database.collection(collectionName).findOne({ resetToken });
+
+        // Close the MongoDB client connection
+        await client.close();
+
+        // Check if result is not null (resetToken found)
+        if (result) {
+            return true; // Reset token found in the database
+        } else {
+            return false; // Reset token not found in the database
+        }
+    } catch (error) {
+        // Handle errors during MongoDB operations
+        console.error('Error verifying reset token:', error);
+        throw new Error("Error verifying reset token"); // Throw error if an error occurs
+    }
+};
+
 
 
 module.exports.deleteAccountService = async (requestData) => {

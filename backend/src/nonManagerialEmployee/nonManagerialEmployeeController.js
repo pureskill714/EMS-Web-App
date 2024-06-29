@@ -103,6 +103,35 @@ var forgetPasswordControllerFn = async (req, res) => {
     }
 };
 
+var verifyResetPasswordControllerFn = async (req, res) => {
+    try {
+        // Extract resetToken from request body or query parameters
+        const resetToken = req.body.resetToken || req.query.resetToken;
+
+        // Call the verifyResetPasswordService function with the resetToken
+        const resetTokenFound = await nonManagerialEmployeeService.verifyResetPasswordService(resetToken);
+
+        // Respond based on the result from verifyResetPasswordService
+        if (resetTokenFound) {
+            res.status(200).json({
+                success: true,
+                message: "Reset token found in the database"
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "Reset token not found in the database"
+            });
+        }
+    } catch (error) {
+        console.error('Error in verifyResetPasswordControllerFn:', error);
+        res.status(500).json({
+            success: false,
+            message: "Error verifying reset token"
+        });
+    }
+};
+
 var resendVerificationControllerFn = async (req, res) => {
     try {
         // Extract the email from the request body
@@ -185,5 +214,6 @@ module.exports = { createnonManagerialEmployeeControllerFn,
                    verifyAccountControllerFn,
                    resendVerificationControllerFn,
                    forgetPasswordControllerFn,
+                   verifyResetPasswordControllerFn,
                    deleteAccountControllerFn
                  };
