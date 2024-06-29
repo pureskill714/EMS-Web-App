@@ -26,6 +26,7 @@ import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newb
 import { BookingconfirmationadminComponent } from './manage-bookings/bookingconfirmationadmin/bookingconfirmationadmin.component';
 import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 const routes: Routes = [
@@ -158,6 +159,11 @@ const routes: Routes = [
   {
     component: ForgotPasswordComponent,
     path: 'forgot-password'
+  }
+  ,
+  {
+    component: ResetPasswordComponent,
+    path: 'reset-password/:token'
   }
 ];
 
