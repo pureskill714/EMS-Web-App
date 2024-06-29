@@ -21,7 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit(): void {
     if (this.forgotPasswordForm.valid) {
       const email = this.forgotPasswordForm.value.email;
-      this.http.post('http://your-node-backend.com/forgot-password', { email })
+      this.http.post('http://localhost:9992/forgot-password', { email })
         .subscribe(
           response => {
             // Handle success response

@@ -71,6 +71,38 @@ var verifyAccountControllerFn = async (req, res) => {
     }
 };
 
+var forgetPasswordControllerFn = async (req, res) => {
+    try {
+        // Extract the email from the request body
+        const { email } = req.body;
+
+        // Call the forgetPassword service function with the email
+        const result = await nonManagerialEmployeeService.forgetPasswordService(email);
+
+        // Handle the result from the service function
+        if (result.message === 'Password reset email sent successfully') {
+            // If password reset email is sent successfully, send success response
+            res.status(200).json({
+                status: true,
+                message: result.message
+            });
+        } else {
+            // If the email is not found or sending email fails, send error response
+            res.status(400).json({
+                status: false,
+                message: result.message
+            });
+        }
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error(error);
+        res.status(500).json({
+            status: false,
+            message: "Error sending password reset email"
+        });
+    }
+};
+
 var resendVerificationControllerFn = async (req, res) => {
     try {
         // Extract the email from the request body
@@ -152,5 +184,6 @@ module.exports = { createnonManagerialEmployeeControllerFn,
                    getAllEmployeesControllerFn,
                    verifyAccountControllerFn,
                    resendVerificationControllerFn,
+                   forgetPasswordControllerFn,
                    deleteAccountControllerFn
                  };

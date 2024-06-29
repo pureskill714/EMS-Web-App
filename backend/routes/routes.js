@@ -10,6 +10,7 @@ router.route('/login').post(nonManagerialEmployeeController.loginUserControllerF
 router.route('/create').post(nonManagerialEmployeeController.createnonManagerialEmployeeControllerFn);
 router.route('/verify-account').post(nonManagerialEmployeeController.verifyAccountControllerFn);
 router.route('/resend-verification').post(nonManagerialEmployeeController.resendVerificationControllerFn);
+router.route('/forgot-password').post(nonManagerialEmployeeController.forgetPasswordControllerFn);
 
 router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployeesControllerFn);
 router.route('/deleteaccount').post(nonManagerialEmployeeController.deleteAccountControllerFn);
