@@ -164,6 +164,36 @@ var resendVerificationControllerFn = async (req, res) => {
     }
 };
 
+var resetPasswordControllerFn = async (req, res) => {
+    try {
+        // Extract resetToken from request body or query parameters
+        const resetToken = req.body.resetToken || req.query.resetToken;
+        const newPassword = req.body.newPassword
+
+        // Call the verifyResetPasswordService function with the resetToken
+        const resetTokenFound = await nonManagerialEmployeeService.resetPasswordService(resetToken,newPassword);
+
+        // Respond based on the result from verifyResetPasswordService
+        if (resetTokenFound) {
+            res.status(200).json({
+                success: true,
+                message: "New password updated in the database"
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "New password not updated in the database"
+            });
+        }
+    } catch (error) {
+        console.error('Error in resetPasswordControllerFn:', error);
+        res.status(500).json({
+            success: false,
+            message: "Error resetting new password"
+        });
+    }
+};
+
 var getAllEmployeesControllerFn = async (req, res) => {
     try {
 
@@ -215,5 +245,6 @@ module.exports = { createnonManagerialEmployeeControllerFn,
                    resendVerificationControllerFn,
                    forgetPasswordControllerFn,
                    verifyResetPasswordControllerFn,
+                   resetPasswordControllerFn,
                    deleteAccountControllerFn
                  };

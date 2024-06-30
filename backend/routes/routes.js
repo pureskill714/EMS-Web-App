@@ -12,6 +12,7 @@ router.route('/verify-account').post(nonManagerialEmployeeController.verifyAccou
 router.route('/resend-verification').post(nonManagerialEmployeeController.resendVerificationControllerFn);
 router.route('/forgot-password').post(nonManagerialEmployeeController.forgetPasswordControllerFn);
 router.route('/verifyResetPassword').post(nonManagerialEmployeeController.verifyResetPasswordControllerFn);
+router.route('/resetPassword').post(nonManagerialEmployeeController.resetPasswordControllerFn);
 
 router.get('/getemployeedetails', nonManagerialEmployeeController.getAllEmployeesControllerFn);
 router.route('/deleteaccount').post(nonManagerialEmployeeController.deleteAccountControllerFn);

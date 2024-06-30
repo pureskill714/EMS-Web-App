@@ -348,6 +348,55 @@ module.exports.verifyResetPasswordService = async (resetToken) => {
     }
 };
 
+module.exports.resetPasswordService = async (resetToken, newPassword) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'nonmanagerialemployees'; // Adjust based on your collection name
+
+        // MongoDB query to find the document with resetToken
+        const user = await database.collection(collectionName).findOne({ resetToken });
+
+        if (user) {
+            // Encrypt the new password
+            const encryptedPassword = encryptor.encrypt(newPassword);
+
+            // Update the user's password and resetToken
+            await database.collection(collectionName).updateOne(
+                { resetToken },
+                {
+                    $set: { password: encryptedPassword },
+                    $unset: { resetToken: null }
+                }
+            );
+
+            // Close the MongoDB client connection
+            await client.close();
+
+            return true; // Password updated successfully
+        } else {
+            // Close the MongoDB client connection
+            await client.close();
+
+            return false; // Reset token not found in the database
+        }
+    } catch (error) {
+        // Handle errors during MongoDB operations
+        console.error('Error in resetPasswordService:', error);
+        throw new Error("Error resetting password"); // Throw error if an error occurs
+    }
+};
 
 
 module.exports.deleteAccountService = async (requestData) => {

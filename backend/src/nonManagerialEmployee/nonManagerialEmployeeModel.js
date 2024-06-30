@@ -32,7 +32,7 @@ var nonManagerialEmployeeSchema = new Schema({
     },
     resetToken: {
         type: String,
-        default: ""
+        default: null
     }
 });
 

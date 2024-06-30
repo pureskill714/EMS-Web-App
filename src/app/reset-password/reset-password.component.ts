@@ -16,19 +16,22 @@ export class ResetPasswordComponent implements OnInit {
   token: string = '';
   tokenValid: boolean = false;
   message: string = '';
+  resetToken: string = '';
+  newPassword: string = '';
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const token = params['token'];
+      this.resetToken = params['token'];
 
       // Create a request body containing the resetToken
-      const bodyData = { resetToken: token };
+      const bodyData = { resetToken: this.resetToken };
 
       // Send POST request to backend for account password change
       this.http.post<any>('http://localhost:9992/verifyResetPassword', bodyData).subscribe(
@@ -93,10 +96,40 @@ export class ResetPasswordComponent implements OnInit {
     if (this.resetPasswordForm.valid) {
       const newPassword = this.resetPasswordForm.value.newPassword;
       const confirmPassword = this.resetPasswordForm.value.confirmPassword;
+
       // Implement the reset password logic here
       console.log('New Password:', newPassword);
       console.log('Confirm Password:', confirmPassword);
       this.message = 'Password reset successfully';
+
+      this.newPassword = newPassword;
+
+      
+      //update backend DB, need body of token and password
+      let bodyData = {
+        resetToken: this.resetToken,
+        newPassword: this.newPassword,
+      };
+  
+      this.http.post("http://localhost:9992/resetPassword", bodyData).subscribe(
+        (resultData: any) => {
+
+          console.log(resultData);
+  
+            if (resultData.status) {
+              console.log('Reset password success:', resultData);
+            }
+            else {
+              // Error: Handle error
+              console.log('Reset password failed:', resultData.message);
+            }
+          },
+          (error) => {
+            // Error: Handle HTTP error
+            console.error('(HTTP error) Reset password failed', error);
+            alert('(HTTP error) Reset password failed');
+        });
+
     } else {
       this.message = 'Form is invalid';
     }
