@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserDataService } from './../user-data.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 // Define an interface for the slot structure
 interface Slot {
@@ -22,6 +23,7 @@ export class DashboardComponent implements OnInit {
   selectedRoom: string = ""
   selectedMeetingRooms: boolean[] = [];
   retrievedAllMeetingRoomDetails : any = [];
+  roleCheck: string | null = null;
 
   
   // Define the meeting rooms and their calendar information
@@ -32,7 +34,13 @@ export class DashboardComponent implements OnInit {
 
   retrievedCalendarInfoWithNames : any = [];
 
-  constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient) {
+  constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient,private router: Router) {
+    this.roleCheck = this.userDataService.getRole();
+    console.log(this.roleCheck)
+    if (this.roleCheck != "non-managerial") {
+      this.router.navigate(["not-authorized"]);
+      this.authService.kickUser(); // Call AuthService kick user method
+    }
   }
 
   ngOnInit() {

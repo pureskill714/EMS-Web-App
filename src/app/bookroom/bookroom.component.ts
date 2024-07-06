@@ -36,11 +36,18 @@ export class BookroomComponent {
 
   meetingRooms : any = [];
   retrievedAllMeetingRoomDetails : any = [];
-
   retrievedCalendarInfoWithNames : any = [];
+  roleCheck: string | null = null;
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
+
+    this.roleCheck = this.userDataService.getRole();
+    if (this.roleCheck != "non-managerial") {
+      this.router.navigate(["not-authorized"]);
+      this.authService.kickUser(); // Call AuthService kick user method
+    }
+    else {
       const userData = this.authService.getUserData();
     if (userData) {
       const { email, firstName, lastName } = userData;
@@ -52,6 +59,7 @@ export class BookroomComponent {
     }
       
     this.getBookingInfos();
+  }
   }
 
   showCalendarView: boolean = false;
