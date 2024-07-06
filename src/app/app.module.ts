@@ -41,6 +41,8 @@ import { CancelbookingconfirmationadminComponent } from './manage-bookings/cance
 import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
 import { BookingconfirmationadminComponent } from './manage-bookings/bookingconfirmationadmin/bookingconfirmationadmin.component';
 import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -79,6 +81,8 @@ import { ManageAccountsComponent } from './manage-accounts/manage-accounts.compo
     NewbookingadminComponent,
     BookingconfirmationadminComponent,
     ManageAccountsComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,

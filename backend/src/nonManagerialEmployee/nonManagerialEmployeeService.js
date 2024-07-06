@@ -181,6 +181,224 @@ module.exports.resendVerificationService = (bodyData) => {
     });
 };
 
+module.exports.forgetPasswordService = (email) => {
+    return new Promise((resolve, reject) => {
+        // Check if email exists in the database
+        nonManagerialEmployeeModel.findOne({ email })
+            .then(existingEmployee => {
+                if (existingEmployee) {
+                    // Email found, generate a reset token
+                    const resetToken = uuidv4(); // Generate a random UUID (version 4)
+                    
+                    // Update the employee document with the reset token
+                    existingEmployee.resetToken = resetToken;
+
+                    // Save the updated employee data to the database
+                    existingEmployee.save()
+                        .then(() => {
+                            // Send forgot password email with the generated token
+                            sendForgotPasswordEmail(email, resetToken)
+                                .then(() => resolve({ message: 'Password reset email sent successfully' })) // Resolve if email sent successfully
+                                .catch(err => reject({ message: 'Error sending password reset email', error: err })); // Reject if email sending fails
+                        })
+                        .catch(error => {
+                            reject({ message: 'Error saving reset token to database', error }); // Reject if saving to database fails
+                        });
+                } else {
+                    // Email not found, reject the promise
+                    reject({ message: 'Email not found in database' });
+                }
+            })
+            .catch(error => {
+                reject({ message: 'Error querying the database', error }); // Reject if database query fails
+            });
+    });
+};
+
+function sendForgotPasswordEmail(email, resetToken) {
+    return new Promise((resolve, reject) => {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            auth: {
+                user: 'wizvision600@gmail.com',
+                pass: 'xikf gvuy lzud lqnk'
+            }
+        });
+
+        const mailOptions = {
+            from: 'wizvision600@gmail.com',
+            to: email,
+            subject: 'Password Reset Request',
+            html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Password Reset Request</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            line-height: 1.6;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #f9f9f9;
+                        }
+                        .container {
+                            width: 100%;
+                            max-width: 600px;
+                            margin: 0 auto;
+                            background-color: #ffffff;
+                            border-radius: 8px;
+                            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                            overflow: hidden;
+                        }
+                        .header {
+                            background-color: #4CAF50;
+                            color: white;
+                            text-align: center;
+                            padding: 20px 0;
+                        }
+                        .content {
+                            padding: 20px;
+                            text-align: center;
+                        }
+                        .button {
+                            display: inline-block;
+                            padding: 10px 20px;
+                            margin-top: 20px;
+                            color: white;
+                            background-color: #4CAF50;
+                            text-decoration: none;
+                            border-radius: 5px;
+                        }
+                        .footer {
+                            padding: 10px;
+                            text-align: center;
+                            background-color: #f1f1f1;
+                            color: #666;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="header">
+                            <h1>Password Reset Request</h1>
+                        </div>
+                        <div class="content">
+                            <p>We received a request to reset the password for your account associated with this email address. If you made this request, please click the button below to reset your password:</p>
+                            <a href="http://localhost:4200/reset-password/${resetToken}" class="button">Reset Password</a>
+                            <p>If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
+                            <p>If you have any questions, feel free to contact our support team.</p>
+                            <p>Best regards,</p>
+                            <p>The [Company Name] Team</p>
+                        </div>
+                        <div class="footer">
+                            <p>&copy; ${new Date().getFullYear()} [Company Name]. All rights reserved.</p>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `
+        };
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.error('Error sending email:', err);
+                reject(err); // Reject with error if email sending fails
+            } else {
+                console.log('Email sent:', info.response);
+                resolve(); // Resolve the promise if email sent successfully
+            }
+        });
+    });
+}
+
+module.exports.verifyResetPasswordService = async (resetToken) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'nonmanagerialemployees'; // Adjust based on your collection name
+
+        // MongoDB query to find the document with resetToken
+        const result = await database.collection(collectionName).findOne({ resetToken });
+
+        // Close the MongoDB client connection
+        await client.close();
+
+        // Check if result is not null (resetToken found)
+        if (result) {
+            return true; // Reset token found in the database
+        } else {
+            return false; // Reset token not found in the database
+        }
+    } catch (error) {
+        // Handle errors during MongoDB operations
+        console.error('Error verifying reset token:', error);
+        throw new Error("Error verifying reset token"); // Throw error if an error occurs
+    }
+};
+
+module.exports.resetPasswordService = async (resetToken, newPassword) => {
+    try {
+        const uri = 'mongodb://localhost:27017';
+        const dbName = 'ems';
+
+        // Create a new MongoClient
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+        // Connect to the MongoDB server
+        await client.connect();
+
+        // Get the reference to the database
+        const database = client.db(dbName);
+
+        // Collection Name
+        const collectionName = 'nonmanagerialemployees'; // Adjust based on your collection name
+
+        // MongoDB query to find the document with resetToken
+        const user = await database.collection(collectionName).findOne({ resetToken });
+
+        if (user) {
+            // Encrypt the new password
+            const encryptedPassword = encryptor.encrypt(newPassword);
+
+            // Update the user's password and resetToken
+            await database.collection(collectionName).updateOne(
+                { resetToken },
+                {
+                    $set: { password: encryptedPassword },
+                    $unset: { resetToken: null }
+                }
+            );
+
+            // Close the MongoDB client connection
+            await client.close();
+
+            return true; // Password updated successfully
+        } else {
+            // Close the MongoDB client connection
+            await client.close();
+
+            return false; // Reset token not found in the database
+        }
+    } catch (error) {
+        // Handle errors during MongoDB operations
+        console.error('Error in resetPasswordService:', error);
+        throw new Error("Error resetting password"); // Throw error if an error occurs
+    }
+};
+
+
 module.exports.deleteAccountService = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';

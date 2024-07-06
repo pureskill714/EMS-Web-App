@@ -71,6 +71,67 @@ var verifyAccountControllerFn = async (req, res) => {
     }
 };
 
+var forgetPasswordControllerFn = async (req, res) => {
+    try {
+        // Extract the email from the request body
+        const { email } = req.body;
+
+        // Call the forgetPassword service function with the email
+        const result = await nonManagerialEmployeeService.forgetPasswordService(email);
+
+        // Handle the result from the service function
+        if (result.message === 'Password reset email sent successfully') {
+            // If password reset email is sent successfully, send success response
+            res.status(200).json({
+                status: true,
+                message: result.message
+            });
+        } else {
+            // If the email is not found or sending email fails, send error response
+            res.status(400).json({
+                status: false,
+                message: result.message
+            });
+        }
+    } catch (error) {
+        // Handle any errors that occur during the process
+        console.error(error);
+        res.status(500).json({
+            status: false,
+            message: "Error sending password reset email"
+        });
+    }
+};
+
+var verifyResetPasswordControllerFn = async (req, res) => {
+    try {
+        // Extract resetToken from request body or query parameters
+        const resetToken = req.body.resetToken || req.query.resetToken;
+
+        // Call the verifyResetPasswordService function with the resetToken
+        const resetTokenFound = await nonManagerialEmployeeService.verifyResetPasswordService(resetToken);
+
+        // Respond based on the result from verifyResetPasswordService
+        if (resetTokenFound) {
+            res.status(200).json({
+                success: true,
+                message: "Reset token found in the database"
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "Reset token not found in the database"
+            });
+        }
+    } catch (error) {
+        console.error('Error in verifyResetPasswordControllerFn:', error);
+        res.status(500).json({
+            success: false,
+            message: "Error verifying reset token"
+        });
+    }
+};
+
 var resendVerificationControllerFn = async (req, res) => {
     try {
         // Extract the email from the request body
@@ -99,6 +160,36 @@ var resendVerificationControllerFn = async (req, res) => {
         res.status(500).json({
             status: false,
             message: 'Error resending verification email'
+        });
+    }
+};
+
+var resetPasswordControllerFn = async (req, res) => {
+    try {
+        // Extract resetToken from request body or query parameters
+        const resetToken = req.body.resetToken || req.query.resetToken;
+        const newPassword = req.body.newPassword
+
+        // Call the verifyResetPasswordService function with the resetToken
+        const resetTokenFound = await nonManagerialEmployeeService.resetPasswordService(resetToken,newPassword);
+
+        // Respond based on the result from verifyResetPasswordService
+        if (resetTokenFound) {
+            res.status(200).json({
+                success: true,
+                message: "New password updated in the database"
+            });
+        } else {
+            res.status(404).json({
+                success: false,
+                message: "New password not updated in the database"
+            });
+        }
+    } catch (error) {
+        console.error('Error in resetPasswordControllerFn:', error);
+        res.status(500).json({
+            success: false,
+            message: "Error resetting new password"
         });
     }
 };
@@ -152,5 +243,8 @@ module.exports = { createnonManagerialEmployeeControllerFn,
                    getAllEmployeesControllerFn,
                    verifyAccountControllerFn,
                    resendVerificationControllerFn,
+                   forgetPasswordControllerFn,
+                   verifyResetPasswordControllerFn,
+                   resetPasswordControllerFn,
                    deleteAccountControllerFn
                  };

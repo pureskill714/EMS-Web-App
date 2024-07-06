@@ -70,7 +70,7 @@ export class LoginComponent {
               this.router.navigateByUrl('dashboard');
             } 
 
-            else if (userRole === 'admin') {
+            else if (userRole === 'admin' && resultData.isVerified === true) {
               this.router.navigateByUrl('admin-dashboard');
             }
 

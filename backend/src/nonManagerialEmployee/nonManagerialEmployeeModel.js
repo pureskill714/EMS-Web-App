@@ -29,6 +29,10 @@ var nonManagerialEmployeeSchema = new Schema({
     },
     verificationToken: { 
         type: String
+    },
+    resetToken: {
+        type: String,
+        default: null
     }
 });
 
