@@ -41,6 +41,16 @@ export class BookroomComponent {
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
+      const userData = this.authService.getUserData();
+    if (userData) {
+      const { email, firstName, lastName } = userData;
+      this.userDataService.setFirstName(userData.firstName);
+      this.userDataService.setLastName(userData.lastName);
+      this.userDataService.setEmail(userData.email);
+    } else {
+      alert("THIS IS FAIL")
+    }
+      
     this.getBookingInfos();
   }
 
@@ -51,16 +61,6 @@ export class BookroomComponent {
   selectedMeetingRooms: boolean[] = [];
 
   ngOnInit() {
-    const userData = this.authService.getUserData();
-    if (userData) {
-      const { email, firstName, lastName } = userData;
-      this.userDataService.setFirstName(userData.firstName);
-      this.userDataService.setLastName(userData.lastName);
-      this.userDataService.setEmail(userData.email);
-    } else {
-      alert("THIS IS FAIL")
-    }
-
     this.http.get("http://localhost:9992/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -212,6 +212,7 @@ export class BookroomComponent {
       "email": this.userDataService.getEmail(),
     };
 
+    console.log(this.userDataService.getEmail())
     this.http.post<any>('http://localhost:9992/retrievebookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
