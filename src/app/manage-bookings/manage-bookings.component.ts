@@ -38,10 +38,20 @@ export class ManageBookingsComponent {
   retrievedAllMeetingRoomDetails : any = [];
 
   retrievedCalendarInfoWithNames : any = [];
+  roleCheck: string | null = null;
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
-    this.getBookingInfos();
+
+    this.roleCheck = this.userDataService.getRole();
+
+    if (this.roleCheck != "admin") {
+        this.router.navigate(["not-authorized"]);
+        this.authService.kickUser(); // Call AuthService kick user method
+    }
+    else {
+      this.getBookingInfos();
+    }
   }
 
   showCalendarView: boolean = false;

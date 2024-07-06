@@ -13,10 +13,19 @@ import { BookingCancellationDialogAdminComponent } from '../manage-bookings/book
   styleUrl: './manage-accounts.component.css'
 })
 export class ManageAccountsComponent {
-  retrievedEmployeeDetails: any[] = []
+  retrievedEmployeeDetails: any[] = [];
+  roleCheck: string | null = null;
 
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
-    private authService: AuthService,private router: Router,private dialog: MatDialog) {}
+    private authService: AuthService,private router: Router,private dialog: MatDialog) {
+
+      this.roleCheck = this.userDataService.getRole();
+
+      if (this.roleCheck != "admin") {
+        this.router.navigate(["not-authorized"]);
+        this.authService.kickUser(); // Call AuthService kick user method
+      }
+    }
 
     ngOnInit(): void {
       this.getEmployeeDetails();
