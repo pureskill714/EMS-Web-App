@@ -35,7 +35,12 @@ export class DashboardComponent implements OnInit {
   retrievedCalendarInfoWithNames : any = [];
 
   constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient,private router: Router) {
-    this.roleCheck = this.userDataService.getRole();
+    const userData = this.authService.getUserData();
+    
+    if (userData) {
+      this.roleCheck = userData.role;
+    }
+
     console.log(this.roleCheck)
     if (this.roleCheck != "non-managerial") {
       this.router.navigate(["not-authorized"]);
@@ -46,10 +51,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     const userData = this.authService.getUserData();
     if (userData) {
-      const { email, firstName, lastName } = userData;
+      const { email, firstName, lastName, role } = userData;
       this.userDataService.setFirstName(userData.firstName);
       this.userDataService.setLastName(userData.lastName);
       this.userDataService.setEmail(userData.email);
+      this.userDataService.setRole(userData.role);
     } else {
       alert("THIS IS FAIL")
     }

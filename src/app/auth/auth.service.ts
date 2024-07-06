@@ -33,8 +33,8 @@ export class AuthService {
   }
 
   // Method to store user data in browser storage
-  storeUserData(email: string, firstName: string, lastName: string) {
-    const userData = { email, firstName, lastName };
+  storeUserData(email: string, firstName: string, lastName: string, role: string) {
+    const userData = { email, firstName, lastName, role };
     localStorage.setItem(this.storageKey, JSON.stringify(userData));
   }
 

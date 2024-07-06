@@ -42,7 +42,11 @@ export class BookroomComponent {
   constructor(private userDataService: UserDataService, private http: HttpClient, private location: Location,
     private authService: AuthService,private router: Router,private dialog: MatDialog) {
 
-    this.roleCheck = this.userDataService.getRole();
+    const userData = this.authService.getUserData();
+    if (userData) {
+    this.roleCheck = userData.role;
+    }
+    
     if (this.roleCheck != "non-managerial") {
       this.router.navigate(["not-authorized"]);
       this.authService.kickUser(); // Call AuthService kick user method
@@ -54,6 +58,7 @@ export class BookroomComponent {
       this.userDataService.setFirstName(userData.firstName);
       this.userDataService.setLastName(userData.lastName);
       this.userDataService.setEmail(userData.email);
+      this.userDataService.setRole(userData.role);
     } else {
       alert("THIS IS FAIL")
     }
