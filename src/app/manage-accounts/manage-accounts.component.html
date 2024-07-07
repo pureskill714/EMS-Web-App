@@ -9,6 +9,7 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email Address</th>
+            <th>Account Role</th>
             <th>Account ID</th>
             <th>Actions</th>
           </tr>
@@ -18,6 +19,7 @@
             <td>{{ retrievedEmployeeDetail.firstname }}</td>
             <td>{{ retrievedEmployeeDetail.lastname }}</td>
             <td>{{ retrievedEmployeeDetail.email }}</td>
+            <td>{{ retrievedEmployeeDetail.role }}</td>
             <td>{{ retrievedEmployeeDetail._id }}</td>
             <td>
               <button class="btn btn-danger" (click)="deleteAccount(retrievedEmployeeDetail._id)">Delete Account</button>
