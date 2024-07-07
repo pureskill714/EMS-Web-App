@@ -11,6 +11,7 @@ import { NewbookingComponent } from './bookroom/newbooking/newbooking.component'
 import { CancelbookingComponent } from './bookroom/cancelbookingconfirmation/cancelbooking.component';
 import { BookingconfirmationComponent } from './bookroom/bookingconfirmation/bookingconfirmation.component';
 import { EmployeeinfoComponent } from './employeeinfo/employeeinfo.component';
+import { MeetingroominfoComponent } from './meetingroominfo/meetingroominfo.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RegisteraccountconfirmationComponent } from './register/registeraccountconfirmation/registeraccountconfirmation.component';
 import { NonverifiedaccountmessageComponent } from './login/nonverifiedaccountmessage/nonverifiedaccountmessage.component';
@@ -27,6 +28,7 @@ import { BookingconfirmationadminComponent } from './manage-bookings/bookingconf
 import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
 
 
 const routes: Routes = [
@@ -95,6 +97,11 @@ const routes: Routes = [
   {
     component: EmployeeinfoComponent,
     path: 'employeeinfo'
+  }
+  ,
+  {
+    component: MeetingroominfoComponent,
+    path: 'meetingroominfo'
   }
   ,
   {

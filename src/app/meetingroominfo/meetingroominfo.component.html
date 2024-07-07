@@ -1,0 +1,23 @@
+<app-header></app-header>
+
+<br><br>
+
+<div class="booking-list-container">
+    <table class="booking-list">
+        <thead>
+          <tr>
+            <th>Meeting Room Name</th>
+            <th>Capacity</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let room of meetingRoomNames">
+          <td>{{ room.name }}</td>
+          <td>{{ room.capacity }}</td>
+          <td>{{ room.location }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+</div>

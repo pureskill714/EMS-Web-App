@@ -43,6 +43,7 @@ import { BookingconfirmationadminComponent } from './manage-bookings/bookingconf
 import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { MeetingroominfoComponent } from './meetingroominfo/meetingroominfo.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ManageAccountsComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    MeetingroominfoComponent,
   ],
   imports: [
     BrowserModule,
