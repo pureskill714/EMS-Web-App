@@ -187,6 +187,7 @@ export class ManageRoomsComponent {
   editRoomCapacity(roomId: string, meetingRoomName: string) {
     // Add logic to edit room order
     console.log(roomId)
+    console.log(meetingRoomName)
     this.userDataService.setMeetingRoom(meetingRoomName);
 
     const dialogRef = this.dialog.open(EditroomcapacityConfirmationDialogComponent, {
@@ -215,18 +216,18 @@ export class ManageRoomsComponent {
           (error) => {
             console.error("Error occurred while sending POST request:", error);
             if (error.status === 409) { 
-                alert("Error editing new meeting room order. Room order may have ben taken");
+                alert("Error editing new meeting room capacity. Room order may have ben taken");
             } else {
-                alert("Error editing new meeting room order. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+                alert("Error editing new meeting room capacity. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
             }
             // You can handle the error further as needed
         }
         );
 
-        console.log('Edit new meeting room confirmed');
+        console.log('Edit new meeting room capacity confirmed');
       }
       else{
-        console.log('Edit new room cancelled');
+        console.log('Edit new room capacity cancelled');
       }
     })
   }
@@ -262,18 +263,18 @@ export class ManageRoomsComponent {
           (error) => {
             console.error("Error occurred while sending POST request:", error);
             if (error.status === 409) { 
-                alert("Error editing new meeting room order. Room order may have ben taken");
+                alert("Error editing new meeting room location. Room order may have ben taken");
             } else {
-                alert("Error editing new meeting room order. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+                alert("Error editing new meeting room location. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
             }
             // You can handle the error further as needed
         }
         );
 
-        console.log('Edit new meeting room confirmed');
+        console.log('Edit new meeting room location confirmed');
       }
       else{
-        console.log('Edit new room cancelled');
+        console.log('Edit new room location cancelled');
       }
     })
   }

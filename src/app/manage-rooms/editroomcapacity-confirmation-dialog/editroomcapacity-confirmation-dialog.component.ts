@@ -8,14 +8,14 @@ import { UserDataService } from '../../user-data.service';
   styleUrl: './editroomcapacity-confirmation-dialog.component.css'
 })
 export class EditroomcapacityConfirmationDialogComponent {
-  oldMeetingRoomName: string | null = "";
+  meetingRoomName: string | null = "";
   newMeetingRoomCapacity: string | null = "";
 
   constructor(public dialogRef: MatDialogRef<EditroomcapacityConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {}
 
   ngOnInit() {
-    this.oldMeetingRoomName = this.userDataService.getOldMeetingRoomName()
+    this.meetingRoomName = this.userDataService.getMeetingRoom()
  }
 
 
