@@ -3,8 +3,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
 import { AddroomConfirmationDialogComponent } from './addroom-confirmation-dialog/addroom-confirmation-dialog.component';
 import { DeleteroomConfirmationDialogComponent } from './deleteroom-confirmation-dialog/deleteroom-confirmation-dialog.component';
+import { EditroomcapacityConfirmationDialogComponent } from './editroomcapacity-confirmation-dialog/editroomcapacity-confirmation-dialog.component';
 import { EditroomnameConfirmationDialogComponent } from './editroomname-confirmation-dialog/editroomname-confirmation-dialog.component';
 import { EditroomorderConfirmationDialogComponent } from './editroomorder-confirmation-dialog/editroomorder-confirmation-dialog.component';
+import { EditroomlocationConfirmationDialogComponent } from './editroomlocation-confirmation-dialog/editroomlocation-confirmation-dialog.component';
 import { UserDataService } from '../user-data.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
@@ -180,9 +182,100 @@ export class ManageRoomsComponent {
         console.log('Edit new room cancelled');
       }
     })
+  }
 
+  editRoomCapacity(roomId: string, meetingRoomName: string) {
+    // Add logic to edit room order
+    console.log(roomId)
+    this.userDataService.setMeetingRoom(meetingRoomName);
 
-    
+    const dialogRef = this.dialog.open(EditroomcapacityConfirmationDialogComponent, {
+      width: '430px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // Handle the confirmation action
+      
+        let bodyData = {
+          "id": roomId,
+          "newRoomOrder": this.userDataService.getnewRoomOrder(),
+        };
+
+        this.http.post("http://localhost:9992/editmeetingroomcapacity", bodyData).subscribe(
+          (resultData: any) => {
+              console.log(resultData);
+              //alert("Room Booking Successfully");
+              this.router.navigate(['/admin-dashboard']);
+          },
+          (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            if (error.status === 409) { 
+                alert("Error editing new meeting room order. Room order may have ben taken");
+            } else {
+                alert("Error editing new meeting room order. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+            }
+            // You can handle the error further as needed
+        }
+        );
+
+        console.log('Edit new meeting room confirmed');
+      }
+      else{
+        console.log('Edit new room cancelled');
+      }
+    })
+  }
+
+  editRoomLocation(roomId: string, meetingRoomName: string) {
+    // Add logic to edit room order
+    console.log(roomId)
+    this.userDataService.setMeetingRoom(meetingRoomName);
+
+    const dialogRef = this.dialog.open(EditroomlocationConfirmationDialogComponent, {
+      width: '430px',
+      panelClass: 'custom-dialog-container', // Custom CSS class for dialog container
+      hasBackdrop: true, // Display backdrop behind the dialog
+      backdropClass: 'custom-backdrop', // Custom CSS class for backdrop
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'confirm') {
+        // Handle the confirmation action
+      
+        let bodyData = {
+          "id": roomId,
+          "newRoomOrder": this.userDataService.getnewRoomOrder(),
+        };
+
+        this.http.post("http://localhost:9992/editmeetingroomlocation", bodyData).subscribe(
+          (resultData: any) => {
+              console.log(resultData);
+              //alert("Room Booking Successfully");
+              this.router.navigate(['/admin-dashboard']);
+          },
+          (error) => {
+            console.error("Error occurred while sending POST request:", error);
+            if (error.status === 409) { 
+                alert("Error editing new meeting room order. Room order may have ben taken");
+            } else {
+                alert("Error editing new meeting room order. Please check if the backend server is running/functioning properly or you might not be logged in that's why error");
+            }
+            // You can handle the error further as needed
+        }
+        );
+
+        console.log('Edit new meeting room confirmed');
+      }
+      else{
+        console.log('Edit new room cancelled');
+      }
+    })
   }
 
   editRoomName(roomId: string, oldMeetingRoomName: string) {

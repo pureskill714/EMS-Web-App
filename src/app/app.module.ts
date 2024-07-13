@@ -44,6 +44,9 @@ import { ManageAccountsComponent } from './manage-accounts/manage-accounts.compo
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { MeetingroominfoComponent } from './meetingroominfo/meetingroominfo.component';
+import { EditroomcapacityConfirmationDialogComponent } from './manage-rooms/editroomcapacity-confirmation-dialog/editroomcapacity-confirmation-dialog.component';
+import { EditroomlocationConfirmationDialogComponent } from './manage-rooms/editroomlocation-confirmation-dialog/editroomlocation-confirmation-dialog.component';
+
 
 
 @NgModule({
@@ -85,6 +88,8 @@ import { MeetingroominfoComponent } from './meetingroominfo/meetingroominfo.comp
     ForgotPasswordComponent,
     ResetPasswordComponent,
     MeetingroominfoComponent,
+    EditroomcapacityConfirmationDialogComponent,
+    EditroomlocationConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
