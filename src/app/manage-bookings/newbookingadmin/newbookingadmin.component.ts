@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { BookingConfirmationDialogComponent } from '../../bookroom/booking-confirmation-dialog/booking-confirmation-dialog.component';
 import { UserDataService } from '../../user-data.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-newbookingadmin',
@@ -23,6 +24,8 @@ export class NewbookingadminComponent implements OnInit {
   retrievedMeetingRoomNames : any = [];
   meetingRooms: string[] = []; // Add more rooms as needed
   bookedDetailsSelected : boolean = false;
+
+  roleCheck: string | null = null;
 
     // Define your time slots here
   timeSlots: string[] = [
@@ -69,7 +72,14 @@ export class NewbookingadminComponent implements OnInit {
 
   }
 
-  constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router) {
+  constructor(private dialog: MatDialog,private userDataService: UserDataService,private http: HttpClient,private router: Router,private authService: AuthService) {
+    this.roleCheck = this.userDataService.getRole();
+
+    if (this.roleCheck != "admin") {
+        this.router.navigate(["not-authorized"]);
+        this.authService.kickUser(); // Call AuthService kick user method
+    }
+    
     // Initialize minDate to the current date
     const today = new Date();
     this.minDate = today.toISOString().split('T')[0];
