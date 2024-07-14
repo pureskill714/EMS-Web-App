@@ -3,6 +3,7 @@ import { UserDataService } from './../user-data.service';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 // Define an interface for the slot structure
 interface Slot {
@@ -14,7 +15,8 @@ interface Slot {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
+  providers: [DatePipe]
 })
 export class DashboardComponent implements OnInit {
   retrievedMeetingRoomNames : any = [];
@@ -25,6 +27,8 @@ export class DashboardComponent implements OnInit {
   retrievedAllMeetingRoomDetails : any = [];
   roleCheck: string | null = null;
 
+  today: string | null = null;
+
   
   // Define the meeting rooms and their calendar information
   meetingRoomsTimeSlots = [];
@@ -34,7 +38,7 @@ export class DashboardComponent implements OnInit {
 
   retrievedCalendarInfoWithNames : any = [];
 
-  constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient,private router: Router) {
+  constructor(private userDataService: UserDataService,private authService: AuthService,private http: HttpClient,private router: Router,private datePipe: DatePipe) {
     const userData = this.authService.getUserData();
     
     if (userData) {
@@ -46,6 +50,8 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(["not-authorized"]);
       this.authService.kickUser(); // Call AuthService kick user method
     }
+
+    this.today = this.datePipe.transform(new Date(), 'dd/MM/yyyy');
   }
 
   ngOnInit() {
