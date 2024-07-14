@@ -46,6 +46,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MeetingroominfoComponent } from './meetingroominfo/meetingroominfo.component';
 import { EditroomcapacityConfirmationDialogComponent } from './manage-rooms/editroomcapacity-confirmation-dialog/editroomcapacity-confirmation-dialog.component';
 import { EditroomlocationConfirmationDialogComponent } from './manage-rooms/editroomlocation-confirmation-dialog/editroomlocation-confirmation-dialog.component';
+import { EditroomcapacityconfirmationComponent } from './manage-rooms/editroomcapacityconfirmation/editroomcapacityconfirmation.component';
+import { EditroomlocationconfirmationComponent } from './manage-rooms/editroomlocationconfirmation/editroomlocationconfirmation.component';
 
 
 
@@ -90,6 +92,8 @@ import { EditroomlocationConfirmationDialogComponent } from './manage-rooms/edit
     MeetingroominfoComponent,
     EditroomcapacityConfirmationDialogComponent,
     EditroomlocationConfirmationDialogComponent,
+    EditroomcapacityconfirmationComponent,
+    EditroomlocationconfirmationComponent,
   ],
   imports: [
     BrowserModule,

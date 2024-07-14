@@ -21,6 +21,8 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { AddroomconfirmationComponent } from './manage-rooms/addroomconfirmation/addroomconfirmation.component';
 import { DeleteroomconfirmationComponent } from './manage-rooms/deleteroomconfirmation/deleteroomconfirmation.component';
 import { EditroomconfirmationComponent } from './manage-rooms/editroomconfirmation/editroomconfirmation.component';
+import { EditroomcapacityconfirmationComponent } from './manage-rooms/editroomcapacityconfirmation/editroomcapacityconfirmation.component';
+import { EditroomlocationconfirmationComponent } from './manage-rooms/editroomlocationconfirmation/editroomlocationconfirmation.component';
 import { ManageBookingsComponent } from './manage-bookings/manage-bookings.component';
 import { CancelbookingconfirmationadminComponent } from './manage-bookings/cancelbookingconfirmationadmin/cancelbookingconfirmationadmin.component';
 import { NewbookingadminComponent } from './manage-bookings/newbookingadmin/newbookingadmin.component';
@@ -127,6 +129,16 @@ const routes: Routes = [
   {
     component: EditroomconfirmationComponent,
     path : 'confirm-edit-room'
+  }
+  ,
+  {
+    component: EditroomcapacityconfirmationComponent,
+    path : 'confirm-edit-room-capacity'
+  }
+  ,
+  {
+    component: EditroomlocationconfirmationComponent,
+    path : 'confirm-edit-room-location'
   }
   ,
   {
