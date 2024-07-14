@@ -704,6 +704,38 @@ module.exports.editMeetingRoomCapacityService = async (requestData) => {
     }
 };
 
+module.exports.editMeetingRoomLocationService = async (requestData) => {
+    const uri = 'mongodb://localhost:27017';
+    const dbName = 'ems';
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+
+    try {
+        await client.connect();
+        const database = client.db(dbName);
+        const meetingRoomsCollection = database.collection('meetingrooms');
+
+        const oid = new ObjectId(requestData.id); // Make sure requestData.id is a valid ObjectId string
+        const newRoomLocation = requestData.newRoomLocation; // The new room capacity you want to set
+
+        // Update the document
+        const result = await meetingRoomsCollection.updateOne(
+            { _id: oid },
+            { $set: { location: newRoomLocation } }
+        );
+
+        if (result.matchedCount > 0) {
+            return { success: true, message: `Successfully updated the roomOrder of document with _id: ${oid} to ${newRoomLocation}` };
+        } else {
+            return { success: false, message: `No document found with _id: ${oid}` };
+        }
+    } catch (error) {
+        throw error;
+    } finally {
+        // Ensure the client will close when you finish/error
+        await client.close();
+    }
+};
+
 module.exports.deleteMeetingRoomService = async (requestData) => {
     try {
         const uri = 'mongodb://localhost:27017';

@@ -22,6 +22,7 @@ router.route('/addmeetingrooms').post(roomBookingController.addNewMeetingRoomCon
 router.route('/editmeetingroomname').post(roomBookingController.editMeetingRoomNameControllerFn);
 router.route('/editmeetingroomorder').post(roomBookingController.editMeetingRoomOrderControllerFn);
 router.route('/editmeetingroomcapacity').post(roomBookingController.editMeetingRoomCapacityControllerFn);
+router.route('/editmeetingroomlocation').post(roomBookingController.editMeetingRoomLocationControllerFn);
 router.route('/deletemeetingrooms').post(roomBookingController.deleteMeetingRoomControllerFn);
 
 router.route('/booking').post(roomBookingController.createRoomBookingControllerFn);

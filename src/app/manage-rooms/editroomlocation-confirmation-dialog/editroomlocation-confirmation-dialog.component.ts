@@ -24,7 +24,7 @@ export class EditroomlocationConfirmationDialogComponent {
   }
 
   onConfirm(): void {
-    this.userDataService.setNewMeetingRoomName(this.newMeetingRoomLocation);
+    this.userDataService.setMeetingRoomLocation(this.newMeetingRoomLocation);
     this.dialogRef.close('confirm');
   }
 
