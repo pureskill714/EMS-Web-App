@@ -672,7 +672,7 @@ module.exports.editMeetingRoomNameService = async (requestData) => {
     }
 };
 
-module.exports.editMeetingRoomOrderService = async (requestData) => {
+module.exports.editMeetingRoomCapacityService = async (requestData) => {
     const uri = 'mongodb://localhost:27017';
     const dbName = 'ems';
     const client = new MongoClient(uri, { useUnifiedTopology: true });
@@ -682,18 +682,17 @@ module.exports.editMeetingRoomOrderService = async (requestData) => {
         const database = client.db(dbName);
         const meetingRoomsCollection = database.collection('meetingrooms');
 
-        // Extract the _id and newRoomOrder from requestData
         const oid = new ObjectId(requestData.id); // Make sure requestData.id is a valid ObjectId string
-        const newRoomOrder = requestData.newRoomOrder; // The new roomOrder you want to set
+        const newRoomCapacity = requestData.newRoomCapacity; // The new room capacity you want to set
 
         // Update the document
         const result = await meetingRoomsCollection.updateOne(
             { _id: oid },
-            { $set: { roomOrder: newRoomOrder } }
+            { $set: { capacity: newRoomCapacity } }
         );
 
         if (result.matchedCount > 0) {
-            return { success: true, message: `Successfully updated the roomOrder of document with _id: ${oid} to ${newRoomOrder}` };
+            return { success: true, message: `Successfully updated the roomOrder of document with _id: ${oid} to ${newRoomCapacity}` };
         } else {
             return { success: false, message: `No document found with _id: ${oid}` };
         }

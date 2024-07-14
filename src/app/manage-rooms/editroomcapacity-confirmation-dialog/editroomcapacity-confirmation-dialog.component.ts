@@ -9,7 +9,7 @@ import { UserDataService } from '../../user-data.service';
 })
 export class EditroomcapacityConfirmationDialogComponent {
   meetingRoomName: string | null = "";
-  newMeetingRoomCapacity: string | null = "";
+  newMeetingRoomCapacity: number | null = null;
 
   constructor(public dialogRef: MatDialogRef<EditroomcapacityConfirmationDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
   private userDataService: UserDataService) {}
@@ -24,7 +24,7 @@ export class EditroomcapacityConfirmationDialogComponent {
   }
 
   onConfirm(): void {
-    this.userDataService.setNewMeetingRoomName(this.newMeetingRoomCapacity);
+    this.userDataService.setRoomCapacity(this.newMeetingRoomCapacity);
     this.dialogRef.close('confirm');
   }
 

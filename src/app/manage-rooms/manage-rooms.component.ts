@@ -204,7 +204,7 @@ export class ManageRoomsComponent {
       
         let bodyData = {
           "id": roomId,
-          "newRoomOrder": this.userDataService.getnewRoomOrder(),
+          "newRoomCapacity": this.userDataService.getRoomCapacity()
         };
 
         this.http.post("http://localhost:9992/editmeetingroomcapacity", bodyData).subscribe(
