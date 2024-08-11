@@ -7,6 +7,8 @@ WORKDIR /usr/src/app
 # Copy the package.json file and install dependencies
 COPY package.json /usr/src/app
 
+RUN npm cache clean --force
+
 # Update npm itself and update all packages listed in package.json
 RUN npm install -g npm && npm update && npm install
 
@@ -14,7 +16,7 @@ RUN npm install -g npm && npm update && npm install
 COPY . /usr/src/app
 
 # Expose the port your application will run on
-EXPOSE 80
+EXPOSE 4200
 
 # Start the application
 CMD ["npm", "start"]

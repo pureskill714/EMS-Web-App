@@ -278,7 +278,7 @@ const deleteMeetingRoomControllerFn = async (req, res) => {
 };
 
 var getMeetingRoomsControllerFn = async (req, res) => {
-    const uri = 'mongodb://localhost:27017';
+    const uri = 'mongodb://database:27017';
     const dbName = 'ems';
     const client = new MongoClient(uri, { useUnifiedTopology: true });
     

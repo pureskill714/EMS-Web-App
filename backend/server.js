@@ -13,7 +13,7 @@ app.listen(9992, () => {
   console.log("Server started");
 });
 
-mongoose.connect("mongodb://localhost:27017/ems")
+mongoose.connect("mongodb://database:27017/ems")
   .then(() => {
     console.log("Successfully connected to the database");
   })

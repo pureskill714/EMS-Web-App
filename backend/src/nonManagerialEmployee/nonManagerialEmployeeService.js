@@ -106,7 +106,7 @@ function sendVerificationEmail(email, verificationToken) {
  module.exports.verifyAccount = async (verificationToken) => {
     try {
         // MongoDB connection URL
-        const uri = 'mongodb://localhost:27017';
+        const uri = 'mongodb://database:27017';
         // Database Name
         const dbName = 'ems';
 
@@ -314,7 +314,7 @@ function sendForgotPasswordEmail(email, resetToken) {
 
 module.exports.verifyResetPasswordService = async (resetToken) => {
     try {
-        const uri = 'mongodb://localhost:27017';
+        const uri = 'mongodb://database:27017';
         const dbName = 'ems';
 
         // Create a new MongoClient
@@ -350,7 +350,7 @@ module.exports.verifyResetPasswordService = async (resetToken) => {
 
 module.exports.resetPasswordService = async (resetToken, newPassword) => {
     try {
-        const uri = 'mongodb://localhost:27017';
+        const uri = 'mongodb://database:27017';
         const dbName = 'ems';
 
         // Create a new MongoClient
@@ -401,7 +401,7 @@ module.exports.resetPasswordService = async (resetToken, newPassword) => {
 
 module.exports.deleteAccountService = async (requestData) => {
     try {
-        const uri = 'mongodb://localhost:27017';
+        const uri = 'mongodb://database:27017';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
