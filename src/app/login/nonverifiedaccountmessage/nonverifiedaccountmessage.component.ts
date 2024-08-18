@@ -25,7 +25,7 @@ export class NonverifiedaccountmessageComponent {
 
     console.log(this.userDataService.getEmail());
     // Send POST request to backend for account verification
-    this.http.post<any>('http://localhost:9992/resend-verification', bodyData).subscribe(
+    this.http.post<any>('http://192.168.10.110:9992/resend-verification', bodyData).subscribe(
       () => {
         // Handle successful verification (e.g., show success message)
         alert("Email verification email successfully resent! Please check your email.")

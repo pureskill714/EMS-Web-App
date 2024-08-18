@@ -70,12 +70,12 @@ export class RegisterComponent {
         return; // Exit the function if passwords don't match
       }
 
-    // Password complexity check using regular expression
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
+    // Password complexity check using regular 192.168.10.110ion
+    /*const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
     if (!passwordRegex.test(this.password)) {
         alert("Password must contain at least one uppercase letter, one lowercase letter, one number, one special character, and be at least 8 characters long.");
         return; // Exit the function if password complexity is invalid
-    }
+    }*/
 
      // Check if email contains the required domain. Comment out if needed to register other emails
      /*const validDomain = '@wizvision.com';
@@ -91,7 +91,7 @@ export class RegisterComponent {
         "password": this.password,
     };
 
-    this.http.post("http://localhost:9992/create", bodyData).subscribe(
+    this.http.post("http://192.168.10.110:9992/create", bodyData).subscribe(
         (resultData: any) => {
             console.log(resultData);
             this.router.navigate(['/registerconfirmation']);

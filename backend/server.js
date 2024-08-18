@@ -6,7 +6,7 @@ var routes = require('./routes/routes');
 const cors = require('cors');
 
 app.use(cors({
-  origin: "http://localhost:4200"
+  origin: '*',  // Allows requests from any origin
 }));
 
 app.listen(9992, () => {
