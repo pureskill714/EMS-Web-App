@@ -776,17 +776,25 @@ module.exports.deleteMeetingRoomService = async (requestData) => {
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
         const database = client.db(dbName);
-        const collectionName = 'meetingrooms';
+        const meetingRoomsCollection = database.collection('meetingrooms');
+        const bookingsCollection = database.collection('bookings');
 
-        // Retrieve the booking details using the provided ObjectId
-        const meetingRoom = await database.collection(collectionName).findOne({ _id: new ObjectId(requestData.id) });
+        // Retrieve the meeting room details using the provided ObjectId
+        const meetingRoom = await meetingRoomsCollection.findOne({ _id: new ObjectId(requestData.id) });
 
         if (!meetingRoom) {
-            throw new Error('Meeting Room not found'); // Handle if booking with the specified id is not found
+            throw new Error('Meeting Room not found');
         }
 
-        // MongoDB query to delete the document with the specified _id
-        const result = await database.collection(collectionName).deleteOne({ _id: new ObjectId(requestData.id) });
+        // Delete the meeting room with the specified _id
+        const result = await meetingRoomsCollection.deleteOne({ _id: new ObjectId(requestData.id) });
+
+        if (result.deletedCount === 0) {
+            throw new Error('Failed to delete the Meeting Room');
+        }
+
+        // Delete all bookings associated with the deleted meeting room
+        await bookingsCollection.deleteMany({ meetingRoom: meetingRoom.name });
 
         await client.close();
 

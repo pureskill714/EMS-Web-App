@@ -345,6 +345,7 @@ export class ManageRoomsComponent {
         // Handle the confirmation action
         let bodyData = {
           "id": roomId,
+          "meetingRoomName": meetingRoomName
         };
 
         this.http.post("http://192.168.10.110:9992/deletemeetingrooms", bodyData).subscribe(
