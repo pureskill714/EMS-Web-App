@@ -66,7 +66,7 @@ function sendVerificationEmail(email, verificationToken) {
             from: 'wizvision600@gmail.com',
             to: email,
             subject: 'Account Verification',
-            html: `Click <a href="http://localhost:4200/verify/${verificationToken}">here</a> to verify your account.`
+            html: `Click <a href="http://192.168.10.110:4200/verify/${verificationToken}">here</a> to verify your account.`
         };
 
         transporter.sendMail(mailOptions, (err, info) => {
