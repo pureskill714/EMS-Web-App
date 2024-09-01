@@ -1,30 +1,30 @@
 version: '3.0' # specify docker-compose version
- 
-# Define the services/ containers to be run
+
+# Define the services/containers to be run
 services:
- angular: # name of the first service
-  build: webapp # specify the directory of the Dockerfile
-  ports:
-  - "80:80" # specify port mapping
-  networks:
+  angular: # name of the first service
+    build: webapp # specify the directory of the Dockerfile
+    ports:
+      - "80:80" # specify port mapping
+    networks:
       - mean-stack-network # connect to the custom network
- 
- express: # name of the second service
-  build: webapp/backend # specify the directory of the Dockerfile
-  ports:
-  - "9992:9992" #specify ports mapping
-  links:
+
+  express: # name of the second service
+    build: webapp/backend # specify the directory of the Dockerfile
+    ports:
+      - "9992:9992" # specify ports mapping
+    links:
       - database # ensure the database service starts before this service
     environment:
       MONGO_URL: mongodb://database:27017/ems # link to the database service
     networks:
       - mean-stack-network # connect to the custom network
- 
- database: # name of the third service
-  image: mongo # specify image to build container from
-  ports:
-  - "27017:27017" # specify port forwarding
-  networks:
+
+  database: # name of the third service
+    image: mongo # specify image to build container from
+    ports:
+      - "27017:27017" # specify port forwarding
+    networks:
       - mean-stack-network # connect to the custom network
 
 networks:
