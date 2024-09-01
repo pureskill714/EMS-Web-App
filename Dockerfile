@@ -1,22 +1,14 @@
-FROM node:20.11.0
-
-# Create the application directory
-RUN mkdir -p /usr/src/app
+# Stage 1: Build the Angular app
+FROM node:20.11.0 AS build
 WORKDIR /usr/src/app
-
-# Copy the package.json file and install dependencies
 COPY package.json /usr/src/app
-
 RUN npm cache clean --force
-
-# Update npm itself and update all packages listed in package.json
 RUN npm install -g npm && npm update && npm install
-
-# Copy the rest of the application code
 COPY . /usr/src/app
+RUN npm run build -- --prod
 
-# Expose the port your application will run on
-EXPOSE 4200
-
-# Start the application
-CMD ["npm", "start"]
+# Stage 2: Serve the Angular app
+FROM nginx:alpine
+COPY --from=build /usr/src/app/dist/webapp /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
