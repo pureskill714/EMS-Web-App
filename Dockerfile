@@ -10,5 +10,10 @@ RUN npm run build -- --prod
 # Stage 2: Serve the Angular app
 FROM nginx:alpine
 COPY --from=build /usr/src/app/dist/webapp /usr/share/nginx/html
+
+# Expose the port your application will run on
 EXPOSE 80
+EXPOSE 4200
+# Start the application
+CMD ["npm", "start"]
 CMD ["nginx", "-g", "daemon off;"]

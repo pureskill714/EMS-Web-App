@@ -1,31 +1,32 @@
-version: '3.0'
-
+version: '3.0' # specify docker-compose version
+ 
+# Define the services/ containers to be run
 services:
-  angular:
-    build: ./webapp # Ensure this points to the directory containing the Dockerfile
-    ports:
-      - "80:80" # Map container port 80 to VM port 80
-    networks:
-      - mean-stack-network
-
-  express:
-    build: ./webapp/backend # Directory containing Dockerfile for Express
-    ports:
-      - "9992:9992"
-    links:
-      - database
+ angular: # name of the first service
+  build: webapp # specify the directory of the Dockerfile
+  ports:
+  - "80:80" # specify port mapping
+  networks:
+      - mean-stack-network # connect to the custom network
+ 
+ express: # name of the second service
+  build: webapp/backend # specify the directory of the Dockerfile
+  ports:
+  - "9992:9992" #specify ports mapping
+  links:
+      - database # ensure the database service starts before this service
     environment:
-      MONGO_URL: mongodb://database:27017/ems
+      MONGO_URL: mongodb://database:27017/ems # link to the database service
     networks:
-      - mean-stack-network
-
-  database:
-    image: mongo
-    ports:
-      - "27017:27017"
-    networks:
-      - mean-stack-network
+      - mean-stack-network # connect to the custom network
+ 
+ database: # name of the third service
+  image: mongo # specify image to build container from
+  ports:
+  - "27017:27017" # specify port forwarding
+  networks:
+      - mean-stack-network # connect to the custom network
 
 networks:
-  mean-stack-network:
+  mean-stack-network: # define the custom network
     driver: bridge
