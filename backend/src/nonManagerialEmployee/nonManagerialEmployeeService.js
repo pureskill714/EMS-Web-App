@@ -285,7 +285,7 @@ function sendForgotPasswordEmail(email, resetToken) {
                         </div>
                         <div class="content">
                             <p>We received a request to reset the password for your account associated with this email address. If you made this request, please click the button below to reset your password:</p>
-                            <a href="http://localhost:4200/reset-password/${resetToken}" class="button">Reset Password</a>
+                            <a href="http://192.168.10.110:4200/reset-password/${resetToken}" class="button">Reset Password</a>
                             <p>If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
                             <p>If you have any questions, feel free to contact our support team.</p>
                             <p>Best regards,</p>
