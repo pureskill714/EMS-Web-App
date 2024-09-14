@@ -91,7 +91,7 @@ export class RegisterComponent {
         "password": this.password,
     };
 
-    this.http.post("http://192.168.10.110:9992/create", bodyData).subscribe(
+    this.http.post("http://localhost:9992/create", bodyData).subscribe(
         (resultData: any) => {
             console.log(resultData);
             this.router.navigate(['/registerconfirmation']);

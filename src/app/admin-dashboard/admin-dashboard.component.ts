@@ -66,7 +66,7 @@ export class AdminDashboardComponent {
       alert("THIS IS FAIL")
     }
 
-    this.http.get("http://192.168.10.110:9992/getmeetingrooms").subscribe(
+    this.http.get("http://localhost:9992/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -110,7 +110,7 @@ export class AdminDashboardComponent {
         "date": new Date().toISOString().split('T')[0] // Set to today's date in YYYY-MM-DD format
       };
 
-      this.http.post<any>('http://192.168.10.110:9992/retrievecalendarinfos', bodyData)
+      this.http.post<any>('http://localhost:9992/retrievecalendarinfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -136,7 +136,7 @@ export class AdminDashboardComponent {
           }
         });
 
-        this.http.post<any>('http://192.168.10.110:9992/retrievecalendarinfoswithnames', bodyData)
+        this.http.post<any>('http://localhost:9992/retrievecalendarinfoswithnames', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
@@ -147,7 +147,7 @@ export class AdminDashboardComponent {
             }
           });
 
-      this.http.post<any>('http://192.168.10.110:9992/retrievecalendarmeetingroomdetails', bodyData)
+      this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log("received all meeting room details")

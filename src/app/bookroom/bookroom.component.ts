@@ -74,7 +74,7 @@ export class BookroomComponent {
   selectedMeetingRooms: boolean[] = [];
 
   ngOnInit() {
-    this.http.get("http://192.168.10.110:9992/getmeetingrooms").subscribe(
+    this.http.get("http://localhost:9992/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -135,7 +135,7 @@ export class BookroomComponent {
       "date": this.selectedDate,
     };
 
-    this.http.post<any>('http://192.168.10.110:9992/retrievecalendarinfos', bodyData)
+    this.http.post<any>('http://localhost:9992/retrievecalendarinfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -159,7 +159,7 @@ export class BookroomComponent {
           }
         });
 
-        this.http.post<any>('http://192.168.10.110:9992/retrievecalendarinfoswithnames', bodyData)
+        this.http.post<any>('http://localhost:9992/retrievecalendarinfoswithnames', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
@@ -170,7 +170,7 @@ export class BookroomComponent {
             }
           });
         
-        this.http.post<any>('http://192.168.10.110:9992/retrievecalendarmeetingroomdetails', bodyData)
+        this.http.post<any>('http://localhost:9992/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log("received all meeting room details")
@@ -198,7 +198,7 @@ export class BookroomComponent {
       "email": this.userDataService.getEmail(),
     };
 
-    this.http.post<any>('http://192.168.10.110:9992/retrievepastbookinginfos', bodyData)
+    this.http.post<any>('http://localhost:9992/retrievepastbookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -226,7 +226,7 @@ export class BookroomComponent {
     };
 
     console.log(this.userDataService.getEmail())
-    this.http.post<any>('http://192.168.10.110:9992/retrievebookinginfos', bodyData)
+    this.http.post<any>('http://localhost:9992/retrievebookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -273,7 +273,7 @@ export class BookroomComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'cancel') {
         // Call your backend service to cancel the booking
-        this.http.post<any>('http://192.168.10.110:9992/cancelbooking', bodyData)
+        this.http.post<any>('http://localhost:9992/cancelbooking', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);

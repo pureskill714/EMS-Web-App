@@ -49,7 +49,7 @@ export class EmployeeinfoComponent implements OnInit {
 
     getEmployeeDetails() {
       
-      this.http.get("http://192.168.10.110:9992/getemployeedetails").subscribe(
+      this.http.get("http://localhost:9992/getemployeedetails").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
