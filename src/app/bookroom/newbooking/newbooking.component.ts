@@ -42,7 +42,7 @@ export class NewbookingComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.http.get("http://192.168.10.110:9992/getmeetingrooms").subscribe(
+    this.http.get("http://58.182.172.239/api/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -119,7 +119,7 @@ export class NewbookingComponent implements OnInit {
       "meetingRoom": this.userDataService.getSelectedBookingRoom(),
     };
 
-    this.http.post<any>('http://192.168.10.110:9992/retrievebookingtimeslots', bodyData)
+    this.http.post<any>('http://58.182.172.239/api/retrievebookingtimeslots', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -143,7 +143,7 @@ export class NewbookingComponent implements OnInit {
         }
       );
 
-      this.http.post<any>('http://192.168.10.110:9992/retrievecalendardetails', bodyData)
+      this.http.post<any>('http://58.182.172.239/api/retrievecalendardetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -255,7 +255,7 @@ export class NewbookingComponent implements OnInit {
             "lastName": this.userDataService.getLastName()
         };
 
-          this.http.post("http://192.168.10.110:9992/booking", bodyData).subscribe(
+          this.http.post("http://58.182.172.239/api/booking", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");

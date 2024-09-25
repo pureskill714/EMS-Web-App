@@ -42,7 +42,7 @@ export class LoginComponent {
       password: this.password,
     };
 
-    this.http.post("http://192.168.10.110:9992/login", bodyData).subscribe(
+    this.http.post('http://58.182.172.239/api/login', bodyData).subscribe(
       (resultData: any) => {
         console.log(resultData);
         console.log(resultData.role);

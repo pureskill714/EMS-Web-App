@@ -1,32 +1,45 @@
-version: '3.0' # specify docker-compose version
- 
-# Define the services/ containers to be run
+version: '3.0'  # Specify Docker Compose version
+
 services:
-  angular: # name of the first service
-    build: webapp # specify the directory of the Dockerfile
+  angular:  
+    build: webapp  
+    container_name: angular
     ports:
-      - "4200:4200" # specify port mapping
+      - "4200:4200"
     networks:
-      - mean-stack-network # connect to the custom network
- 
-  express: # name of the second service
-    build: webapp/backend # specify the directory of the Dockerfile
+      - mean-stack-network  
+
+  express:  
+    build: webapp/backend  
+    container_name: express
     ports:
-      - "9992:9992" # specify ports mapping
-    links:
-      - database # ensure the database service starts before this service
+      - "9992:9992"  
     environment:
-      MONGO_URL: mongodb://database:27017/ems # link to the database service
+      MONGO_URL: mongodb://database:27017/ems # link to the database service 
     networks:
-      - mean-stack-network # connect to the custom network
- 
-  database: # name of the third service
-    image: mongo # specify image to build container from
+      - mean-stack-network  
+
+  database: # name of the third service 
+    image: mongo  
+    container_name: mongo
     ports:
-      - "27017:27017" # specify port forwarding
+      - "27017:27017"  
     networks:
-      - mean-stack-network # connect to the custom network
+      - mean-stack-network  
+
+  nginx:  
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Mount Nginx configuration
+    depends_on:
+      - angular  
+      - express  
+    networks:
+      - mean-stack-network  
 
 networks:
-  mean-stack-network: # define the custom network
+  mean-stack-network:  
     driver: bridge

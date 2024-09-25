@@ -30,7 +30,7 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit(): void {
     if (this.forgotPasswordForm.valid) {
       const email = this.forgotPasswordForm.value.email;
-      this.http.post('http://192.168.10.110:9992/forgot-password', { email })
+      this.http.post('http://58.182.172.239/api/forgot-password', { email })
         .subscribe(
           response => {
             // Handle success response

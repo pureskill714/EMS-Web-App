@@ -19,7 +19,7 @@ export class AccountverificationComponent implements OnInit {
       const bodyData = { token: token };
 
       // Send POST request to backend for account verification
-      this.http.post<any>('http://192.168.10.110:9992/verify-account', bodyData).subscribe(
+      this.http.post<any>('http://58.182.172.239/api/verify-account', bodyData).subscribe(
         () => {
           // Handle successful verification (e.g., show success message)
           console.log('Account verified successfully!');
