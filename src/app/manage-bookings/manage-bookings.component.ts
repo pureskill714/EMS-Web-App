@@ -71,7 +71,7 @@ export class ManageBookingsComponent {
       alert("THIS IS FAIL")
     }
 
-    this.http.get("http://58.182.172.239/api/getmeetingrooms").subscribe(
+    this.http.get("http://34.30.66.94/api/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -132,7 +132,7 @@ export class ManageBookingsComponent {
       "date": this.selectedDate,
     };
 
-    this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfos', bodyData)
+    this.http.post<any>('http://34.30.66.94/api/retrievecalendarinfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -156,7 +156,7 @@ export class ManageBookingsComponent {
           }
         });
 
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfoswithnames', bodyData)
+        this.http.post<any>('http://34.30.66.94/api/retrievecalendarinfoswithnames', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
@@ -167,7 +167,7 @@ export class ManageBookingsComponent {
             }
           });
         
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarmeetingroomdetails', bodyData)
+        this.http.post<any>('http://34.30.66.94/api/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log("received all meeting room details")
@@ -195,7 +195,7 @@ export class ManageBookingsComponent {
       "email": this.userDataService.getEmail(),
     };
 
-    this.http.post<any>('http://58.182.172.239/api/retrievepastbookinginfos', bodyData)
+    this.http.post<any>('http://34.30.66.94/api/retrievepastbookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -222,7 +222,7 @@ export class ManageBookingsComponent {
       "email": this.userDataService.getEmail(),
     };
 
-    this.http.post<any>('http://58.182.172.239/api/retrievebookinginfos', bodyData)
+    this.http.post<any>('http://34.30.66.94/api/retrievebookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -269,7 +269,7 @@ export class ManageBookingsComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'cancel') {
         // Call your backend service to cancel the booking
-        this.http.post<any>('http://58.182.172.239/api/cancelbooking', bodyData)
+        this.http.post<any>('http://34.30.66.94/api/cancelbooking', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);

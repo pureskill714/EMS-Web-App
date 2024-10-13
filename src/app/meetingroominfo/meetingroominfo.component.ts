@@ -54,7 +54,7 @@ export class MeetingroominfoComponent {
 
     getEmployeeDetails() {
       
-      this.http.get("http://58.182.172.239/api/getmeetingrooms").subscribe(
+      this.http.get("http://34.30.66.94/api/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   

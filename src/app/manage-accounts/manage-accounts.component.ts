@@ -34,7 +34,7 @@ export class ManageAccountsComponent {
 
     getEmployeeDetails() {
       
-      this.http.get("http://58.182.172.239/api/getemployeedetails").subscribe(
+      this.http.get("http://34.30.66.94/api/getemployeedetails").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -66,7 +66,7 @@ export class ManageAccountsComponent {
       dialogRef.afterClosed().subscribe(result => {
         if (result === 'cancel') {
           // Call your backend service to cancel the booking
-          this.http.post<any>('http://58.182.172.239/api/deleteaccount', bodyData)
+          this.http.post<any>('http://34.30.66.94/api/deleteaccount', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
