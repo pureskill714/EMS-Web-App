@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   roleCheck: string | null = null;
 
   today: string | null = null;
+  showTable: boolean = false;
 
   
   // Define the meeting rooms and their calendar information
@@ -186,5 +187,68 @@ export class DashboardComponent implements OnInit {
     }
     return null;
   }
+
+  toggleCalendarView(): void {
+    this.meetingRooms = [];
+
+     // Loop through each meeting room name
+     this.meetingRoomNames.forEach(name => {
+      // Create a meeting room object with the name and an empty calendarInfos array
+      const meetingRoom = { name: name, calendarInfos: [''] };
+
+      // Add the meeting room object to the meetingRooms array
+      this.meetingRooms.push(meetingRoom);
+    });
+
+    let bodyData = {
+      "date": new Date().toISOString().split('T')[0] // Set to today's date in YYYY-MM-DD format
+    };
+
+    this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfos', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log(resultData);
+
+          if (resultData.status) {
+            console.log('Calendar data received:', resultData);
+
+            const meetingRooms : any = []; // Initialize an empty array to store meeting rooms
+
+            // Iterate through each meeting room name and construct the meeting room object
+            this.meetingRoomNames.forEach(name => {
+              // Extract array data for the current meeting room
+              const calendarInfoArray = resultData.calendarInfo[name] || []; // Use default empty array if data is undefined
+    
+              // Push the meeting room object into the meetingRooms array
+              meetingRooms.push({ name: name, calendarInfos: calendarInfoArray });
+            });
+    
+            // Update the meetingRooms property with the dynamically created array
+            this.meetingRooms = meetingRooms;
+          }
+        });
+
+        this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfoswithnames', bodyData)
+        .subscribe(
+          (resultData: any) => {
+            console.log(resultData);
+  
+            if (resultData.status) {
+              console.log('Calendar data (with names) received:', resultData);
+              this.retrievedCalendarInfoWithNames = resultData;
+            }
+          });
+        
+        this.http.post<any>('http://58.182.172.239/api/retrievecalendarmeetingroomdetails', bodyData)
+      .subscribe(
+        (resultData: any) => {
+          console.log("received all meeting room details")
+          console.log(resultData);
+          //console.log(resultData[0]);
+          this.retrievedAllMeetingRoomDetails = resultData;
+          console.log(this.retrievedAllMeetingRoomDetails[0].bookings[0].date)
+        });
+
+      }
 
 }
