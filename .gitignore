@@ -48,7 +48,6 @@ dist/
 *.bundle.js
 
 # Dependency directories
-package-lock.json
 yarn.lock
 
 # Environment variables
