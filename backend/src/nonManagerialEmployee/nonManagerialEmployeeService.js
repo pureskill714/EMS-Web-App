@@ -66,7 +66,7 @@ function sendVerificationEmail(email, verificationToken) {
             from: 'wizvision600@gmail.com',
             to: email,
             subject: 'Account Verification',
-            html: `Click <a href="http://58.182.172.239/verify/${verificationToken}">here</a> to verify your account.`
+            html: `Click <a href="http://134.122.17.14/verify/${verificationToken}">here</a> to verify your account.`
         };
 
         transporter.sendMail(mailOptions, (err, info) => {
@@ -285,7 +285,7 @@ function sendForgotPasswordEmail(email, resetToken) {
                         </div>
                         <div class="content">
                             <p>We received a request to reset the password for your account associated with this email address. If you made this request, please click the button below to reset your password:</p>
-                            <a href="http://58.182.172.239/reset-password/${resetToken}" class="button">Reset Password</a>
+                            <a href="http://134.122.17.14/reset-password/${resetToken}" class="button">Reset Password</a>
                             <p>If you did not request a password reset, please ignore this email. Your password will remain unchanged.</p>
                             <p>If you have any questions, feel free to contact our support team.</p>
                             <p>Best regards,</p>

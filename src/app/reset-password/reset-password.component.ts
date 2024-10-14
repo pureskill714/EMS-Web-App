@@ -34,7 +34,7 @@ export class ResetPasswordComponent implements OnInit {
       const bodyData = { resetToken: this.resetToken };
 
       // Send POST request to backend for account password change
-      this.http.post<any>('http://58.182.172.239/api/verifyResetPassword', bodyData).subscribe(
+      this.http.post<any>('http://134.122.17.14/api/verifyResetPassword', bodyData).subscribe(
         (response) => {
           // Handle successful verification
           if (response.success) {
@@ -111,7 +111,7 @@ export class ResetPasswordComponent implements OnInit {
         newPassword: this.newPassword,
       };
   
-      this.http.post("http://58.182.172.239/api/resetPassword", bodyData).subscribe(
+      this.http.post("http://134.122.17.14/api/resetPassword", bodyData).subscribe(
         (resultData: any) => {
 
           console.log(resultData);

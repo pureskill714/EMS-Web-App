@@ -67,7 +67,7 @@ export class DashboardComponent implements OnInit {
       alert("THIS IS FAIL")
     }
 
-    this.http.get("http://58.182.172.239/api/getmeetingrooms").subscribe(
+    this.http.get("http://134.122.17.14/api/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
         "date": new Date().toISOString().split('T')[0] // Set to today's date in YYYY-MM-DD format
       };
 
-      this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfos', bodyData)
+      this.http.post<any>('http://134.122.17.14/api/retrievecalendarinfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -138,7 +138,7 @@ export class DashboardComponent implements OnInit {
         });
 
 
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfoswithnames', bodyData)
+        this.http.post<any>('http://134.122.17.14/api/retrievecalendarinfoswithnames', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
@@ -151,7 +151,7 @@ export class DashboardComponent implements OnInit {
             }
           });
 
-      this.http.post<any>('http://58.182.172.239/api/retrievecalendarmeetingroomdetails', bodyData)
+      this.http.post<any>('http://134.122.17.14/api/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log("received all meeting room details")
@@ -204,7 +204,7 @@ export class DashboardComponent implements OnInit {
       "date": new Date().toISOString().split('T')[0] // Set to today's date in YYYY-MM-DD format
     };
 
-    this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfos', bodyData)
+    this.http.post<any>('http://134.122.17.14/api/retrievecalendarinfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -228,7 +228,7 @@ export class DashboardComponent implements OnInit {
           }
         });
 
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfoswithnames', bodyData)
+        this.http.post<any>('http://134.122.17.14/api/retrievecalendarinfoswithnames', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
@@ -239,7 +239,7 @@ export class DashboardComponent implements OnInit {
             }
           });
         
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarmeetingroomdetails', bodyData)
+        this.http.post<any>('http://134.122.17.14/api/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log("received all meeting room details")

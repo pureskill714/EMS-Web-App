@@ -46,7 +46,7 @@ export class ManageRoomsComponent {
 
 
   ngOnInit() {
-    this.http.get("http://58.182.172.239/api/getmeetingrooms").subscribe(
+    this.http.get("http://134.122.17.14/api/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -108,7 +108,7 @@ export class ManageRoomsComponent {
           "meetingRoomLocation": this.userDataService.getMeetingRoomLocation()
       };
 
-      this.http.post("http://58.182.172.239/api/addmeetingrooms", bodyData).subscribe(
+      this.http.post("http://134.122.17.14/api/addmeetingrooms", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
@@ -159,7 +159,7 @@ export class ManageRoomsComponent {
           "newRoomOrder": this.userDataService.getnewRoomOrder(),
         };
 
-        this.http.post("http://58.182.172.239/api/editmeetingroomorder", bodyData).subscribe(
+        this.http.post("http://134.122.17.14/api/editmeetingroomorder", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
@@ -207,7 +207,7 @@ export class ManageRoomsComponent {
           "newRoomCapacity": this.userDataService.getRoomCapacity()
         };
 
-        this.http.post("http://58.182.172.239/api/editmeetingroomcapacity", bodyData).subscribe(
+        this.http.post("http://134.122.17.14/api/editmeetingroomcapacity", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
@@ -254,7 +254,7 @@ export class ManageRoomsComponent {
           "newRoomLocation": this.userDataService.getMeetingRoomLocation()
         };
 
-        this.http.post("http://58.182.172.239/api/editmeetingroomlocation", bodyData).subscribe(
+        this.http.post("http://134.122.17.14/api/editmeetingroomlocation", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
@@ -299,7 +299,7 @@ export class ManageRoomsComponent {
           "newMeetingRoomName": this.userDataService.getnewMeetingRoomName(),
         };
 
-        this.http.post("http://58.182.172.239/api/editmeetingroomname", bodyData).subscribe(
+        this.http.post("http://134.122.17.14/api/editmeetingroomname", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");
@@ -348,7 +348,7 @@ export class ManageRoomsComponent {
           "meetingRoomName": meetingRoomName
         };
 
-        this.http.post("http://58.182.172.239/api/deletemeetingrooms", bodyData).subscribe(
+        this.http.post("http://134.122.17.14/api/deletemeetingrooms", bodyData).subscribe(
           (resultData: any) => {
               console.log(resultData);
               //alert("Room Booking Successfully");

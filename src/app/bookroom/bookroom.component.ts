@@ -74,7 +74,7 @@ export class BookroomComponent {
   selectedMeetingRooms: boolean[] = [];
 
   ngOnInit() {
-    this.http.get("http://58.182.172.239/api/getmeetingrooms").subscribe(
+    this.http.get("http://134.122.17.14/api/getmeetingrooms").subscribe(
         (resultData: any) => {
           console.log(resultData);
   
@@ -135,7 +135,7 @@ export class BookroomComponent {
       "date": this.selectedDate,
     };
 
-    this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfos', bodyData)
+    this.http.post<any>('http://134.122.17.14/api/retrievecalendarinfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -159,7 +159,7 @@ export class BookroomComponent {
           }
         });
 
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarinfoswithnames', bodyData)
+        this.http.post<any>('http://134.122.17.14/api/retrievecalendarinfoswithnames', bodyData)
         .subscribe(
           (resultData: any) => {
             console.log(resultData);
@@ -170,7 +170,7 @@ export class BookroomComponent {
             }
           });
         
-        this.http.post<any>('http://58.182.172.239/api/retrievecalendarmeetingroomdetails', bodyData)
+        this.http.post<any>('http://134.122.17.14/api/retrievecalendarmeetingroomdetails', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log("received all meeting room details")
@@ -198,7 +198,7 @@ export class BookroomComponent {
       "email": this.userDataService.getEmail(),
     };
 
-    this.http.post<any>('http://58.182.172.239/api/retrievepastbookinginfos', bodyData)
+    this.http.post<any>('http://134.122.17.14/api/retrievepastbookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -226,7 +226,7 @@ export class BookroomComponent {
     };
 
     console.log(this.userDataService.getEmail())
-    this.http.post<any>('http://58.182.172.239/api/retrievebookinginfos', bodyData)
+    this.http.post<any>('http://134.122.17.14/api/retrievebookinginfos', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
@@ -273,7 +273,7 @@ export class BookroomComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'cancel') {
         // Call your backend service to cancel the booking
-        this.http.post<any>('http://58.182.172.239/api/cancelbooking', bodyData)
+        this.http.post<any>('http://134.122.17.14/api/cancelbooking', bodyData)
       .subscribe(
         (resultData: any) => {
           console.log(resultData);
