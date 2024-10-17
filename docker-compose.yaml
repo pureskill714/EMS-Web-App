@@ -23,7 +23,9 @@ services:
     image: mongo  
     container_name: mongo
     ports:
-      - "27017:27017"  
+      - "27017:27017"
+    volumes:
+      - ./mongodb:/data/db/
     networks:
       - mean-stack-network  
 
@@ -38,7 +40,11 @@ services:
       - angular  
       - express  
     networks:
-      - mean-stack-network  
+      - mean-stack-network
+
+volumes:
+  mongodb:
+    external: true      
 
 networks:
   mean-stack-network:  
