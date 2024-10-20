@@ -197,7 +197,7 @@ var resetPasswordControllerFn = async (req, res) => {
 var getAllEmployeesControllerFn = async (req, res) => {
     try {
 
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();

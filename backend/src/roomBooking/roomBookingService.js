@@ -105,7 +105,7 @@ function sendBookingConfirmationnEmail(email,firstName,lastName,date,meetingRoom
 module.exports.retrieveTimeslots = async (requestData) => {
     try {
         // MongoDB connection URL
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         // Database Name
         const dbName = 'ems';
 
@@ -146,7 +146,7 @@ module.exports.retrieveTimeslots = async (requestData) => {
 module.exports.retrieveBookingInfos = async (requestData) => {
     try {
         // MongoDB connection URL
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         // Database Name
         const dbName = 'ems';
 
@@ -188,7 +188,7 @@ module.exports.retrieveBookingInfos = async (requestData) => {
 module.exports.retrievePastBookingInfos = async (requestData) => {
     try {
         // MongoDB connection URL
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         // Database Name
         const dbName = 'ems';
 
@@ -233,7 +233,7 @@ module.exports.retrievePastBookingInfos = async (requestData) => {
 
 module.exports.retrieveCalendarInfo = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
@@ -288,7 +288,7 @@ module.exports.retrieveCalendarInfo = async (requestData) => {
 
 module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
@@ -376,7 +376,7 @@ module.exports.retrieveCalendarInfoWithNames = async (requestData) => {
 
 module.exports.retrieveCalendarDetails = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
@@ -429,7 +429,7 @@ module.exports.retrieveCalendarDetails = async (requestData) => {
 
 module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
@@ -515,7 +515,7 @@ module.exports.retrieveCalendarMeetingRoomDetails = async (requestData) => {
 
 module.exports.cancelBooking = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
@@ -640,7 +640,7 @@ module.exports.addNewMeetingRoomService = async (meetingRoomDetails) => {
 };
 
 module.exports.editMeetingRoomOrderService = async (requestData) => {
-    const uri = 'mongodb://database:27017';
+    const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
     const dbName = 'ems';
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -674,7 +674,7 @@ module.exports.editMeetingRoomOrderService = async (requestData) => {
 
 module.exports.editMeetingRoomNameService = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
@@ -706,7 +706,7 @@ module.exports.editMeetingRoomNameService = async (requestData) => {
 };
 
 module.exports.editMeetingRoomCapacityService = async (requestData) => {
-    const uri = 'mongodb://database:27017';
+    const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
     const dbName = 'ems';
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -738,7 +738,7 @@ module.exports.editMeetingRoomCapacityService = async (requestData) => {
 };
 
 module.exports.editMeetingRoomLocationService = async (requestData) => {
-    const uri = 'mongodb://database:27017';
+    const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
     const dbName = 'ems';
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 
@@ -771,7 +771,7 @@ module.exports.editMeetingRoomLocationService = async (requestData) => {
 
 module.exports.deleteMeetingRoomService = async (requestData) => {
     try {
-        const uri = 'mongodb://database:27017';
+        const uri = 'mongodb://admin:raheem12345@database:27017/ems?authSource=admin';
         const dbName = 'ems';
         const client = new MongoClient(uri, { useUnifiedTopology: true });
         await client.connect();
