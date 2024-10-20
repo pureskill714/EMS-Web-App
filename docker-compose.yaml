@@ -26,6 +26,8 @@ services:
       - "27017:27017"
     volumes:
       - ./mongodb:/data/db/
+      - ./mongod.conf:/etc/mongod.conf  # Mount MongoDB configuration
+    command: --config /etc/mongod.conf  # Use the config file
     networks:
       - mean-stack-network  
 
