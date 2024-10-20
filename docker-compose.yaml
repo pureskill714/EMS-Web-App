@@ -15,7 +15,7 @@ services:
     ports:
       - "9992:9992"  
     environment:
-      MONGO_URL: mongodb://admin:raheem12345@database:27017/ems # link to the database service 
+      MONGO_URL: mongodb://admin:raheem12345@database:27017/ems?authSource=admin # Use the authSource for admin database
     networks:
       - mean-stack-network  
 
@@ -27,6 +27,9 @@ services:
     volumes:
       - ./mongodb:/data/db/
       - ./mongod.conf:/etc/mongod.conf  # Mount MongoDB configuration
+    environment:  # Add root username and password for MongoDB
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: raheem12345
     command: --config /etc/mongod.conf  # Use the config file
     networks:
       - mean-stack-network  
