@@ -15,7 +15,7 @@ services:
     ports:
       - "9992:9992"  
     environment:
-      MONGO_URL: mongodb://database:27017/ems # link to the database service 
+      MONGO_URL: mongodb://admin:raheem12345@database:27017/ems # link to the database service 
     networks:
       - mean-stack-network  
 

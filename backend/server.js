@@ -13,7 +13,7 @@ app.use(cors({
 app.use(express.json()); // Middleware to parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect("mongodb://database:27017/ems")
+mongoose.connect("mongodb://admin:raheem12345@database:27017/ems")
   .then(() => {
     console.log("Successfully connected to the database");
   })
