@@ -25,7 +25,7 @@ export class HeaderComponent {
       this.userDataService.setEmail(userData.email);
       this.fullName = this.userDataService.getFullName();
     } else {
-       this.router.navigate(["not-authorized"])
+       alert("This is fail")
     }
   }
 
