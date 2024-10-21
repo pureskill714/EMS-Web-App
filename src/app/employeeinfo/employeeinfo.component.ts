@@ -41,7 +41,7 @@ export class EmployeeinfoComponent implements OnInit {
       this.userDataService.setEmail(userData.email);
       this.userDataService.setRole(userData.role);
     } else {
-      alert("THIS IS FAIL")
+       this.router.navigate(["not-authorized"])
     }
 
       this.getEmployeeDetails();

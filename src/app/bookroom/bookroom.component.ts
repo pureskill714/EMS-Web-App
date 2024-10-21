@@ -60,7 +60,7 @@ export class BookroomComponent {
       this.userDataService.setEmail(userData.email);
       this.userDataService.setRole(userData.role);
     } else {
-      alert("THIS IS FAIL")
+       this.router.navigate(["not-authorized"])
     }
       
     this.getBookingInfos();

@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
       this.userDataService.setEmail(userData.email);
       this.userDataService.setRole(userData.role);
     } else {
-      alert("THIS IS FAIL")
+       this.router.navigate(["not-authorized"])
     }
 
     this.http.get("http://134.122.17.14/api/getmeetingrooms").subscribe(

@@ -68,7 +68,7 @@ export class ManageBookingsComponent {
       this.userDataService.setLastName(userData.lastName);
       this.userDataService.setEmail(userData.email);
     } else {
-      alert("THIS IS FAIL")
+       this.router.navigate(["not-authorized"])
     }
 
     this.http.get("http://134.122.17.14/api/getmeetingrooms").subscribe(

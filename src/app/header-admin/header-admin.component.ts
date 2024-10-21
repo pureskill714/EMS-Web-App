@@ -22,7 +22,7 @@ export class HeaderAdminComponent {
       this.userDataService.setEmail(userData.email);
       this.fullName = this.userDataService.getFullName();
     } else {
-      alert("THIS IS FAIL")
+       this.router.navigate(["not-authorized"])
     }
   }
 

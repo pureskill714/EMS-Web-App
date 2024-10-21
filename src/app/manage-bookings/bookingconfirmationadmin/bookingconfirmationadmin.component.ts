@@ -28,7 +28,7 @@ export class BookingconfirmationadminComponent {
       this.userDataService.setLastName(userData.lastName);
       this.userDataService.setEmail(userData.email);
     } else {
-      alert("THIS IS FAIL")
+       this.router.navigate(["not-authorized"])
     }
   }
 
